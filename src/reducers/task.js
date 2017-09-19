@@ -9,7 +9,17 @@ const initialState = {
 		time: 6100,
 		timecreated: new Date().getTime(),
 		timefinished: null,
-		timeKey: 1
+		timeKey: 1,
+		timeintervals: [
+			{
+				startTime: new Date().getTime() - 20000,
+				stopTime: new Date().getTime() - 15000,
+			},
+			{
+				startTime: new Date().getTime() - 10000,
+				stopTime: new Date().getTime() - 8000
+			}
+		]
 	},
 	{
 		task: 'Create HTML for landing page',
@@ -18,7 +28,8 @@ const initialState = {
 		time: 8200,
 		timecreated: new Date().getTime(),
 		timefinished: null,
-		timeKey: 2
+		timeKey: 2,
+		timeintervals: []
 	},
 	{
 		task: 'Mow yard',
@@ -27,7 +38,13 @@ const initialState = {
 		time: 2500,
 		timecreated: new Date().getTime(),
 		timefinished: new Date().getTime(),
-		timeKey: 3
+		timeKey: 3,
+		timeintervals: [
+			{
+				startTime: new Date().getTime() - 5000,
+				stopTime: new Date().getTime() - 3000
+			}
+		]
 	}
 	],
 	selectedTaskIndex: -1
@@ -46,9 +63,10 @@ export default function Task(state=initialState, action) {
 					project: action.project,
 					client: action.client,
 					time: 0,
-					timecreated: currTimeStamp,
+					timecreated: new Date().getTime(),
 					timefinished: null,
-					timeKey: currTimeStamp
+					timeKey: new Date().getTime(),
+					timeintervals: []
 				}
 			]
 			return {
@@ -68,8 +86,9 @@ export default function Task(state=initialState, action) {
 			const finishTask = finishTaskList.tasks.filter(function(task){
 				return task.timeKey === finishTaskList.selectedTaskIndex;
 			})[0];
-			finishTask.timefinished = currTimeStamp;
+			finishTask.timefinished = new Date().getTime(),
 			finishTask.time = action.time
+			finishTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
 			return {
 				...state,
 				finishTaskList,
@@ -84,6 +103,18 @@ export default function Task(state=initialState, action) {
 			return {
 				tasks: deleteTask,
 				selectedTaskIndex: -1
+			}
+
+		case TaskActionTypes.PAUSE_TASK:
+			const pauseTaskList = Object.assign({}, state);
+			const pauseTask = pauseTaskList.tasks.filter(function(task){
+				return task.timeKey === pauseTaskList.selectedTaskIndex;
+			})[0];
+			pauseTask.time = action.time
+			pauseTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
+			return {
+				...state,
+				pauseTaskList
 			}
 
 		default:

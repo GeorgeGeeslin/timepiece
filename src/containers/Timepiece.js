@@ -20,6 +20,7 @@ class Timepiece extends Component {
 		const selectTask = bindActionCreators(TaskActionCreators.selectTask, dispatch);
 		const finishTask = bindActionCreators(TaskActionCreators.finishTask, dispatch);
 		const deleteTask = bindActionCreators(TaskActionCreators.deleteTask, dispatch);
+		const pauseTask = bindActionCreators(TaskActionCreators.pauseTask, dispatch);
 
 		const formatTime = (sec) =>
 			Math.floor(sec / 3600) % 60 + 
@@ -82,7 +83,8 @@ class Timepiece extends Component {
 				<Timer
 					selectedTaskIndex={selectedTaskIndex} 
 					secondsElapsed={secondsElapsed} 
-					finishTask={finishTask} />
+					finishTask={finishTask} 
+					pauseTask={pauseTask}/>
 				<CreateTaskForm addTask={addTask} />
 				<div className='currentTaskWrapper'>
 					<h2>Current Tasks</h2>

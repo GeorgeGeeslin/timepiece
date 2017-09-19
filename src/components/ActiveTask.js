@@ -40,8 +40,8 @@ ActiveTask.propTypes = {
 		task: PropTypes.string.isRequired,
 		time: PropTypes.number.isRequired,
 		timeKey: PropTypes.number.isRequired,
-		timecreated: PropTypes.instanceOf(Date).isRequired,
-		timefinished: PropTypes.instanceOf(Date)
+		timecreated: PropTypes.number.isRequired,
+		timefinished: PropTypes.number
 	})
 }
 
