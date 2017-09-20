@@ -86,7 +86,7 @@ export default function Task(state=initialState, action) {
 			const finishTask = finishTaskList.tasks.filter(function(task){
 				return task.timeKey === finishTaskList.selectedTaskIndex;
 			})[0];
-			//finishTask.timefinished = new Date().getTime(),
+			finishTask.timefinished = new Date().getTime(),
 			finishTask.time = action.time
 			finishTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
 			return {
@@ -107,14 +107,11 @@ export default function Task(state=initialState, action) {
 
 		case TaskActionTypes.PAUSE_TASK:
 			const pauseTaskList =  Object.assign({}, state);
-			//const pauseTaskList = state;
-			//var pauseTaskList = state.tasks
 			const pauseTask = pauseTaskList.tasks.filter(function(task){
 				return task.timeKey === pauseTaskList.selectedTaskIndex;
 			})[0];
 			pauseTask.time = action.time
 			pauseTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
-			//const newTaskList = pauseTaskList.tasks.map(obj => pauseTask.find(o => o.timeKey) || obj);
 			return {
 				...state,
 				pauseTaskList
