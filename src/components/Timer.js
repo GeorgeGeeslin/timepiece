@@ -67,6 +67,7 @@ class Timer extends Component {
 	validatePauseTask() {
 		if (this.state.startTime !== null && this.state.stopTime !== null) {
 			this.props.pauseTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime);
+			console.log('validatePauseTask');
 		}
 	}
 
