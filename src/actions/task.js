@@ -16,10 +16,12 @@ export const selectTask = (timeKey) => {
 	};
 }
 
-export const finishTask = (time) => {
+export const finishTask = (time, startTime, stopTime) => {
 	return {
 		type: TaskActionTypes.FINISH_TASK,
-		time
+		time,
+		startTime,
+		stopTime
 	};
 }
 
@@ -30,3 +32,11 @@ export const deleteTask = (timeKey) => {
 	}
 }
 
+export const pauseTask = (time, startTime, stopTime) => {
+	return {
+		type: TaskActionTypes.PAUSE_TASK,
+		time,
+		startTime,
+		stopTime
+	}
+}
