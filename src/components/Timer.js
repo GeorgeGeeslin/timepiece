@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { Button } from 'react-bootstrap';
 
 //TODO put this function in one place to share across modules.
-//const currTimeStamp = new Date().getTime();
-
 const formatTime = (sec) =>
 	Math.floor(sec / 3600) % 60 + 
 		':' + 
