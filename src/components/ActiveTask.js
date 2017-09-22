@@ -13,7 +13,7 @@ const formatTime = (sec) =>
 const ActiveTask = ({ selectedTask }) => {
 	if(selectedTask) {
 		return(
-			<div>
+			<div className="ActiveTask">
 				<ul>
 					<li>
 						<span>Task: </span>

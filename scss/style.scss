@@ -1,0 +1,37 @@
+$color-primary: #2cf1ff; //teal
+$color-secondary: #ffa755; //orange 
+$color-accent: #9d138c; //deep purple
+$color-shade: #eee; //light-gray
+
+$color-text: #230a28;
+$color-bg: #130918; //very dark blue
+$color-bg-light: #fefefe; //pinkish white
+
+$font-stack-primary: 'Raleway', sans-serif;
+$font-stack-secondary: 'Bree Serif', serif;
+
+$button-gutter: 5px;
+
+body{
+	font-family: $font-stack-primary;
+	background-color: $color-bg-light;
+	color: $color-text;
+}
+
+h1,
+h2 {
+	font-family: $font-stack-primary;
+}
+
+button {
+	margin-right: $button-gutter;
+	margin-bottom: $button-gutter;
+}
+
+ul{
+	list-style: none;
+}
+
+.ActiveTask {
+
+}

@@ -108,9 +108,9 @@ class Timer extends Component {
 
 	render() {
 		return (
-			<div className="stopwatch">
-				<h1 className="stopwatch-timer">{formatTime(this.state.secondsElapsed)}</h1>
- 					<button onClick={this.handleStartClick.bind(this)} disabled={this.props.selectedTaskIndex === -1 || this.state.startIsDisabled}>Start</button>
+			<div className="Timer">
+				<h1>{formatTime(this.state.secondsElapsed)}</h1>
+ 					<button bsStyle="primary" onClick={this.handleStartClick.bind(this)} disabled={this.props.selectedTaskIndex === -1 || this.state.startIsDisabled}>Start</button>
 					<button onClick={this.handlePauseClick.bind(this)} disabled={this.state.pauseIsDisabled}>Pause</button>
 					<button onClick={this.handleFinishClick.bind(this)} disabled={this.state.finishIsDisabled}>Finish</button>
 					<button onClick={this.handleCancelClick.bind(this)} disabled={this.state.cancelIsDisabled}>Cancel</button>		

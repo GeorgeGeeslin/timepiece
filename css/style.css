@@ -1,0 +1,17 @@
+body {
+  font-family: "Raleway", sans-serif;
+  background-color: #fefefe;
+  color: #230a28; }
+
+h1,
+h2 {
+  font-family: "Raleway", sans-serif; }
+
+button {
+  margin-right: 5px;
+  margin-bottom: 5px; }
+
+ul {
+  list-style: none; }
+
+/*# sourceMappingURL=style.css.map */
