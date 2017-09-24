@@ -4,17 +4,16 @@ import { PropTypes } from 'prop-types';
 
 //onClick={() => props.selectTask(props.timeKey)}>	
 const FinishedTask = props => (
-	<div className='currentTask'>		
+	<div className='tasks'>		
 
 		<div>
-			<p>{props.task}</p>
-			<p>{props.project}</p>
+			<p><span className="taskLabel">TASK: </span>{props.task}</p>
+			<p><span className="taskLabel">PROJECT: </span>{props.project}</p>
 		</div>
 		<div>
 			<button onClick={ () => props.selectTask(props.timeKey)}>Select Task</button>
 			<button onClick={ () => props.deleteTask(props.timeKey)}>Delete Task</button>
 		</div>
-		<hr/>
 	</div>
 );
 
