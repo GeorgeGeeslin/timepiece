@@ -11,7 +11,9 @@ h2 {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  font-family: "Quicksand", sans-serif; }
+  font-family: "Roboto Condensed", sans-serif;
+  text-align: center;
+  margin-top: 5px; }
 
 ul {
   list-style: none;
@@ -36,9 +38,6 @@ button {
 input:focus {
   outline: none; }
 
-/*input:enabled {
-	outline: none;
-}*/
 input[type="submit"] {
   margin-right: 5px;
   margin-bottom: 5px;
@@ -87,5 +86,13 @@ input[type="text"] {
   background-color: #120d2f;
   padding-left: 2%;
   margin-top: 20px; }
+
+.tasks {
+  border: 1px solid #2c245a;
+  background-color: #120d2f;
+  padding-left: 2%;
+  margin-top: 20px; }
+  .tasks p {
+    margin-bottom: 0; }
 
 /*# sourceMappingURL=style.css.map */

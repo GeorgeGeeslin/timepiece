@@ -65,7 +65,9 @@ body{
 h1,
 h2 {
 	@include center;
-	font-family: $font-stack-primary;
+	font-family: $font-stack-labels;
+	text-align: center;
+	margin-top: 5px;
 }
 
 ul{
@@ -83,10 +85,6 @@ button {
 input:focus {
 	outline: none;
 }
-
-/*input:enabled {
-	outline: none;
-}*/
 
 input[type="submit"] {
 	@include inputs {
@@ -122,12 +120,11 @@ input[type="text"] {
 	@include container;
 }
 
-.timer {
-
-}
-
-.createTaskForm {
-
+.tasks {
+	@include container;
+	p {
+		margin-bottom: 0;
+	}
 }
 
 

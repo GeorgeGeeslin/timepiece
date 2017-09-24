@@ -90,16 +90,14 @@ class Timepiece extends Component {
 					finishTask={finishTask} 
 					pauseTask={pauseTask}/>
 				<CreateTaskForm addTask={addTask} />
-				<div className='currentTaskWrapper'>
-					<h2>Current Tasks</h2>
-					<hr />
+				<h2>Current Tasks</h2>
+				<div className='taskWrapper'>
 					{ currentTasks }
 				</div>
 				</Col>
 				<Col sm={12} md={6}>
-				<div className='finishedTaskWrapper'>
 				<h2>Finished Tasks</h2>
-				<hr />
+				<div className='taskWrapper'>
 					{ finishedTasks }
 				</div>
 				</Col>
