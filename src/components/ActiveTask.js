@@ -13,14 +13,15 @@ const formatTime = (sec) =>
 const ActiveTask = ({ selectedTask }) => {
 	if(selectedTask) {
 		return(
-			<div className="ActiveTask">
+			<div className="activeTask">
+				<span className="taskLabel">Working On:</span>
 				<ul>
 					<li>
-						<span>Task: </span>
+						<span className="taskLabel">TASK: </span>
 						{selectedTask.task}
 					</li>
 					<li>
-						<span>Project: </span>
+						<span className="taskLabel">PROJECT: </span>
 						{selectedTask.project}
 					</li>
 					<li>{formatTime(selectedTask.time)}</li>
@@ -29,7 +30,7 @@ const ActiveTask = ({ selectedTask }) => {
 		)
 	} 
 	else {
-		return(<p>No Active Task</p>)
+		return(<div className="activeTask"><p>No Task Selected</p></div>)
 	}
 };
 

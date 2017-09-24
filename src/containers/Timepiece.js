@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Grid, Col, Row } from 'react-bootstrap';
 import * as TaskActionCreators from '../actions/task';
 import ActiveTask from '../components/ActiveTask';
 import Timer from '../components/Timer';
 import CreateTaskForm from '../components/CreateTaskForm';
 import CurrentTask from '../components/CurrentTask';
 import FinishedTask from '../components/FinishedTask';
-import { Grid, Col, Row } from 'react-bootstrap';
+
 
 class Timepiece extends Component {
 	static propTypes = {
