@@ -7,8 +7,8 @@ const FinishedTask = props => (
 	<div className='currentTask'>		
 
 		<div>
-			<h3>{props.task}</h3>
-			<h3>{props.project}</h3>
+			<p>{props.task}</p>
+			<p>{props.project}</p>
 		</div>
 		<div>
 			<button onClick={ () => props.selectTask(props.timeKey)}>Select Task</button>

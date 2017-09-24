@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Grid, Col, Row } from 'react-bootstrap';
 import * as TaskActionCreators from '../actions/task';
 import ActiveTask from '../components/ActiveTask';
 import Timer from '../components/Timer';
 import CreateTaskForm from '../components/CreateTaskForm';
 import CurrentTask from '../components/CurrentTask';
 import FinishedTask from '../components/FinishedTask';
+
 
 class Timepiece extends Component {
 	static propTypes = {
@@ -77,7 +79,9 @@ class Timepiece extends Component {
 		));
 
 		return (
-			<div>
+			<Grid>
+				<Row className="show-grid">
+				<Col sm={12} md={6}>
 				<ActiveTask 
 					selectedTask={selectedTask} />
 				<Timer
@@ -91,12 +95,16 @@ class Timepiece extends Component {
 					<hr />
 					{ currentTasks }
 				</div>
+				</Col>
+				<Col sm={12} md={6}>
 				<div className='finishedTaskWrapper'>
 				<h2>Finished Tasks</h2>
 				<hr />
 					{ finishedTasks }
 				</div>
-			</div>
+				</Col>
+				</Row>
+			</Grid>
 		)
 	}
 }

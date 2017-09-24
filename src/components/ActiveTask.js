@@ -4,14 +4,15 @@ import { PropTypes } from 'prop-types';
 const ActiveTask = ({ selectedTask }) => {
 	if(selectedTask) {
 		return(
-			<div>
+			<div className="activeTask">
+				<span className="taskLabel">Working On:</span>
 				<ul>
 					<li>
-						<span>Task: </span>
+						<span className="taskLabel">TASK: </span>
 						{selectedTask.task}
 					</li>
 					<li>
-						<span>Project: </span>
+						<span className="taskLabel">PROJECT: </span>
 						{selectedTask.project}
 					</li>
 				</ul>
@@ -19,7 +20,7 @@ const ActiveTask = ({ selectedTask }) => {
 		)
 	} 
 	else {
-		return(<p>No Active Task</p>)
+		return(<div className="activeTask"><p>No Task Selected</p></div>)
 	}
 };
 

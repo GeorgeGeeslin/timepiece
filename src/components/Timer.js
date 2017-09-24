@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { Button } from 'react-bootstrap';
 
 //TODO put this function in one place to share across modules.
-//const currTimeStamp = new Date().getTime();
-
 const formatTime = (sec) =>
 	Math.floor(sec / 3600) % 60 + 
 		':' + 
@@ -109,8 +108,8 @@ class Timer extends Component {
 
 	render() {
 		return (
-			<div className="stopwatch">
-				<h1 className="stopwatch-timer">{formatTime(this.state.secondsElapsed)}</h1>
+			<div className="timer">
+				<h1>{formatTime(this.state.secondsElapsed)}</h1>
  					<button onClick={this.handleStartClick.bind(this)} disabled={this.props.selectedTaskIndex === -1 || this.state.startIsDisabled}>Start</button>
 					<button onClick={this.handlePauseClick.bind(this)} disabled={this.state.pauseIsDisabled}>Pause</button>
 					<button onClick={this.handleFinishClick.bind(this)} disabled={this.state.finishIsDisabled}>Finish</button>
