@@ -1,15 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-//TODO put this function in one place to share across modules.
-const formatTime = (sec) =>
-	Math.floor(sec / 3600) % 60 + 
-		':' + 
-		('0' + Math.floor(sec / 60) % 60).slice(-2) + 
-		':' + 
-		('0' + sec % 60).slice(-2)
-
-
 const ActiveTask = ({ selectedTask }) => {
 	if(selectedTask) {
 		return(
@@ -23,7 +14,6 @@ const ActiveTask = ({ selectedTask }) => {
 						<span>Project: </span>
 						{selectedTask.project}
 					</li>
-					<li>{formatTime(selectedTask.time)}</li>
 				</ul>
 			</div>
 		)
