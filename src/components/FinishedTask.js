@@ -12,7 +12,7 @@ const FinishedTask = props => (
 		</div>
 		<div>
 			<button onClick={ () => props.selectTask(props.timeKey)}>Select Task</button>
-			<button onClick={ () => props.deleteTask(props.timeKey)}>Delete Task</button>
+			<button onClick={ () => props.deleteTask(props.timeKey, props.selectedTaskIndex)}>Delete Task</button>
 		</div>
 	</div>
 );

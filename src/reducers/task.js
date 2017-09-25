@@ -100,9 +100,16 @@ export default function Task(state=initialState, action) {
 			const deleteTask = deleteTaskList.tasks.filter(function(task){
 				return task.timeKey !== action.timeKey
 			})
-			return {
-				tasks: deleteTask,
-				selectedTaskIndex: -1
+			if (action.timekey === action.selectedTaskIndex) {
+				return {
+					tasks: deleteTask,
+					selectedTaskIndex: -1
+				}
+			} else {
+				return {
+					tasks: deleteTask,
+					selectedTaskIndex: action.selectedTaskIndex
+				}
 			}
 
 		case TaskActionTypes.PAUSE_TASK:

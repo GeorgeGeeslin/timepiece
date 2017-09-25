@@ -25,10 +25,11 @@ export const finishTask = (time, startTime, stopTime) => {
 	};
 }
 
-export const deleteTask = (timeKey) => {
+export const deleteTask = (timeKey, selectedTaskIndex) => {
 	return {
 		type: TaskActionTypes.DELETE_TASK,
-		timeKey
+		timeKey,
+		selectedTaskIndex
 	}
 }
 
