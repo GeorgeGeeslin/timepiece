@@ -65,7 +65,6 @@ export default class CreatTaskForm extends Component {
 				client: ''
 			});
 		}
-		console.log("asdf")
 	};
 
 	render() {

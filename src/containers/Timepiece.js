@@ -60,6 +60,7 @@ class Timepiece extends Component {
 				timeKey={tasks.timeKey}
 				selectTask={selectTask}
 				deleteTask={deleteTask}
+				selectedTaskIndex={selectedTaskIndex}
 			/>
 		));
 
@@ -75,6 +76,7 @@ class Timepiece extends Component {
 				timeKey={tasks.timeKey}
 				selectTask={selectTask}
 				deleteTask={deleteTask}
+				selectedTaskIndex={selectedTaskIndex}
 			/>
 		));
 
@@ -88,7 +90,8 @@ class Timepiece extends Component {
 					selectedTaskIndex={selectedTaskIndex} 
 					secondsElapsed={secondsElapsed} 
 					finishTask={finishTask} 
-					pauseTask={pauseTask}/>
+					pauseTask={pauseTask}
+					selectedTask={selectedTask} />
 				<CreateTaskForm addTask={addTask} />
 				<h2>Current Tasks</h2>
 				<div className='taskWrapper'>
