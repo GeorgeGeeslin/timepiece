@@ -34,7 +34,8 @@ class Timer extends Component {
 			})
 		} else if (prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) {
 			this.setState({
-				secondsElapsed: this.props.secondsElapsed
+				secondsElapsed: this.props.secondsElapsed,
+				startIsDisabled: false
 			})
 		}
 	}
