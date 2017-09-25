@@ -71,25 +71,24 @@ export default class CreatTaskForm extends Component {
 		return(
 			<div className="creatTaskForm">
 				<form onSubmit={this.addTask}>
-					<input type='submit' value='ADD TASK' />
 					<input id='taskField'
 						type='text'
 						value={this.state.task}
 						onChange={this.onTaskNameChange}
-						placeholder='Task (required)'
-					/>
+						placeholder='Task (required)' />
 					<input
 						type='text'
 						value={this.state.project}
 						onChange={this.onProjectNameChange}
-						placeholder='Project'
-					/>	
+						placeholder='Project'	/>	
 					<input
 						type='text'
 						value={this.state.client}
 						onChange={this.onClientNameChange}
-						placeholder='Client'
-					/>						
+						placeholder='Client' />		
+					<input 
+						type='submit' 
+						value='ADD TASK' />				
 				</form>
 			</div>
 		)
