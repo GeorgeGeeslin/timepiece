@@ -55,6 +55,7 @@ input[type="submit"] {
     color: #74546a; }
 
 input[type="text"] {
+  line-height: 2em;
   border: 0px;
   margin-right: 5px;
   margin-bottom: 5px;
@@ -80,6 +81,9 @@ input[type="text"] {
 .taskLabel {
   font: "Roboto Condensed", sans-serif;
   font-size: .8em; }
+
+input[type="text"].inputError {
+  background-color: #f04e7d; }
 
 .activeTask {
   border: 1px solid #2c245a;
