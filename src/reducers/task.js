@@ -100,7 +100,7 @@ export default function Task(state=initialState, action) {
 			const deleteTask = deleteTaskList.tasks.filter(function(task){
 				return task.timeKey !== action.timeKey
 			})
-			if (action.timekey === action.selectedTaskIndex) {
+			if (action.timeKey === action.selectedTaskIndex) {
 				return {
 					tasks: deleteTask,
 					selectedTaskIndex: -1
