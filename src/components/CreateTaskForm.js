@@ -71,7 +71,7 @@ export default class CreatTaskForm extends Component {
 		return(
 			<div className="creatTaskForm">
 				<form onSubmit={this.addTask}>
-					<input type='submit' value='Add Task' />
+					<input type='submit' value='ADD TASK' />
 					<input id='taskField'
 						type='text'
 						value={this.state.task}

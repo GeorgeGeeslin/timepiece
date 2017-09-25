@@ -41,7 +41,6 @@ $max-width: 1000px;
 	margin-bottom: $button-gutter;
 	color: $color-text;
 	background-color: transparent;
-	text-transform: uppercase;
 	width: 90%;
 	@content;
 	&:disabled {

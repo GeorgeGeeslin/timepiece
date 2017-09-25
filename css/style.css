@@ -24,7 +24,6 @@ button {
   margin-bottom: 5px;
   color: #eadef2;
   background-color: transparent;
-  text-transform: uppercase;
   width: 90%;
   border: 1px solid #9d138c;
   width: 100%;
@@ -43,7 +42,6 @@ input[type="submit"] {
   margin-bottom: 5px;
   color: #eadef2;
   background-color: transparent;
-  text-transform: uppercase;
   width: 90%;
   border: 1px solid #9d138c;
   width: 100%;
@@ -61,7 +59,6 @@ input[type="text"] {
   margin-bottom: 5px;
   color: #eadef2;
   background-color: transparent;
-  text-transform: uppercase;
   width: 90%;
   border-bottom: 1px solid #9d138c;
   width: 100%;
