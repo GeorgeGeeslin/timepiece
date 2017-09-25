@@ -20,7 +20,7 @@ const ActiveTask = ({ selectedTask }) => {
 		)
 	} 
 	else {
-		return(<div className="activeTask"><p>No Task Selected</p></div>)
+		return null;
 	}
 };
 
