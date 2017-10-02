@@ -117,10 +117,30 @@ class Timer extends Component {
 		return (
 			<div className="timer">
 				<h1>{formatTime(this.state.secondsElapsed)}</h1>
- 					<button onClick={this.handleStartClick.bind(this)} disabled={this.props.selectedTaskIndex === -1 || this.state.startIsDisabled}>START</button>
-					<button onClick={this.handlePauseClick.bind(this)} disabled={this.state.pauseIsDisabled}>PAUSE</button>
-					<button onClick={this.handleFinishClick.bind(this)} disabled={this.state.finishIsDisabled}>FINISH</button>
-					<button onClick={this.handleCancelClick.bind(this)} disabled={this.state.cancelIsDisabled}>CANCEL</button>		
+ 					<button
+ 						className='control-buttons' 
+ 						onClick={this.handleStartClick.bind(this)}
+ 						disabled={this.props.selectedTaskIndex === -1 || this.state.startIsDisabled}>
+ 						START
+ 					</button>
+					<button 
+						className='control-buttons'
+						onClick={this.handlePauseClick.bind(this)} 
+						disabled={this.state.pauseIsDisabled}>
+						PAUSE
+					</button>
+					<button
+						className='control-buttons' 
+						onClick={this.handleFinishClick.bind(this)} 
+						disabled={this.state.finishIsDisabled}>
+						FINISH
+					</button>
+					<button
+						className='control-buttons' 
+						onClick={this.handleCancelClick.bind(this)} 
+						disabled={this.state.cancelIsDisabled}>
+						CANCEL
+					</button>		
 			</div>
 		)
 	}

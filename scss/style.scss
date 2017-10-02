@@ -41,7 +41,7 @@ $max-width: 1000px;
 	margin-bottom: $button-gutter;
 	color: $color-text;
 	background-color: transparent;
-	width: 90%;
+	//width: 90%;
 	@content;
 	&:disabled {
 		border: 1px solid $color-accent;
@@ -76,7 +76,8 @@ ul{
 	padding-left: 0;
 }
 
-button {
+.control-buttons {
+	width: 100%;
 	@include inputs {
 		border: 1px solid $color-borders;
 	}
@@ -94,7 +95,18 @@ input[type="submit"] {
 	@include center;
 }
 
+.task-button-container {
+	text-align: center;
+}
+
+.task-buttons {
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+}
+
 input[type="text"] {
+	width: 100%;
 	line-height: 2em;
 	border: 0px;
 	@include inputs {

@@ -69,7 +69,7 @@ export default class CreatTaskForm extends Component {
 
 	render() {
 		return(
-			<div className="creatTaskForm">
+			<div className='creatTaskForm'>
 				<form onSubmit={this.addTask}>
 					<input id='taskField'
 						type='text'
@@ -86,7 +86,8 @@ export default class CreatTaskForm extends Component {
 						value={this.state.client}
 						onChange={this.onClientNameChange}
 						placeholder='Client' />		
-					<input 
+					<input
+						className='control-buttons' 
 						type='submit' 
 						value='ADD TASK' />				
 				</form>
