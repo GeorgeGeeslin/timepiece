@@ -7,6 +7,7 @@ const CurrentTask = props => (
 		<div>
 			<p><span className="taskLabel">TASK: </span>{props.task}</p>
 			<p><span className="taskLabel">PROJECT: </span>{props.project}</p>
+			<p><span className="taskLabel">CLIENT: </span>{props.project}</p>
 		</div>
 		<div>
 			<button onClick={ () => props.selectTask(props.timeKey)}>SELECT TASK</button>
