@@ -11,8 +11,9 @@ const FinishedTask = props => (
 			<p><span className="taskLabel">CLIENT: </span>{props.project}</p>
 		</div>
 		<div>
-			<button onClick={ () => props.selectTask(props.timeKey)}>SELECT TASK</button>
-			<button onClick={ () => props.deleteTask(props.timeKey, props.selectedTaskIndex)}>DELETE TASK</button>
+			<button onClick={ () => props.selectTask(props.timeKey)}>SELECT </button>
+			<button onClick={ () => props.deleteTask(props.timeKey, props.selectedTaskIndex)}>DELETE</button>
+			<button>EDIT</button>
 		</div>
 	</div>
 );
