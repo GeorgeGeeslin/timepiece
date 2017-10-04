@@ -45,9 +45,10 @@ const initialState = {
 				stopTime: new Date().getTime() - 3000
 			}
 		]
-	}
-	],
-	selectedTaskIndex: -1
+	}],
+	selectedTaskIndex: -1,
+	showEditScreen: false,
+	editTaskIndex: -1
 }
 
 const currDate = new Date();
@@ -102,11 +103,13 @@ export default function Task(state=initialState, action) {
 			})
 			if (action.timeKey === action.selectedTaskIndex) {
 				return {
+					...state,
 					tasks: deleteTask,
 					selectedTaskIndex: -1
 				}
 			} else {
 				return {
+					...state,
 					tasks: deleteTask,
 					selectedTaskIndex: action.selectedTaskIndex
 				}
@@ -122,6 +125,20 @@ export default function Task(state=initialState, action) {
 			return {
 				...state,
 				pauseTaskList
+			}
+
+		case TaskActionTypes.OPEN_EDIT:
+			return {
+				...state,
+				editTaskIndex: action.timeKey,
+				showEditScreen: true
+			}
+
+		case TaskActionTypes.CLOSE_EDIT:
+			return {
+				...state,
+				editTaskIndex: -1,
+				showEditScreen: false
 			}
 
 		default:

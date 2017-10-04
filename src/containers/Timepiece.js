@@ -9,6 +9,7 @@ import Timer from '../components/Timer';
 import CreateTaskForm from '../components/CreateTaskForm';
 import CurrentTask from '../components/CurrentTask';
 import FinishedTask from '../components/FinishedTask';
+import EditTask from '../components/EditTask';
 
 
 class Timepiece extends Component {
@@ -17,12 +18,14 @@ class Timepiece extends Component {
 	};
 	
 	render() {
-		const { dispatch, tasks, selectedTaskIndex} = this.props;
+		const { dispatch, tasks, selectedTaskIndex, showEditScreen, editTaskIndex} = this.props;
 		const addTask = bindActionCreators(TaskActionCreators.addTask, dispatch);
 		const selectTask = bindActionCreators(TaskActionCreators.selectTask, dispatch);
 		const finishTask = bindActionCreators(TaskActionCreators.finishTask, dispatch);
 		const deleteTask = bindActionCreators(TaskActionCreators.deleteTask, dispatch);
 		const pauseTask = bindActionCreators(TaskActionCreators.pauseTask, dispatch);
+		const openEdit = bindActionCreators(TaskActionCreators.openEdit, dispatch);
+		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
 
 		const formatTime = (sec) =>
 			Math.floor(sec / 3600) % 60 + 
@@ -45,9 +48,6 @@ class Timepiece extends Component {
 			secondsElapsed = selectedTask.time;
 		}
 		
-		//TODO
-		//filter to remove finished tasks (has timefinished property)
-		//sort by timecreated 
 		const currentTasks = tasks.filter(function(task){
 			return task.timefinished === null
 		}).map((tasks, index) => (
@@ -60,6 +60,7 @@ class Timepiece extends Component {
 				timeKey={tasks.timeKey}
 				selectTask={selectTask}
 				deleteTask={deleteTask}
+				openEdit={openEdit}
 				selectedTaskIndex={selectedTaskIndex}
 			/>
 		));
@@ -76,6 +77,7 @@ class Timepiece extends Component {
 				timeKey={tasks.timeKey}
 				selectTask={selectTask}
 				deleteTask={deleteTask}
+				openEdit={openEdit}
 				selectedTaskIndex={selectedTaskIndex}
 			/>
 		));
@@ -105,6 +107,10 @@ class Timepiece extends Component {
 				</div>
 				</Col>
 				</Row>
+				<p>showEditScreen is {showEditScreen.toString()}</p>
+				<EditTask
+				closeEdit={closeEdit} 
+				showEditScreen={showEditScreen}/>
 			</Grid>
 		)
 	}
@@ -113,7 +119,9 @@ class Timepiece extends Component {
 const mapStateToProps = state => (
 	{
 		tasks: state.tasks,
-		selectedTaskIndex: state.selectedTaskIndex
+		selectedTaskIndex: state.selectedTaskIndex,
+		showEditScreen: state.showEditScreen,
+		editTaskIndex: state.editTaskIndex
 	}
 );
 

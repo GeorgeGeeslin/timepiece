@@ -19,18 +19,18 @@ ul {
   list-style: none;
   padding-left: 0; }
 
-button {
+.control-buttons {
+  width: 100%;
   margin-right: 5px;
   margin-bottom: 5px;
   color: #eadef2;
   background-color: transparent;
-  width: 90%;
   border: 1px solid #9d138c;
   width: 100%;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto; }
-  button:disabled {
+  .control-buttons:disabled {
     border: 1px solid #623353;
     color: #74546a; }
 
@@ -42,7 +42,6 @@ input[type="submit"] {
   margin-bottom: 5px;
   color: #eadef2;
   background-color: transparent;
-  width: 90%;
   border: 1px solid #9d138c;
   width: 100%;
   max-width: 1000px;
@@ -52,14 +51,27 @@ input[type="submit"] {
     border: 1px solid #623353;
     color: #74546a; }
 
+.task-button-container {
+  text-align: center; }
+
+.task-buttons {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #eadef2;
+  background-color: transparent;
+  border: 1px solid #9d138c; }
+  .task-buttons:disabled {
+    border: 1px solid #623353;
+    color: #74546a; }
+
 input[type="text"] {
+  width: 100%;
   line-height: 2em;
   border: 0px;
   margin-right: 5px;
   margin-bottom: 5px;
   color: #eadef2;
   background-color: transparent;
-  width: 90%;
   border-bottom: 1px solid #9d138c;
   width: 100%;
   max-width: 1000px;
@@ -81,6 +93,15 @@ input[type="text"] {
 
 input[type="text"].inputError {
   background-color: #f04e7d; }
+
+.modal-open {
+  background-color: #74546a; }
+
+.edit-modal {
+  background-color: #fbf3e6;
+  opacity: 100;
+  width: 90%;
+  margin: auto; }
 
 .activeTask {
   border: 1px solid #2c245a;
