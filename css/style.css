@@ -94,6 +94,15 @@ input[type="text"] {
 input[type="text"].inputError {
   background-color: #f04e7d; }
 
+.modal-open {
+  background-color: #74546a; }
+
+.edit-modal {
+  background-color: #fbf3e6;
+  opacity: 100;
+  width: 90%;
+  margin: auto; }
+
 .activeTask {
   border: 1px solid #2c245a;
   background-color: #120d2f;

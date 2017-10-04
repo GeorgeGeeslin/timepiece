@@ -41,3 +41,16 @@ export const pauseTask = (time, startTime, stopTime) => {
 		stopTime
 	}
 }
+
+export const openEdit = (timeKey) => {
+	return {
+		type: TaskActionTypes.OPEN_EDIT,
+		timeKey
+	}
+}
+
+export const closeEdit = () => {
+	return {
+		type: TaskActionTypes.CLOSE_EDIT
+	}
+}

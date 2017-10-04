@@ -2,8 +2,6 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 
-
-//onClick={() => props.selectTask(props.timeKey)}>	
 const FinishedTask = props => (
 	<Grid className='tasks'>
 		<Row>		
@@ -24,7 +22,8 @@ const FinishedTask = props => (
 				DELETE
 			</button>
 			<button
-				className='task-buttons'>
+				className='task-buttons'
+				onClick={ () => props.openEdit(props.timeKey)}>
 				EDIT
 			</button>
 		</Col>

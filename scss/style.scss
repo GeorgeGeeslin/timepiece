@@ -133,6 +133,22 @@ input[type="text"].inputError {
 	background-color: $color-error;
 }
 
+.modal-backdrop {
+	//background-color: green;
+	//opacity: 100;
+}
+
+.modal-open {
+	background-color: $color-shade;
+}
+
+.edit-modal {
+	background-color: $color-bg-light;
+	opacity: 100;
+	width: 90%;
+	margin: auto;
+}
+
 // REACT COMPONENTS ------------------------------ /
 .activeTask {
 	@include container;

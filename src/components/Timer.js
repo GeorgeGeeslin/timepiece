@@ -32,7 +32,6 @@ class Timer extends Component {
 				secondsElapsed: 0,
 				startIsDisabled: true
 			})
-			console.log("ding")
 		} else if (prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) {
 			this.setState({
 				secondsElapsed: this.props.secondsElapsed,
@@ -73,7 +72,6 @@ class Timer extends Component {
 	validatePauseTask() {
 		if (this.state.startTime !== null && this.state.stopTime !== null) {
 			this.props.pauseTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime);
-			console.log('validatePauseTask');
 		}
 	}
 
