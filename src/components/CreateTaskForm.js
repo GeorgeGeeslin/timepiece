@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-//import { FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 
 export default class CreatTaskForm extends Component {
 	 static propTypes = {
@@ -12,16 +11,6 @@ export default class CreatTaskForm extends Component {
 		project: '',
 		client: ''
 	};
-
-	getValidationState() {
-		const taskLength = this.state.task.length;
-		const projLength = this.state.project.length;
-		if (taskLength > 0 && projLength > 0) {
-			return 'success';
-		} else {
-			return 'error';
-		}
-	}
 
 	onTaskNameChange = (e) => {
 		const taskField = document.getElementById("taskField");

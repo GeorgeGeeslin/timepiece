@@ -64,7 +64,8 @@ body{
 }
 
 h1,
-h2 {
+h2,
+h3 {
 	@include center;
 	font-family: $font-stack-labels;
 	text-align: center;
@@ -147,6 +148,10 @@ input[type="text"].inputError {
 	opacity: 100;
 	width: 90%;
 	margin: auto;
+	color: $color-shade;
+	&:hr {
+		width: 100%;
+	}
 }
 
 // REACT COMPONENTS ------------------------------ /

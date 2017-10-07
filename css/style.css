@@ -6,7 +6,8 @@ body {
   color: #eadef2; }
 
 h1,
-h2 {
+h2,
+h3 {
   width: 100%;
   max-width: 1000px;
   margin-left: auto;
@@ -101,7 +102,10 @@ input[type="text"].inputError {
   background-color: #fbf3e6;
   opacity: 100;
   width: 90%;
-  margin: auto; }
+  margin: auto;
+  color: #74546a; }
+  .edit-modal:hr {
+    width: 100%; }
 
 .activeTask {
   border: 1px solid #2c245a;

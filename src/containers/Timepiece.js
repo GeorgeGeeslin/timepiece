@@ -82,6 +82,20 @@ class Timepiece extends Component {
 			/>
 		));
 
+		let editTask;
+		if (editTaskIndex !== -1) {
+			editTask = tasks.filter(function(task){
+				return task.timeKey === editTaskIndex;
+			})[0];
+		} else {
+			editTask = {
+				task: '',
+				project: '',
+				client: '',
+				timeIntervals: []
+			}
+		}
+
 		return (
 			<Grid>
 				<Row className="show-grid">
@@ -107,10 +121,11 @@ class Timepiece extends Component {
 				</div>
 				</Col>
 				</Row>
-				<p>showEditScreen is {showEditScreen.toString()}</p>
-				<EditTask
+				{showEditScreen === true && <EditTask
 				closeEdit={closeEdit} 
-				showEditScreen={showEditScreen}/>
+				showEditScreen={showEditScreen}
+				selectedTaskIndex={selectedTaskIndex}
+				editTask={editTask}/>}
 			</Grid>
 		)
 	}

@@ -141,6 +141,12 @@ export default function Task(state=initialState, action) {
 				showEditScreen: false
 			}
 
+		case TaskActionTypes.UPDATE_TASK:
+			return {
+				...state,
+				
+			}
+
 		default:
 			return state;
 	}	
