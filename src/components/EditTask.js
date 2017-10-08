@@ -11,7 +11,28 @@ export default class EditTask extends Component {
 	state = {
 		task: this.props.editTask.task,
 		project: this.props.editTask.project,
-		client: this.props.editTask.client
+		client: this.props.editTask.client,
+		timeintervals: this.props.editTask.timeintervals,
+		time: this.props.editTask.time
+	};
+
+	formatTimeStamp(timeStamp) {
+		const date = new Date(timeStamp);
+		let hours = date.getHours();
+		hours = (hours+24)%24;
+		let mid='am';
+		if ( hours === 0 ) {
+			hours = 12;
+		} else if ( hours > 12 ){
+			hours = hours % 12;
+			mid = 'pm'
+		}
+		let minutes = ('0' + date.getMinutes()).slice(-2);
+		let seconds = ('0' + date.getSeconds()).slice(-2);
+		let month = ('0' + (date.getMonth() + 1)).slice(-2);
+		let day = ('0' + date.getDate()).slice(-2);
+		let year = date.getFullYear();
+		return month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + mid;
 	};
 
 	onTaskNameChange = (e) => {
@@ -33,23 +54,45 @@ export default class EditTask extends Component {
 		this.setState({client: client});
 	};
 
+
+//need to handle passing an index to this function so that I can change the correct time interval
+	onTimeIntervalChange = (e, index) => {
+	//	const in
+	}
+
 	updateTask = (e) => {
 		//rember to validate that taskField is not blank
 		if (e) e.preventDefault();
 		if (this.state.task.length === 0) {
-			//const taskField = document.getElementById('taskField');
-			//taskField.classList.add('inputError')
-			//this.setState({
-			//	task: ''
-			//});
+			const taskField = document.getElementById('taskField');
+			taskField.classList.add('inputError')
+			this.setState({
+				task: ''
+			});
 		} else {
-			//need to create updateTask function in store
-			console.log("task.length > 0")
+			this.props.updateTask(
+
+			)
 		}
 	};
 
 
 	render() {	
+
+		const timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
+			<div key={index}>
+				<h6>Time Interval: {index + 1}</h6>
+				<input 
+					type='text'
+					value={this.formatTimeStamp(timeInterval.startTime)}
+					onChange={this.onTimeIntervalChange}/>
+				<input 
+					type='text'
+					value={this.formatTimeStamp(timeInterval.stopTime)}
+					onChange={this.onTimeIntervalChange}/>
+			</div>
+		));
+
 		return (
 			<Modal show={this.props.showEditScreen} className='edit-modal'>
 				<Modal.Header closeButton>
@@ -69,6 +112,7 @@ export default class EditTask extends Component {
 							type='text'
 							value={this.state.client}
 							onChange={this.onClientNameChange}/>
+							{ timeIntervals }
 						<input 
 							type='submit'
 							value='Save Edits'/>

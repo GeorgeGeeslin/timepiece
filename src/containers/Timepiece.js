@@ -26,6 +26,7 @@ class Timepiece extends Component {
 		const pauseTask = bindActionCreators(TaskActionCreators.pauseTask, dispatch);
 		const openEdit = bindActionCreators(TaskActionCreators.openEdit, dispatch);
 		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
+		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
 
 		const formatTime = (sec) =>
 			Math.floor(sec / 3600) % 60 + 
@@ -123,6 +124,7 @@ class Timepiece extends Component {
 				</Row>
 				{showEditScreen === true && <EditTask
 				closeEdit={closeEdit} 
+				updateTask={updateTask}
 				showEditScreen={showEditScreen}
 				selectedTaskIndex={selectedTaskIndex}
 				editTask={editTask}/>}
