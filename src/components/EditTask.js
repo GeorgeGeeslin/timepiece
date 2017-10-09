@@ -18,21 +18,13 @@ export default class EditTask extends Component {
 
 	formatTimeStamp(timeStamp) {
 		const date = new Date(timeStamp);
-		let hours = date.getHours();
-		hours = (hours+24)%24;
-		let mid='am';
-		if ( hours === 0 ) {
-			hours = 12;
-		} else if ( hours > 12 ){
-			hours = hours % 12;
-			mid = 'pm'
-		}
+		let hours = ('0' + date.getHours()).slice(-2);
 		let minutes = ('0' + date.getMinutes()).slice(-2);
 		let seconds = ('0' + date.getSeconds()).slice(-2);
 		let month = ('0' + (date.getMonth() + 1)).slice(-2);
 		let day = ('0' + date.getDate()).slice(-2);
 		let year = date.getFullYear();
-		return month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + mid;
+		return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
 	};
 
 	onTaskNameChange = (e) => {
@@ -78,23 +70,22 @@ export default class EditTask extends Component {
 
 
 	render() {	
-
 		const timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index}>
 				<h4>Time Interval: {index + 1}</h4>
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
-							<label for='start-time' className='control-label'>Start:</label>
+							<label htmlFor='start-time' className='control-label'>Start:</label>
 							<input id='start-time'
-								type='text'
-								value={this.formatTimeStamp(timeInterval.startTime)}
+								type='datetime-local'
+								value={this.formatTimeStamp(timeInterval.stopTime)}
 								onChange={this.onTimeIntervalChange}/>
 						</Col>
 						<Col sm={12} md={6}>
-							<label for='stop-time' className='control-label'>End:</label>
+							<label htmlFor='stop-time' className='control-label'>End:</label>
 							<input id='stop-time'
-								type='text'
+								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.stopTime)}
 								onChange={this.onTimeIntervalChange}/>
 						</Col>
@@ -109,28 +100,24 @@ export default class EditTask extends Component {
 					<h3>Edit Task</h3>
 				</Modal.Header>
 				<Modal.Body>
-
-								<form onSubmit={this.updateTask}>
-									<input id='taskField'
-										type='text'
-										value={this.state.task}
-										onChange={this.onTaskNameChange}/>
-									<input 
-										type='text'
-										value={this.state.project}
-										onChange={this.onProjectNameChange}/>
-									<input 
-										type='text'
-										value={this.state.client}
-										onChange={this.onClientNameChange}/>
-
-										{ timeIntervals }
-					
-									<input 
-										type='submit'
-										value='Save Edits'/>
-								</form>
-
+					<form onSubmit={this.updateTask}>
+						<input id='taskField'
+							type='text'
+							value={this.state.task}
+							onChange={this.onTaskNameChange}/>
+						<input 
+							type='text'
+							value={this.state.project}
+							onChange={this.onProjectNameChange}/>
+						<input 
+							type='text'
+							value={this.state.client}
+							onChange={this.onClientNameChange}/>
+							{ timeIntervals }				
+						<input 
+							type='submit'
+							value='Save Edits'/>
+					</form>
 				</Modal.Body>
 				<Modal.Footer>
 					<button onClick={this.props.closeEdit}>Close</button>
