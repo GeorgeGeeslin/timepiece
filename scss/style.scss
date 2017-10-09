@@ -64,7 +64,8 @@ body{
 }
 
 h1,
-h2 {
+h2,
+h3 {
 	@include center;
 	font-family: $font-stack-labels;
 	text-align: center;
@@ -146,7 +147,14 @@ input[type="text"].inputError {
 	background-color: $color-bg-light;
 	opacity: 100;
 	width: 90%;
+	height: 100%;
 	margin: auto;
+	color: $color-shade;
+}
+
+.modal-content {
+	top: 0;
+	position: fixed;
 }
 
 // REACT COMPONENTS ------------------------------ /

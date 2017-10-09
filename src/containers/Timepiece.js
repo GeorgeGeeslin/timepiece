@@ -26,13 +26,14 @@ class Timepiece extends Component {
 		const pauseTask = bindActionCreators(TaskActionCreators.pauseTask, dispatch);
 		const openEdit = bindActionCreators(TaskActionCreators.openEdit, dispatch);
 		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
+		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
 
-		const formatTime = (sec) =>
+		/*const formatTime = (sec) =>
 			Math.floor(sec / 3600) % 60 + 
 			':' + 
 			('0' + Math.floor(sec / 60) % 60).slice(-2) + 
 			':' + 
-			('0' + sec % 60).slice(-2)
+			('0' + sec % 60).slice(-2)*/
 
 		let selectedTask;
 		if (selectedTaskIndex !== -1) {
@@ -82,35 +83,51 @@ class Timepiece extends Component {
 			/>
 		));
 
+		let editTask;
+		if (editTaskIndex !== -1) {
+			editTask = tasks.filter(function(task){
+				return task.timeKey === editTaskIndex;
+			})[0];
+		} else {
+			editTask = {
+				task: '',
+				project: '',
+				client: '',
+				timeIntervals: []
+			}
+		}
+
 		return (
 			<Grid>
 				<Row className="show-grid">
-				<Col sm={12} md={6}>
-				<ActiveTask 
-					selectedTask={selectedTask} />
-				<Timer
-					selectedTaskIndex={selectedTaskIndex} 
-					secondsElapsed={secondsElapsed} 
-					finishTask={finishTask} 
-					pauseTask={pauseTask}
-					selectedTask={selectedTask} />
-				<CreateTaskForm addTask={addTask} />
-				<h2>Current Tasks</h2>
-				<div className='taskWrapper'>
-					{ currentTasks }
-				</div>
-				</Col>
-				<Col sm={12} md={6}>
-				<h2>Finished Tasks</h2>
-				<div className='taskWrapper'>
-					{ finishedTasks }
-				</div>
-				</Col>
+					<Col sm={12} md={6}>
+						<ActiveTask 
+							selectedTask={selectedTask} />
+						<Timer
+							selectedTaskIndex={selectedTaskIndex} 
+							secondsElapsed={secondsElapsed} 
+							finishTask={finishTask} 
+							pauseTask={pauseTask}
+							selectedTask={selectedTask} />
+						<CreateTaskForm addTask={addTask} />
+						<h2>Current Tasks</h2>
+						<div className='taskWrapper'>
+							{ currentTasks }
+						</div>
+					</Col>
+					<Col sm={12} md={6}>
+						<h2>Finished Tasks</h2>
+						<div className='taskWrapper'>
+							{ finishedTasks }
+						</div>
+					</Col>
 				</Row>
-				<p>showEditScreen is {showEditScreen.toString()}</p>
-				<EditTask
+				{showEditScreen === true && <EditTask
 				closeEdit={closeEdit} 
-				showEditScreen={showEditScreen}/>
+				updateTask={updateTask}
+				showEditScreen={showEditScreen}
+				selectedTaskIndex={selectedTaskIndex}
+				editTask={editTask}/>}
 			</Grid>
 		)
 	}
