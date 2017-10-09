@@ -27,6 +27,15 @@ export default class EditTask extends Component {
 		return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
 	};
 
+	formatUnixTime(dateTime) {
+		const year = dateTime.slice(0,4);
+		const month = dateTime.slice(5,7) - 1;
+		const day = dateTime.slice(8,10);
+		const hours = dateTime.slice(11,13);
+		const minutes = dateTime.slice(14,16);
+		return new Date(year,month,day,hours,minutes).getTime();
+	};
+
 	onTaskNameChange = (e) => {
 		const taskField = document.getElementById('taskField');
 		if (taskField.className === 'inputError') {
@@ -46,12 +55,20 @@ export default class EditTask extends Component {
 		this.setState({client: client});
 	};
 
+	onChangeStartTime = (index, e) => {
+		const dateTime = e.target.value;
+		const unixTime = this.formatUnixTime(dateTime);
+		var intervalsCopy = this.state.timeintervals;
+		intervalsCopy[index].startTime = unixTime; 
+		console.log(intervalsCopy);
+		this.setState(this.state.timeintervals = intervalsCopy);
+		//this
+	};
 
-//need to handle passing an index to this function so that I can change the correct time interval
-	onTimeIntervalChange = (e, index) => {
-	//	const in
-	}
+	onChangeStopTime = (e, index) => {
 
+	};
+/*
 	updateTask = (e) => {
 		//rember to validate that taskField is not blank
 		if (e) e.preventDefault();
@@ -67,7 +84,7 @@ export default class EditTask extends Component {
 			)
 		}
 	};
-
+*/
 
 	render() {	
 		const timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
@@ -80,14 +97,14 @@ export default class EditTask extends Component {
 							<input id='start-time'
 								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.stopTime)}
-								onChange={this.onTimeIntervalChange}/>
+								onChange={(e) => this.onChangeStartTime(index, e)}/>
 						</Col>
 						<Col sm={12} md={6}>
 							<label htmlFor='stop-time' className='control-label'>End:</label>
 							<input id='stop-time'
 								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.stopTime)}
-								onChange={this.onTimeIntervalChange}/>
+								onChange={this.onChangeStopTime.bind(this, index)}/>
 						</Col>
 					</Row>
 				</Grid>
