@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { Modal } from 'react-bootstrap';
+import { Modal, Grid, Col, Row } from 'react-bootstrap';
 
 export default class EditTask extends Component {
 	//define propTypes
@@ -81,15 +81,25 @@ export default class EditTask extends Component {
 
 		const timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index}>
-				<h6>Time Interval: {index + 1}</h6>
-				<input 
-					type='text'
-					value={this.formatTimeStamp(timeInterval.startTime)}
-					onChange={this.onTimeIntervalChange}/>
-				<input 
-					type='text'
-					value={this.formatTimeStamp(timeInterval.stopTime)}
-					onChange={this.onTimeIntervalChange}/>
+				<h4>Time Interval: {index + 1}</h4>
+				<Grid>
+					<Row className='show-grid'>
+						<Col sm={12} md={6}>
+							<label for='start-time' className='control-label'>Start:</label>
+							<input id='start-time'
+								type='text'
+								value={this.formatTimeStamp(timeInterval.startTime)}
+								onChange={this.onTimeIntervalChange}/>
+						</Col>
+						<Col sm={12} md={6}>
+							<label for='stop-time' className='control-label'>End:</label>
+							<input id='stop-time'
+								type='text'
+								value={this.formatTimeStamp(timeInterval.stopTime)}
+								onChange={this.onTimeIntervalChange}/>
+						</Col>
+					</Row>
+				</Grid>
 			</div>
 		));
 
@@ -99,25 +109,27 @@ export default class EditTask extends Component {
 					<h3>Edit Task</h3>
 				</Modal.Header>
 				<Modal.Body>
-					<form onSubmit={this.updateTask}>
-						<input id='taskField'
-							type='text'
-							value={this.state.task}
-							onChange={this.onTaskNameChange}/>
-						<input 
-							type='text'
-							value={this.state.project}
-							onChange={this.onProjectNameChange}/>
-						<input 
-							type='text'
-							value={this.state.client}
-							onChange={this.onClientNameChange}/>
-							{ timeIntervals }
-						<input 
-							type='submit'
-							value='Save Edits'/>
-					</form>
 
+								<form onSubmit={this.updateTask}>
+									<input id='taskField'
+										type='text'
+										value={this.state.task}
+										onChange={this.onTaskNameChange}/>
+									<input 
+										type='text'
+										value={this.state.project}
+										onChange={this.onProjectNameChange}/>
+									<input 
+										type='text'
+										value={this.state.client}
+										onChange={this.onClientNameChange}/>
+
+										{ timeIntervals }
+					
+									<input 
+										type='submit'
+										value='Save Edits'/>
+								</form>
 
 				</Modal.Body>
 				<Modal.Footer>

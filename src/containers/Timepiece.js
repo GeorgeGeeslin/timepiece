@@ -100,27 +100,27 @@ class Timepiece extends Component {
 		return (
 			<Grid>
 				<Row className="show-grid">
-				<Col sm={12} md={6}>
-				<ActiveTask 
-					selectedTask={selectedTask} />
-				<Timer
-					selectedTaskIndex={selectedTaskIndex} 
-					secondsElapsed={secondsElapsed} 
-					finishTask={finishTask} 
-					pauseTask={pauseTask}
-					selectedTask={selectedTask} />
-				<CreateTaskForm addTask={addTask} />
-				<h2>Current Tasks</h2>
-				<div className='taskWrapper'>
-					{ currentTasks }
-				</div>
-				</Col>
-				<Col sm={12} md={6}>
-				<h2>Finished Tasks</h2>
-				<div className='taskWrapper'>
-					{ finishedTasks }
-				</div>
-				</Col>
+					<Col sm={12} md={6}>
+						<ActiveTask 
+							selectedTask={selectedTask} />
+						<Timer
+							selectedTaskIndex={selectedTaskIndex} 
+							secondsElapsed={secondsElapsed} 
+							finishTask={finishTask} 
+							pauseTask={pauseTask}
+							selectedTask={selectedTask} />
+						<CreateTaskForm addTask={addTask} />
+						<h2>Current Tasks</h2>
+						<div className='taskWrapper'>
+							{ currentTasks }
+						</div>
+					</Col>
+					<Col sm={12} md={6}>
+						<h2>Finished Tasks</h2>
+						<div className='taskWrapper'>
+							{ finishedTasks }
+						</div>
+					</Col>
 				</Row>
 				{showEditScreen === true && <EditTask
 				closeEdit={closeEdit} 
