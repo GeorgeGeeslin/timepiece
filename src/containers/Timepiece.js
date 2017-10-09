@@ -28,12 +28,12 @@ class Timepiece extends Component {
 		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
 		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
 
-		const formatTime = (sec) =>
+		/*const formatTime = (sec) =>
 			Math.floor(sec / 3600) % 60 + 
 			':' + 
 			('0' + Math.floor(sec / 60) % 60).slice(-2) + 
 			':' + 
-			('0' + sec % 60).slice(-2)
+			('0' + sec % 60).slice(-2)*/
 
 		let selectedTask;
 		if (selectedTaskIndex !== -1) {

@@ -147,11 +147,14 @@ input[type="text"].inputError {
 	background-color: $color-bg-light;
 	opacity: 100;
 	width: 90%;
+	height: 100%;
 	margin: auto;
 	color: $color-shade;
-	&:hr {
-		width: 100%;
-	}
+}
+
+.modal-content {
+	top: 0;
+	position: fixed;
 }
 
 // REACT COMPONENTS ------------------------------ /

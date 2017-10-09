@@ -95,10 +95,10 @@ export default class EditTask extends Component {
 
 		return (
 			<Modal show={this.props.showEditScreen} className='edit-modal'>
-				<Modal.Header closeButton>
+				<Modal.Header>
+					<h3>Edit Task</h3>
 				</Modal.Header>
 				<Modal.Body>
-					<h3>Edit Task</h3>
 					<form onSubmit={this.updateTask}>
 						<input id='taskField'
 							type='text'
