@@ -12,9 +12,10 @@ export default class EditTask extends Component {
 		task: this.props.editTask.task,
 		project: this.props.editTask.project,
 		client: this.props.editTask.client,
-		timeintervals: this.props.editTask.timeintervals
+		timeintervals: this.props.editTask.timeintervals,
+		invalidTimeIndex: -1
 	};
-
+	
 	formatTimeStamp(timeStamp) {
 		const date = new Date(timeStamp);
 		let hours = ('0' + date.getHours()).slice(-2);
@@ -36,9 +37,9 @@ export default class EditTask extends Component {
 	};
 
 	onTaskNameChange = (e) => {
-		const taskField = document.getElementById('taskField');
-		if (taskField.className === 'inputError') {
-			taskField.classList.remove('inputError')
+		const editTaskField = document.getElementById('editTaskField');
+		if (editTaskField.className === 'inputError') {
+			editTaskField.classList.remove('inputError')
 		}
 		const task = e.target.value;
 		this.setState({task: task});
@@ -72,15 +73,30 @@ export default class EditTask extends Component {
 		this.setState(this.state);
 	};
 
-	//validateTime 
+	/*validateTime = this.state.timeintervals.map(function(interval, index) => (
+		if (interval.stopTime < interval.startTime) {
+			document.getElementById
+		}
+	))*/
 
 	updateTask = (e) => {
 		if (e) e.preventDefault();
 		if ( this.state.task.length === 0 ) {
 			const editTaskField = document.getElementById('editTaskField');
 			editTaskField.classList.add('inputError')
-			this.setState({task: ''})
-		} else {
+			component.setState({task: ''})
+		} else if ( this.state.timeintervals.filter(function(interval) { return interval.startTime > interval.stopTime }).length !== -1 ) {
+			this.state.timeintervals.map(function(interval,index) {
+				console.log(interval.startTime)
+				console.log(interval.stopTime)
+				if ( interval.startTime > interval.stopTime ) {
+					//document.getElementById('interval' + index).classList.add('inputError')
+					console.log("invalid time" + index);
+					//this.setState({invalidTimeIndex: index});
+				}
+			})
+		}	else {
+			console.log("valid time");
 			this.props.updateTask(
 				this.state.task,
 				this.state.project,
@@ -94,17 +110,18 @@ export default class EditTask extends Component {
 		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index}>
 				<h4>Time Interval: {index + 1}</h4>
+				{ this.state.invalidTime === index && <h5 className='inputError'>Opps! The start date is later than the end date.</h5>}
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
-							<label htmlFor='start-time' className='control-label' id={'interval' + index }>Start:</label>
+							<label htmlFor='start-time' className='control-label' id={'interval' + index }>Start: </label>
 							<input id='start-time'
 								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.startTime)}
 								onChange={(e) => this.onChangeStartTime(index, e)}/>
 						</Col>
 						<Col sm={12} md={6}>
-							<label htmlFor='stop-time' className='control-label' id={'interval' + index }>End:</label>
+							<label htmlFor='stop-time' className='control-label' id={'interval' + index }>End: </label>
 							<input id='stop-time'
 								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.stopTime)}
