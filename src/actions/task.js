@@ -55,13 +55,12 @@ export const closeEdit = () => {
 	}
 }
 
-export const updateTask = () => {
+export const updateTask = (task, project, client, editTaskIndex) => {
 	return {
 		type: TaskActionTypes.UPDATE_TASK,
-		timeKey,
 		task,
 		project,
 		client,
-		timeIntervals
+		editTaskIndex
 	}
 }

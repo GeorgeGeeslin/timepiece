@@ -12,8 +12,7 @@ export default class EditTask extends Component {
 		task: this.props.editTask.task,
 		project: this.props.editTask.project,
 		client: this.props.editTask.client,
-		timeintervals: this.props.editTask.timeintervals,
-		time: this.props.editTask.time
+		timeintervals: this.props.editTask.timeintervals
 	};
 
 	formatTimeStamp(timeStamp) {
@@ -58,53 +57,58 @@ export default class EditTask extends Component {
 	onChangeStartTime = (index, e) => {
 		const dateTime = e.target.value;
 		const unixTime = this.formatUnixTime(dateTime);
-		var intervalsCopy = this.state.timeintervals;
-		intervalsCopy[index].startTime = unixTime; 
-		console.log(intervalsCopy);
-		this.setState(this.state.timeintervals = intervalsCopy);
-		//this
+		var newState = Object.assign({}, this.state);
+		newState.timeintervals[index].startTime = unixTime;
+		this.state = newState
+		this.setState(this.state);
 	};
 
-	onChangeStopTime = (e, index) => {
-
+	onChangeStopTime = (index, e) => {
+		const dateTime = e.target.value;
+		const unixTime = this.formatUnixTime(dateTime);
+		var newState = Object.assign({}, this.state);
+		newState.timeintervals[index].stopTime = unixTime;
+		this.state = newState
+		this.setState(this.state);
 	};
-/*
+
+	//validateTime 
+
 	updateTask = (e) => {
-		//rember to validate that taskField is not blank
 		if (e) e.preventDefault();
-		if (this.state.task.length === 0) {
-			const taskField = document.getElementById('taskField');
-			taskField.classList.add('inputError')
-			this.setState({
-				task: ''
-			});
+		if ( this.state.task.length === 0 ) {
+			const editTaskField = document.getElementById('editTaskField');
+			editTaskField.classList.add('inputError')
+			this.setState({task: ''})
 		} else {
 			this.props.updateTask(
-
+				this.state.task,
+				this.state.project,
+				this.state.client,
+				this.props.editTaskIndex
 			)
 		}
 	};
-*/
 
 	render() {	
-		const timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
+		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index}>
 				<h4>Time Interval: {index + 1}</h4>
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
-							<label htmlFor='start-time' className='control-label'>Start:</label>
+							<label htmlFor='start-time' className='control-label' id={'interval' + index }>Start:</label>
 							<input id='start-time'
 								type='datetime-local'
-								value={this.formatTimeStamp(timeInterval.stopTime)}
+								value={this.formatTimeStamp(timeInterval.startTime)}
 								onChange={(e) => this.onChangeStartTime(index, e)}/>
 						</Col>
 						<Col sm={12} md={6}>
-							<label htmlFor='stop-time' className='control-label'>End:</label>
+							<label htmlFor='stop-time' className='control-label' id={'interval' + index }>End:</label>
 							<input id='stop-time'
 								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.stopTime)}
-								onChange={this.onChangeStopTime.bind(this, index)}/>
+								onChange={(e) => this.onChangeStopTime(index, e)}/>
 						</Col>
 					</Row>
 				</Grid>
@@ -118,17 +122,20 @@ export default class EditTask extends Component {
 				</Modal.Header>
 				<Modal.Body>
 					<form onSubmit={this.updateTask}>
-						<input id='taskField'
+						<input id='editTaskField'
 							type='text'
 							value={this.state.task}
+							placeholder='Task (required)'
 							onChange={this.onTaskNameChange}/>
 						<input 
 							type='text'
 							value={this.state.project}
+							placeholder='Project'
 							onChange={this.onProjectNameChange}/>
 						<input 
 							type='text'
 							value={this.state.client}
+							placeholder='Client'
 							onChange={this.onClientNameChange}/>
 							{ timeIntervals }				
 						<input 

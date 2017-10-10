@@ -12,7 +12,7 @@ const initialState = {
 		timeKey: 1,
 		timeintervals: [
 			{
-				startTime: new Date().getTime() - 20000,
+				startTime: 1483990440000,
 				stopTime: new Date().getTime() - 15000,
 			},
 			{
@@ -142,9 +142,16 @@ export default function Task(state=initialState, action) {
 			}
 
 		case TaskActionTypes.UPDATE_TASK:
+			const updateTaskList = Object.assign({}, state);
+			const updateTask = updateTaskList.tasks.filter(function(task){
+				return task.timeKey === action.editTaskIndex;
+			})[0];
+			updateTask.task = action.task
+			updateTask.project = action.project
+			updateTask.client = action.client
 			return {
 				...state,
-				
+				updateTaskList			
 			}
 
 		default:
