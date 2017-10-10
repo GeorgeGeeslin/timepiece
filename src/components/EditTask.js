@@ -12,27 +12,27 @@ export default class EditTask extends Component {
 		task: this.props.editTask.task,
 		project: this.props.editTask.project,
 		client: this.props.editTask.client,
-		timeintervals: this.props.editTask.timeintervals,
-		time: this.props.editTask.time
+		timeintervals: this.props.editTask.timeintervals
 	};
 
 	formatTimeStamp(timeStamp) {
 		const date = new Date(timeStamp);
-		let hours = date.getHours();
-		hours = (hours+24)%24;
-		let mid='am';
-		if ( hours === 0 ) {
-			hours = 12;
-		} else if ( hours > 12 ){
-			hours = hours % 12;
-			mid = 'pm'
-		}
+		let hours = ('0' + date.getHours()).slice(-2);
 		let minutes = ('0' + date.getMinutes()).slice(-2);
 		let seconds = ('0' + date.getSeconds()).slice(-2);
 		let month = ('0' + (date.getMonth() + 1)).slice(-2);
 		let day = ('0' + date.getDate()).slice(-2);
 		let year = date.getFullYear();
-		return month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + mid;
+		return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+	};
+
+	formatUnixTime(dateTime) {
+		const year = dateTime.slice(0,4);
+		const month = dateTime.slice(5,7) - 1;
+		const day = dateTime.slice(8,10);
+		const hours = dateTime.slice(11,13);
+		const minutes = dateTime.slice(14,16);
+		return new Date(year,month,day,hours,minutes).getTime();
 	};
 
 	onTaskNameChange = (e) => {
@@ -54,49 +54,61 @@ export default class EditTask extends Component {
 		this.setState({client: client});
 	};
 
+	onChangeStartTime = (index, e) => {
+		const dateTime = e.target.value;
+		const unixTime = this.formatUnixTime(dateTime);
+		var newState = Object.assign({}, this.state);
+		newState.timeintervals[index].startTime = unixTime;
+		this.state = newState
+		this.setState(this.state);
+	};
 
-//need to handle passing an index to this function so that I can change the correct time interval
-	onTimeIntervalChange = (e, index) => {
-	//	const in
-	}
+	onChangeStopTime = (index, e) => {
+		const dateTime = e.target.value;
+		const unixTime = this.formatUnixTime(dateTime);
+		var newState = Object.assign({}, this.state);
+		newState.timeintervals[index].stopTime = unixTime;
+		this.state = newState
+		this.setState(this.state);
+	};
+
+	//validateTime 
 
 	updateTask = (e) => {
-		//rember to validate that taskField is not blank
 		if (e) e.preventDefault();
-		if (this.state.task.length === 0) {
-			const taskField = document.getElementById('taskField');
-			taskField.classList.add('inputError')
-			this.setState({
-				task: ''
-			});
+		if ( this.state.task.length === 0 ) {
+			const editTaskField = document.getElementById('editTaskField');
+			editTaskField.classList.add('inputError')
+			this.setState({task: ''})
 		} else {
 			this.props.updateTask(
-
+				this.state.task,
+				this.state.project,
+				this.state.client,
+				this.props.editTaskIndex
 			)
 		}
 	};
 
-
 	render() {	
-
-		const timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
+		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index}>
 				<h4>Time Interval: {index + 1}</h4>
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
-							<label for='start-time' className='control-label'>Start:</label>
+							<label htmlFor='start-time' className='control-label' id={'interval' + index }>Start:</label>
 							<input id='start-time'
-								type='text'
+								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.startTime)}
-								onChange={this.onTimeIntervalChange}/>
+								onChange={(e) => this.onChangeStartTime(index, e)}/>
 						</Col>
 						<Col sm={12} md={6}>
-							<label for='stop-time' className='control-label'>End:</label>
+							<label htmlFor='stop-time' className='control-label' id={'interval' + index }>End:</label>
 							<input id='stop-time'
-								type='text'
+								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.stopTime)}
-								onChange={this.onTimeIntervalChange}/>
+								onChange={(e) => this.onChangeStopTime(index, e)}/>
 						</Col>
 					</Row>
 				</Grid>
@@ -109,28 +121,27 @@ export default class EditTask extends Component {
 					<h3>Edit Task</h3>
 				</Modal.Header>
 				<Modal.Body>
-
-								<form onSubmit={this.updateTask}>
-									<input id='taskField'
-										type='text'
-										value={this.state.task}
-										onChange={this.onTaskNameChange}/>
-									<input 
-										type='text'
-										value={this.state.project}
-										onChange={this.onProjectNameChange}/>
-									<input 
-										type='text'
-										value={this.state.client}
-										onChange={this.onClientNameChange}/>
-
-										{ timeIntervals }
-					
-									<input 
-										type='submit'
-										value='Save Edits'/>
-								</form>
-
+					<form onSubmit={this.updateTask}>
+						<input id='editTaskField'
+							type='text'
+							value={this.state.task}
+							placeholder='Task (required)'
+							onChange={this.onTaskNameChange}/>
+						<input 
+							type='text'
+							value={this.state.project}
+							placeholder='Project'
+							onChange={this.onProjectNameChange}/>
+						<input 
+							type='text'
+							value={this.state.client}
+							placeholder='Client'
+							onChange={this.onClientNameChange}/>
+							{ timeIntervals }				
+						<input 
+							type='submit'
+							value='Save Edits'/>
+					</form>
 				</Modal.Body>
 				<Modal.Footer>
 					<button onClick={this.props.closeEdit}>Close</button>

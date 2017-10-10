@@ -11,7 +11,6 @@ import CurrentTask from '../components/CurrentTask';
 import FinishedTask from '../components/FinishedTask';
 import EditTask from '../components/EditTask';
 
-
 class Timepiece extends Component {
 	static propTypes = {
 		tasks: PropTypes.array.isRequired
@@ -27,13 +26,6 @@ class Timepiece extends Component {
 		const openEdit = bindActionCreators(TaskActionCreators.openEdit, dispatch);
 		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
 		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
-
-		/*const formatTime = (sec) =>
-			Math.floor(sec / 3600) % 60 + 
-			':' + 
-			('0' + Math.floor(sec / 60) % 60).slice(-2) + 
-			':' + 
-			('0' + sec % 60).slice(-2)*/
 
 		let selectedTask;
 		if (selectedTaskIndex !== -1) {
@@ -120,13 +112,13 @@ class Timepiece extends Component {
 						<div className='taskWrapper'>
 							{ finishedTasks }
 						</div>
-					</Col>
+					</Col>s
 				</Row>
 				{showEditScreen === true && <EditTask
 				closeEdit={closeEdit} 
 				updateTask={updateTask}
 				showEditScreen={showEditScreen}
-				selectedTaskIndex={selectedTaskIndex}
+				editTaskIndex={editTaskIndex}
 				editTask={editTask}/>}
 			</Grid>
 		)
