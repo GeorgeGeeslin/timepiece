@@ -73,15 +73,15 @@ export default class EditTask extends Component {
 		this.setState(this.state);
 	};
 
-	/*validateTime = this.state.timeintervals.map(function(interval, index) => (
-		if (interval.stopTime < interval.startTime) {
-			document.getElementById
-		}
-	))*/
+	addTime = () => {
+		var newState = Object.assign({}, this.state);
+		newState.timeintervals.push({startTime: new Date().getTime(), stopTime: new Date().getTime()})
+		this.state = newState
+		this.setState(this.state)
+	}
 
 	updateTask = (e) => {
 		if (e) e.preventDefault();
-
 		if ( this.state.task.length === 0 ) {
 			const editTaskField = document.getElementById('editTaskField');
 			editTaskField.classList.add('inputError')
@@ -101,6 +101,7 @@ export default class EditTask extends Component {
 				this.state.client,
 				this.props.editTaskIndex
 			)
+			console.log('click')
 		}
 	};
 
@@ -136,7 +137,7 @@ export default class EditTask extends Component {
 					<h3>Edit Task</h3>
 				</Modal.Header>
 				<Modal.Body>
-					<form onSubmit={this.updateTask}>
+					<form id='editform' onSubmit={this.updateTask}>
 						<input id='editTaskField'
 							type='text'
 							value={this.state.task}
@@ -153,12 +154,14 @@ export default class EditTask extends Component {
 							placeholder='Client'
 							onChange={this.onClientNameChange}/>
 							{ timeIntervals }				
-						<input 
-							type='submit'
-							value='Save Edits'/>
+						<button onClick={ () => this.addTime()}>Add Time</button>
 					</form>
 				</Modal.Body>
 				<Modal.Footer>
+					<input 
+						type='submit'
+						value='Save Edits'
+						form='editform'/>
 					<button onClick={this.props.closeEdit}>Close</button>
 				</Modal.Footer>
 			</Modal> 
