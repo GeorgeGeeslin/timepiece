@@ -26,6 +26,7 @@ class Timepiece extends Component {
 		const openEdit = bindActionCreators(TaskActionCreators.openEdit, dispatch);
 		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
 		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
+		//const addTime = bindActionCreators(TaskActionCreators.addTime, dispatch);
 
 		let selectedTask;
 		if (selectedTaskIndex !== -1) {

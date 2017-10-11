@@ -154,6 +154,19 @@ export default function Task(state=initialState, action) {
 				updateTaskList			
 			}
 
+		/*case TaskActionTypes.ADD_TIME:
+			const addTimeList = Object.assign({}, state);
+			const addTime = addTimeList.tasks.filter(function(task){
+				return task.timeKey === action.editTaskIndex;
+			})[0];
+			console.log("addTime")
+			//addTime.timeintervals.push({startTime: null, stopTime: null});
+			addTime.timeintervals.push({startTime: new Date().getTime(), stopTime: new Date().getTime()})
+			return {
+				...state,
+				addTimeList
+			}*/
+
 		default:
 			return state;
 	}	
