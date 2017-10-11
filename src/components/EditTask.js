@@ -13,7 +13,7 @@ export default class EditTask extends Component {
 		project: this.props.editTask.project,
 		client: this.props.editTask.client,
 		timeintervals: this.props.editTask.timeintervals,
-		invalidTimeIndex: -1
+		invalidTimeIndexs: []
 	};
 	
 	formatTimeStamp(timeStamp) {
@@ -81,22 +81,20 @@ export default class EditTask extends Component {
 
 	updateTask = (e) => {
 		if (e) e.preventDefault();
+
 		if ( this.state.task.length === 0 ) {
 			const editTaskField = document.getElementById('editTaskField');
 			editTaskField.classList.add('inputError')
 			component.setState({task: ''})
-		} else if ( this.state.timeintervals.filter(function(interval) { return interval.startTime > interval.stopTime }).length !== -1 ) {
-			this.state.timeintervals.map(function(interval,index) {
-				console.log(interval.startTime)
-				console.log(interval.stopTime)
+		} else if ( this.state.timeintervals.filter(function(interval) { return interval.startTime > interval.stopTime }).length !== 0 ) {
+			var invalidTimes = [];
+			const invalidIntervals = this.state.timeintervals.map((interval,index) => {
 				if ( interval.startTime > interval.stopTime ) {
-					//document.getElementById('interval' + index).classList.add('inputError')
-					console.log("invalid time" + index);
-					//this.setState({invalidTimeIndex: index});
+					invalidTimes.push(index);
 				}
 			})
+			this.setState({invalidTimeIndexs: invalidTimes})
 		}	else {
-			console.log("valid time");
 			this.props.updateTask(
 				this.state.task,
 				this.state.project,
@@ -109,8 +107,8 @@ export default class EditTask extends Component {
 	render() {	
 		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index}>
-				<h4>Time Interval: {index + 1}</h4>
-				{ this.state.invalidTime === index && <h5 className='inputError'>Opps! The start date is later than the end date.</h5>}
+				<h4>Time Interval: {index + 1}</h4> 
+					{  this.state.invalidTimeIndexs.includes(index) && <div className='validationError'>Time Interval Error: The End time cannot be earlier than the Start time.</div> }
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
