@@ -101,7 +101,7 @@ export default class EditTask extends Component {
 				this.state.client,
 				this.props.editTaskIndex
 			)
-			console.log('click')
+			this.props.closeEdit();
 		}
 	};
 
@@ -154,15 +154,16 @@ export default class EditTask extends Component {
 							placeholder='Client'
 							onChange={this.onClientNameChange}/>
 							{ timeIntervals }				
-						<button onClick={ () => this.addTime()}>Add Time</button>
 					</form>
+					<button onClick={ () => this.addTime()}>Add Time</button>
+					<button>Add Notes</button>
 				</Modal.Body>
 				<Modal.Footer>
 					<input 
 						type='submit'
-						value='Save Edits'
+						value='Save and Exit'
 						form='editform'/>
-					<button onClick={this.props.closeEdit}>Close</button>
+					<button onClick={this.props.closeEdit}>Cancel</button>
 				</Modal.Footer>
 			</Modal> 
 		)
