@@ -149,6 +149,7 @@ export default function Task(state=initialState, action) {
 			updateTask.task = action.task
 			updateTask.project = action.project
 			updateTask.client = action.client
+			updateTask.timeintervals = action.timeintervals
 			return {
 				...state,
 				updateTaskList			

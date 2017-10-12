@@ -58,26 +58,26 @@ export default class EditTask extends Component {
 	onChangeStartTime = (index, e) => {
 		const dateTime = e.target.value;
 		const unixTime = this.formatUnixTime(dateTime);
-		var newState = Object.assign({}, this.state);
-		newState.timeintervals[index].startTime = unixTime;
-		this.state = newState
-		this.setState(this.state);
+		var timeintervals = [];
+		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ));
+		timeintervals[index].startTime = unixTime;
+		this.setState({timeintervals: timeintervals});
 	};
 
 	onChangeStopTime = (index, e) => {
 		const dateTime = e.target.value;
 		const unixTime = this.formatUnixTime(dateTime);
-		var newState = Object.assign({}, this.state);
-		newState.timeintervals[index].stopTime = unixTime;
-		this.state = newState
-		this.setState(this.state);
+		var timeintervals = [];
+		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ));
+		timeintervals[index].stopTime = unixTime;
+		this.setState({timeintervals: timeintervals});
 	};
 
-	addTime = () => {
-		var newState = Object.assign({}, this.state);
-		newState.timeintervals.push({startTime: new Date().getTime(), stopTime: new Date().getTime()})
-		this.state = newState
-		this.setState(this.state)
+	onAddTime = () => {
+		var timeintervals = [];
+		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ))
+		timeintervals.push({startTime: new Date().getTime(), stopTime: new Date().getTime()});
+		this.setState({timeintervals: timeintervals});
 	}
 
 	updateTask = (e) => {
@@ -99,6 +99,7 @@ export default class EditTask extends Component {
 				this.state.task,
 				this.state.project,
 				this.state.client,
+				this.state.timeintervals,
 				this.props.editTaskIndex
 			)
 			this.props.closeEdit();
@@ -155,7 +156,7 @@ export default class EditTask extends Component {
 							onChange={this.onClientNameChange}/>
 							{ timeIntervals }				
 					</form>
-					<button onClick={ () => this.addTime()}>Add Time</button>
+					<button onClick={ () => this.onAddTime()}>Add Time</button>
 					<button>Add Notes</button>
 				</Modal.Body>
 				<Modal.Footer>
