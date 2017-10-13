@@ -113,7 +113,7 @@ class Timepiece extends Component {
 						<div className='taskWrapper'>
 							{ finishedTasks }
 						</div>
-					</Col>s
+					</Col>
 				</Row>
 				{showEditScreen === true && <EditTask
 				closeEdit={closeEdit} 

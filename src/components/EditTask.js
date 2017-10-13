@@ -12,6 +12,7 @@ export default class EditTask extends Component {
 		task: this.props.editTask.task,
 		project: this.props.editTask.project,
 		client: this.props.editTask.client,
+		time: this.props.editTask.time,
 		timeintervals: this.props.editTask.timeintervals,
 		invalidTimeIndexs: []
 	};
@@ -36,6 +37,15 @@ export default class EditTask extends Component {
 		return new Date(year,month,day,hours,minutes).getTime();
 	};
 
+	calculateTime = () => {
+		var total = 0;
+		for (var i = 0; i < this.state.timeintervals.length; i++) {
+			total += (this.state.timeintervals[i].stopTime - this.state.timeintervals[i].startTime);
+		}
+
+		return total;
+	};
+
 	onTaskNameChange = (e) => {
 		const editTaskField = document.getElementById('editTaskField');
 		if (editTaskField.className === 'inputError') {
@@ -58,26 +68,28 @@ export default class EditTask extends Component {
 	onChangeStartTime = (index, e) => {
 		const dateTime = e.target.value;
 		const unixTime = this.formatUnixTime(dateTime);
-		var newState = Object.assign({}, this.state);
-		newState.timeintervals[index].startTime = unixTime;
-		this.state = newState
-		this.setState(this.state);
+		var currInterval = {startTime: unixTime, stopTime: this.state.timeintervals[index].stopTime};
+		var timeintervals = [];
+		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ));
+		timeintervals[index] = currInterval;
+		this.setState({timeintervals: timeintervals});
 	};
 
 	onChangeStopTime = (index, e) => {
 		const dateTime = e.target.value;
 		const unixTime = this.formatUnixTime(dateTime);
-		var newState = Object.assign({}, this.state);
-		newState.timeintervals[index].stopTime = unixTime;
-		this.state = newState
-		this.setState(this.state);
+		var currInterval = {startTime: this.state.timeintervals[index].startTime, stopTime: unixTime};
+		var timeintervals = [];
+		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ));
+		timeintervals[index] = currInterval;
+		this.setState({timeintervals: timeintervals});
 	};
 
-	addTime = () => {
-		var newState = Object.assign({}, this.state);
-		newState.timeintervals.push({startTime: new Date().getTime(), stopTime: new Date().getTime()})
-		this.state = newState
-		this.setState(this.state)
+	onAddTime = () => {
+		var timeintervals = [];
+		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ))
+		timeintervals.push({startTime: new Date().getTime(), stopTime: new Date().getTime()});
+		this.setState({timeintervals: timeintervals});
 	}
 
 	updateTask = (e) => {
@@ -95,13 +107,18 @@ export default class EditTask extends Component {
 			})
 			this.setState({invalidTimeIndexs: invalidTimes})
 		}	else {
+			this.state.time = Math.floor(this.calculateTime() / 1000)
+			console.log(this.state.time);
+
 			this.props.updateTask(
 				this.state.task,
 				this.state.project,
 				this.state.client,
+				this.state.time,
+				this.state.timeintervals,
 				this.props.editTaskIndex
 			)
-			console.log('click')
+			this.props.closeEdit();
 		}
 	};
 
@@ -154,15 +171,16 @@ export default class EditTask extends Component {
 							placeholder='Client'
 							onChange={this.onClientNameChange}/>
 							{ timeIntervals }				
-						<button onClick={ () => this.addTime()}>Add Time</button>
 					</form>
+					<button onClick={ () => this.onAddTime()}>Add Time</button>
+					<button>Add Notes</button>
 				</Modal.Body>
 				<Modal.Footer>
 					<input 
 						type='submit'
-						value='Save Edits'
+						value='Save and Exit'
 						form='editform'/>
-					<button onClick={this.props.closeEdit}>Close</button>
+					<button onClick={this.props.closeEdit}>Cancel</button>
 				</Modal.Footer>
 			</Modal> 
 		)
