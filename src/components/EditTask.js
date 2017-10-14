@@ -92,6 +92,13 @@ export default class EditTask extends Component {
 		this.setState({timeintervals: timeintervals});
 	}
 
+	onRemoveTime = (index) => {
+		var timeintervals = [];
+		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ))
+		timeintervals.splice(index,1);
+		this.setState({timeintervals: timeintervals});
+	}
+
 	updateTask = (e) => {
 		if (e) e.preventDefault();
 		if ( this.state.task.length === 0 ) {
@@ -125,7 +132,7 @@ export default class EditTask extends Component {
 	render() {	
 		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index}>
-				<h4>Time Interval: {index + 1}</h4> 
+				<h4>Time Interval: {index + 1}<span onClick={ () => this.onRemoveTime(index) }>Delete</span></h4> 
 					{  this.state.invalidTimeIndexs.includes(index) && <div className='validationError'>Time Interval Error: The End time cannot be earlier than the Start time.</div> }
 				<Grid>
 					<Row className='show-grid'>
