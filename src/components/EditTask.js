@@ -14,7 +14,8 @@ export default class EditTask extends Component {
 		client: this.props.editTask.client,
 		time: this.props.editTask.time,
 		timeintervals: this.props.editTask.timeintervals,
-		invalidTimeIndexs: []
+		invalidTimeIndexs: [],
+		overlappingTimes: []
 	};
 	
 	formatTimeStamp(timeStamp) {
@@ -99,6 +100,18 @@ export default class EditTask extends Component {
 		this.setState({timeintervals: timeintervals});
 	}
 
+	findOverlappingTimes = (intervals) => {
+		var overlappingTimes = [];
+		for (var i = 0; i < intervals.length; i++) {
+			for ( var j = 0; j < intervals.length; j ++) {
+				if (intervals[j].startTime > intervals[i].startTime && intervals[j].startTime < intervals[i].stopTime) {
+				overlappingTimes.push(j);
+				}
+			}
+		}
+		return overlappingTimes;		
+	}
+
 	updateTask = (e) => {
 		if (e) e.preventDefault();
 		if ( this.state.task.length === 0 ) {
@@ -113,10 +126,13 @@ export default class EditTask extends Component {
 				}
 			})
 			this.setState({invalidTimeIndexs: invalidTimes})
-		}	else {
-			this.state.time = Math.floor(this.calculateTime() / 1000)
-			console.log(this.state.time);
+		}	else if (this.findOverlappingTimes(this.state.timeintervals).length > 0){
+			this.setState({overlappingTimes: this.findOverlappingTimes(this.state.timeintervals)})
+		} else {
 
+			console.log(this.findOverlappingTimes(this.state.timeintervals));
+
+			this.state.time = Math.floor(this.calculateTime() / 1000)
 			this.props.updateTask(
 				this.state.task,
 				this.state.project,
@@ -134,6 +150,7 @@ export default class EditTask extends Component {
 			<div key={index}>
 				<h4>Time Interval: {index + 1}<span onClick={ () => this.onRemoveTime(index) }>Delete</span></h4> 
 					{  this.state.invalidTimeIndexs.includes(index) && <div className='validationError'>Time Interval Error: The End time cannot be earlier than the Start time.</div> }
+					{ this.state.overlappingTimes.includes(index) && <div className='validationError'>Time Interval Error: This time interval overlaps another time interval.</div>}
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
