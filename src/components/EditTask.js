@@ -129,9 +129,6 @@ export default class EditTask extends Component {
 		}	else if (this.findOverlappingTimes(this.state.timeintervals).length > 0){
 			this.setState({overlappingTimes: this.findOverlappingTimes(this.state.timeintervals)})
 		} else {
-
-			console.log(this.findOverlappingTimes(this.state.timeintervals));
-
 			this.state.time = Math.floor(this.calculateTime() / 1000)
 			this.props.updateTask(
 				this.state.task,
