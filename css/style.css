@@ -148,22 +148,4 @@ input[type="text"].inputError {
   border: 1px solid #96a2ec;
   background-color: #fbf3e6; }
 
-/*
-$color-borders: #9d138c; 
-$color-accent: #623353;
-$color-shade: #74546a; 
-
-$highlight-text: #dead80;
-$highlight-border: #96a2ec;
-
-$color-text: #eadef2;
-$color-bg: #130918; //very dark blue
-$color-bg-light: #fbf3e6; //#
-
-$color-error: #f04e7d;
-
-$container-box-bg: #120d2f;
-$container-box-border: #2c245a;
-*/
-
 /*# sourceMappingURL=style.css.map */

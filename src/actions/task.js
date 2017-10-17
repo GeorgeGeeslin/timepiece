@@ -66,10 +66,3 @@ export const updateTask = (task, project, client, time, timeintervals, editTaskI
 		editTaskIndex
 	}
 }
-
-/*export const addTime = (editTaskIndex) => {
-	return {
-		type: TaskActionTypes.ADD_TIME,
-		editTaskIndex
-	}
-}*/

@@ -153,6 +153,7 @@ export default function Task(state=initialState, action) {
 			updateTask.timeintervals = action.timeintervals
 			return {
 				...state,
+				selectedTaskIndex: action.editTaskIndex,
 				updateTaskList			
 			}
 

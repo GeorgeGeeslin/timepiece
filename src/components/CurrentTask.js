@@ -8,7 +8,7 @@ const CurrentTask = props => (
 			<Col sm={12}>
 				<p><span className='taskLabel'>TASK: </span>{props.task}</p>
 				<p><span className='taskLabel'>PROJECT: </span>{props.project}</p>
-				<p><span className='taskLabel'>CLIENT: </span>{props.project}</p>
+				<p><span className='taskLabel'>CLIENT: </span>{props.client}</p>
 			</Col>
 			<Col className='task-button-container' sm={12}>
 				<button
