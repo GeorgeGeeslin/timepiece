@@ -144,22 +144,24 @@ export default class EditTask extends Component {
 
 	render() {	
 		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
-			<div key={index}>
-				<h4>Time Interval: {index + 1}<span onClick={ () => this.onRemoveTime(index) }>Delete</span></h4> 
+			<div key={index} className='tasks'>
+				<p>Time Interval: {index + 1}<span style={{float: 'right', paddingRight: '10px'}} onClick={ () => this.onRemoveTime(index) }>Delete</span></p> 
 					{  this.state.invalidTimeIndexs.includes(index) && <div className='validationError'>Time Interval Error: The End time cannot be earlier than the Start time.</div> }
 					{ this.state.overlappingTimes.includes(index) && <div className='validationError'>Time Interval Error: This time interval overlaps another time interval.</div>}
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
-							<label htmlFor='start-time' className='control-label' id={'interval' + index }>Start: </label>
+							<label htmlFor='start-time' className='taskLabel' id={'interval' + index }>Start: </label>
 							<input id='start-time'
+								className='time-input'
 								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.startTime)}
 								onChange={(e) => this.onChangeStartTime(index, e)}/>
 						</Col>
 						<Col sm={12} md={6}>
-							<label htmlFor='stop-time' className='control-label' id={'interval' + index }>End: </label>
+							<label htmlFor='stop-time' className='taskLabel' id={'interval' + index }>End: </label>
 							<input id='stop-time'
+								className='time-input'
 								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.stopTime)}
 								onChange={(e) => this.onChangeStopTime(index, e)}/>
@@ -170,40 +172,47 @@ export default class EditTask extends Component {
 		));
 
 		return (
-			<Modal show={this.props.showEditScreen} className='edit-modal'>
-				<Modal.Header>
-					<h3>Edit Task</h3>
-				</Modal.Header>
-				<Modal.Body>
-					<form id='editform' onSubmit={this.updateTask}>
-						<input id='editTaskField'
-							type='text'
-							value={this.state.task}
-							placeholder='Task (required)'
-							onChange={this.onTaskNameChange}/>
-						<input 
-							type='text'
-							value={this.state.project}
-							placeholder='Project'
-							onChange={this.onProjectNameChange}/>
-						<input 
-							type='text'
-							value={this.state.client}
-							placeholder='Client'
-							onChange={this.onClientNameChange}/>
-							{ timeIntervals }				
-					</form>
-					<button onClick={ () => this.onAddTime()}>Add Time</button>
-					<button>Add Notes</button>
-				</Modal.Body>
-				<Modal.Footer>
-					<input 
-						type='submit'
-						value='Save and Exit'
-						form='editform'/>
-					<button onClick={this.props.closeEdit}>Cancel</button>
-				</Modal.Footer>
-			</Modal> 
+			<Grid>
+				<Row className='show-grid'>
+					<Col sm={12}>
+						<Modal show={this.props.showEditScreen} className='edit-modal'>
+							<Modal.Header>
+								<h2>Edit Task</h2>
+							</Modal.Header>
+							<Modal.Body>
+								<form id='editform' onSubmit={this.updateTask}>
+									<input id='editTaskField'
+										type='text'
+										value={this.state.task}
+										placeholder='Task (required)'
+										onChange={this.onTaskNameChange}/>
+									<input 
+										type='text'
+										value={this.state.project}
+										placeholder='Project'
+										onChange={this.onProjectNameChange}/>
+									<input 
+										type='text'
+										value={this.state.client}
+										placeholder='Client'
+										onChange={this.onClientNameChange}/>
+										{ timeIntervals }				
+								</form>
+								<button className='task-buttons' onClick={ () => this.onAddTime()}>Add Time</button>
+								<button className='task-buttons'>Add Notes</button>
+							</Modal.Body>
+							<Modal.Footer>
+								<input
+									className='task-buttons' 
+									type='submit'
+									value='Save and Exit'
+									form='editform'/>
+								<button className='task-buttons' onClick={this.props.closeEdit}>Cancel</button>
+							</Modal.Footer>
+						</Modal>
+					</Col>
+				</Row>
+			</Grid>
 		)
 	}
 }

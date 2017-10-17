@@ -18,6 +18,8 @@ $color-bg-light: #fbf3e6; //#
 
 $color-error: #f04e7d;
 
+$container-box-bg: #120d2f;
+$container-box-border: #2c245a;
 
 $font-stack-primary: 'Quicksand', sans-serif;
 $font-stack-labels: 'Roboto Condensed', sans-serif;
@@ -50,10 +52,11 @@ $max-width: 1000px;
 }
 
 @mixin container {
-	border: 1px solid #2c245a;
-	background-color: #120d2f;
+	border: 1px solid $container-box-border;
+	background-color: $container-box-bg;
 	padding-left: 2%;
 	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 // BASE ------------------------------ /
@@ -134,27 +137,33 @@ input[type="text"].inputError {
 	background-color: $color-error;
 }
 
-.modal-backdrop {
-	//background-color: green;
-	//opacity: 100;
-}
+
+// MODALS ------------------------------ /
+/*.modal-backdrop {
+	background-color: red;
+	opacity: 100;
+}*/
 
 .modal-open {
-	background-color: $color-shade;
+	background-color: $container-box-border;
 }
 
 .edit-modal {
-	background-color: $color-bg-light;
+	background-color: $color-bg;
 	opacity: 100;
-	width: 90%;
-	//height: 100%;
+	width: 95%;
+	height: 100%;
 	margin: auto;
-	color: $color-shade;
+	//color: $color-shade;
 }
 
 .modal-content {
 	top: 0;
 	position: fixed;
+	width: 95%;
+	height: 100%;
+	margin: auto;
+	background-color: white; //$color-bg;
 }
 
 // REACT COMPONENTS ------------------------------ /
@@ -168,6 +177,44 @@ input[type="text"].inputError {
 		margin-bottom: 0;
 	}
 }
+
+// EDIT ------------------------------ /
+.modal-header {
+	padding-bottom: 25px;
+	padding-top: 25px;
+	border-bottom: 1px solid $highlight-border;
+}
+
+.modal-footer {
+	padding-bottom: 25px;
+	padding-top: 25px;
+	border-top: 1px solid $highlight-border;
+}
+
+.time-input {
+	margin-bottom: 10px;
+	border: 1px solid $highlight-border;
+	background-color: $color-bg-light;
+}
+
+
+/*
+$color-borders: #9d138c; 
+$color-accent: #623353;
+$color-shade: #74546a; 
+
+$highlight-text: #dead80;
+$highlight-border: #96a2ec;
+
+$color-text: #eadef2;
+$color-bg: #130918; //very dark blue
+$color-bg-light: #fbf3e6; //#
+
+$color-error: #f04e7d;
+
+$container-box-bg: #120d2f;
+$container-box-border: #2c245a;
+*/
 
 
 // @MEDIA ------------------------------ /

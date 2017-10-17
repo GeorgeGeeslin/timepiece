@@ -95,32 +95,75 @@ input[type="text"] {
 input[type="text"].inputError {
   background-color: #f04e7d; }
 
+/*.modal-backdrop {
+	background-color: red;
+	opacity: 100;
+}*/
 .modal-open {
-  background-color: #74546a; }
+  background-color: #2c245a; }
 
 .edit-modal {
-  background-color: #fbf3e6;
+  background-color: #130918;
   opacity: 100;
-  width: 90%;
-  margin: auto;
-  color: #74546a; }
+  width: 95%;
+  height: 100%;
+  margin: auto; }
 
 .modal-content {
   top: 0;
-  position: fixed; }
+  position: fixed;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  background-color: white; }
 
 .activeTask {
   border: 1px solid #2c245a;
   background-color: #120d2f;
   padding-left: 2%;
-  margin-top: 20px; }
+  margin-top: 20px;
+  margin-bottom: 20px; }
 
 .tasks {
   border: 1px solid #2c245a;
   background-color: #120d2f;
   padding-left: 2%;
-  margin-top: 20px; }
+  margin-top: 20px;
+  margin-bottom: 20px; }
   .tasks p {
     margin-bottom: 0; }
+
+.modal-header {
+  padding-bottom: 25px;
+  padding-top: 25px;
+  border-bottom: 1px solid #96a2ec; }
+
+.modal-footer {
+  padding-bottom: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #96a2ec; }
+
+.time-input {
+  margin-bottom: 10px;
+  border: 1px solid #96a2ec;
+  background-color: #fbf3e6; }
+
+/*
+$color-borders: #9d138c; 
+$color-accent: #623353;
+$color-shade: #74546a; 
+
+$highlight-text: #dead80;
+$highlight-border: #96a2ec;
+
+$color-text: #eadef2;
+$color-bg: #130918; //very dark blue
+$color-bg-light: #fbf3e6; //#
+
+$color-error: #f04e7d;
+
+$container-box-bg: #120d2f;
+$container-box-border: #2c245a;
+*/
 
 /*# sourceMappingURL=style.css.map */
