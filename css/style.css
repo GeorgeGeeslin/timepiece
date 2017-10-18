@@ -89,9 +89,13 @@ input[type="text"] {
     color: #74546a; }
 
 .taskLabel {
-  display: block;
   font: "Roboto Condensed", sans-serif;
   font-size: .8em; }
+
+.inputLabel {
+  font: "Roboto Condensed", sans-serif;
+  font-size: .8em;
+  display: block; }
 
 input[type="text"].inputError {
   background-color: #f04e7d; }

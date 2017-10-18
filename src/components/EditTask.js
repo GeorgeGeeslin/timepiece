@@ -151,7 +151,7 @@ export default class EditTask extends Component {
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
-							<label sm={12} htmlFor='start-time' className='taskLabel' id={'interval' + index }>Start: </label>
+							<label htmlFor='start-time' className='inputLabel'  id={'interval' + index }>Start: </label>
 							<input id='start-time'
 								className='time-input'
 								type='datetime-local'
@@ -159,7 +159,7 @@ export default class EditTask extends Component {
 								onChange={(e) => this.onChangeStartTime(index, e)}/>
 						</Col>
 						<Col sm={12} md={6}>
-							<label htmlFor='stop-time' className='taskLabel' id={'interval' + index }>End: </label>
+							<label htmlFor='stop-time' className='inputLabel' id={'interval' + index }>End: </label>
 							<input id='stop-time'
 								className='time-input'
 								type='datetime-local'

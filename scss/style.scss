@@ -59,6 +59,11 @@ $max-width: 1000px;
 	margin-bottom: 20px;
 }
 
+@mixin label {
+	font: $font-stack-labels;
+	font-size: .8em;
+}
+
 // BASE ------------------------------ /
 body{
 	font-family: $font-stack-primary;
@@ -129,9 +134,12 @@ input[type="text"] {
 }
 
 .taskLabel {
+	@include label;
+}
+
+.inputLabel {
+	@include label;
 	display: block;
-	font: $font-stack-labels;
-	font-size: .8em;
 }
 
 // ERRORS ------------------------------ /
