@@ -129,6 +129,7 @@ input[type="text"] {
 }
 
 .taskLabel {
+	display: block;
 	font: $font-stack-labels;
 	font-size: .8em;
 }

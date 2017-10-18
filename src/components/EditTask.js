@@ -151,7 +151,7 @@ export default class EditTask extends Component {
 				<Grid>
 					<Row className='show-grid'>
 						<Col sm={12} md={6}>
-							<label htmlFor='start-time' className='taskLabel' id={'interval' + index }>Start: </label>
+							<label sm={12} htmlFor='start-time' className='taskLabel' id={'interval' + index }>Start: </label>
 							<input id='start-time'
 								className='time-input'
 								type='datetime-local'
