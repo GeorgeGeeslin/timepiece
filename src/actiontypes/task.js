@@ -6,3 +6,4 @@ export const PAUSE_TASK = 'task/PAUSE_TASK';
 export const OPEN_EDIT = 'task/OPEN_EDIT';
 export const CLOSE_EDIT = 'task/CLOSE_EDIT';
 export const UPDATE_TASK = 'task/UPDATE_TASK';
+export const RESUME_TASK = 'task/RESUME_TASK';

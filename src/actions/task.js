@@ -66,3 +66,10 @@ export const updateTask = (task, project, client, time, timeintervals, editTaskI
 		editTaskIndex
 	}
 }
+
+export const resumeTask = (timeKey) => {
+	return {
+		type: TaskActionTypes.RESUME_TASK,
+		timeKey
+	}
+}

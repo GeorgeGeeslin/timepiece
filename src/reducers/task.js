@@ -157,6 +157,18 @@ export default function Task(state=initialState, action) {
 				updateTaskList			
 			}
 
+			case TaskActionTypes.RESUME_TASK:
+				const resumeTaskList = Object.assign({}, state);
+				const resumeTask = resumeTaskList.tasks.filter(function(task){
+					return task.timeKey === action.timeKey;
+				})[0];
+				resumeTask.timefinished = null;
+				return {
+					...state,
+					selectedTaskIndex: action.timeKey,
+					resumeTaskList
+				}
+
 		default:
 			return state;
 	}	

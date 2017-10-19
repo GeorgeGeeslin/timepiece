@@ -13,8 +13,8 @@ const FinishedTask = props => (
 		<Col className='task-button-container' sm={12}>
 			<button 
 				className='task-buttons'
-				onClick={ () => props.selectTask(props.timeKey)}>
-				SELECT 
+				onClick={ () => props.resumeTask(props.timeKey)}>
+				RESUME 
 			</button>
 			<button 
 				className='task-buttons'

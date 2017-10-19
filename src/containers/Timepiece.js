@@ -26,7 +26,7 @@ class Timepiece extends Component {
 		const openEdit = bindActionCreators(TaskActionCreators.openEdit, dispatch);
 		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
 		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
-		//const addTime = bindActionCreators(TaskActionCreators.addTime, dispatch);
+		const resumeTask = bindActionCreators(TaskActionCreators.resumeTask, dispatch);
 
 		let selectedTask;
 		if (selectedTaskIndex !== -1) {
@@ -69,7 +69,7 @@ class Timepiece extends Component {
 				client={tasks.client}
 				key={index}
 				timeKey={tasks.timeKey}
-				selectTask={selectTask}
+				resumeTask={resumeTask}
 				deleteTask={deleteTask}
 				openEdit={openEdit}
 				selectedTaskIndex={selectedTaskIndex}
