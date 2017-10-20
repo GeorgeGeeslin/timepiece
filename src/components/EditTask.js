@@ -67,20 +67,28 @@ export default class EditTask extends Component {
 	};
 
 	onChangeStartTime = (index, e) => {
-		const dateTime = e.target.value;
-		const unixTime = this.formatUnixTime(dateTime);
-		var currInterval = {startTime: unixTime, stopTime: this.state.timeintervals[index].stopTime};
-		var timeintervals = [];
+		if (e.target.value === "") {
+			const dateTime = new Date();
+		} else {
+			const dateTime = e.target.value;
+			const unixTime = this.formatUnixTime(dateTime);
+			var currInterval = {startTime: unixTime, stopTime: this.state.timeintervals[index].stopTime};
+			var timeintervals = [];
+		}
 		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ));
 		timeintervals[index] = currInterval;
 		this.setState({timeintervals: timeintervals});
 	};
 
 	onChangeStopTime = (index, e) => {
-		const dateTime = e.target.value;
-		const unixTime = this.formatUnixTime(dateTime);
-		var currInterval = {startTime: this.state.timeintervals[index].startTime, stopTime: unixTime};
-		var timeintervals = [];
+		if (e.target.value === "") {
+			const dateTime = new Date();
+		} else {
+			const dateTime = e.target.value;
+			const unixTime = this.formatUnixTime(dateTime);
+			var currInterval = {startTime: this.state.timeintervals[index].startTime, stopTime: unixTime};
+			var timeintervals = [];
+		}
 		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ));
 		timeintervals[index] = currInterval;
 		this.setState({timeintervals: timeintervals});
