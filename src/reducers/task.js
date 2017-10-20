@@ -154,6 +154,7 @@ export default function Task(state=initialState, action) {
 			return {
 				...state,
 				selectedTaskIndex: action.editTaskIndex,
+				lastManualUpdate: action.editTaskIdex + "," + new Date().getTime(),
 				updateTaskList			
 			}
 
