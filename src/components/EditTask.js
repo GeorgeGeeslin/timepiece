@@ -199,7 +199,6 @@ export default class EditTask extends Component {
 										{ timeIntervals }				
 								</form>
 								<button className='task-buttons' onClick={ () => this.onAddTime()}>Add Time</button>
-								<button className='task-buttons'>Add Notes</button>
 							</Modal.Body>
 							<Modal.Footer>
 								<input
