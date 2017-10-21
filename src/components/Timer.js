@@ -27,13 +27,14 @@ class Timer extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		//console.log("timer updated")
 		if (prevProps.selectedTaskIndex !== this.props.selectedTaskIndex && this.props.selectedTask === undefined) {
 			this.setState({
 				secondsElapsed: 0,
 				startIsDisabled: true
 			})
 			clearInterval(this.incrementer)
-		} else if (prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) {
+		} else if ( (prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
 			this.setState({
 				secondsElapsed: this.props.secondsElapsed,
 				startIsDisabled: false,

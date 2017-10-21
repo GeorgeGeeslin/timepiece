@@ -48,7 +48,8 @@ const initialState = {
 	}],
 	selectedTaskIndex: -1,
 	showEditScreen: false,
-	editTaskIndex: -1
+	editTaskIndex: -1,
+	lastManualUpdate: null
 }
 
 const currDate = new Date();
@@ -154,7 +155,7 @@ export default function Task(state=initialState, action) {
 			return {
 				...state,
 				selectedTaskIndex: action.editTaskIndex,
-				lastManualUpdate: action.editTaskIdex + "," + new Date().getTime(),
+				lastManualUpdate: action.editTaskIndex + ": " + new Date().getTime(),
 				updateTaskList			
 			}
 

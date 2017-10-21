@@ -17,7 +17,11 @@ var config = {
 		]
 	},
 	devServer: {
-		historyApiFallback: true
+		historyApiFallback: true,
+		stats: "errors-only"
+	},
+	watchOptions: {
+		ignored: /scss/
 	},
 	plugins: [new HtmlWebpackPlugin({
 		template: './index.html'

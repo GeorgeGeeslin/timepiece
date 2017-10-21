@@ -17,7 +17,7 @@ class Timepiece extends Component {
 	};
 	
 	render() {
-		const { dispatch, tasks, selectedTaskIndex, showEditScreen, editTaskIndex} = this.props;
+		const { dispatch, tasks, selectedTaskIndex, showEditScreen, editTaskIndex, lastManualUpdate} = this.props;
 		const addTask = bindActionCreators(TaskActionCreators.addTask, dispatch);
 		const selectTask = bindActionCreators(TaskActionCreators.selectTask, dispatch);
 		const finishTask = bindActionCreators(TaskActionCreators.finishTask, dispatch);
@@ -101,7 +101,8 @@ class Timepiece extends Component {
 							secondsElapsed={secondsElapsed} 
 							finishTask={finishTask} 
 							pauseTask={pauseTask}
-							selectedTask={selectedTask} />
+							selectedTask={selectedTask}
+							lastManualUpdate={lastManualUpdate} />
 						<CreateTaskForm addTask={addTask} />
 						{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
 						<div className='taskWrapper'>
@@ -131,7 +132,8 @@ const mapStateToProps = state => (
 		tasks: state.tasks,
 		selectedTaskIndex: state.selectedTaskIndex,
 		showEditScreen: state.showEditScreen,
-		editTaskIndex: state.editTaskIndex
+		editTaskIndex: state.editTaskIndex,
+		lastManualUpdate: state.lastManualUpdate
 	}
 );
 
