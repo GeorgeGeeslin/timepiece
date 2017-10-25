@@ -3,7 +3,8 @@
 body {
   font-family: "Quicksand", sans-serif;
   background-color: #130918;
-  color: #eadef2; }
+  color: #eadef2;
+  height: 100%; }
 
 h1,
 h2,
@@ -19,6 +20,11 @@ h3 {
 ul {
   list-style: none;
   padding-left: 0; }
+
+@media only screen and (min-width: 767px) {
+  .leftCol {
+    min-height: 100vh;
+    border-right: 1px solid #96a2ec; } }
 
 .control-buttons {
   width: 100%;
