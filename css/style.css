@@ -175,6 +175,7 @@ input[type="text"].inputError {
 .time-input {
   margin-bottom: 10px;
   border: 1px solid #96a2ec;
-  background-color: #fbf3e6; }
+  background-color: #fbf3e6;
+  width: 100%; }
 
 /*# sourceMappingURL=style.css.map */
