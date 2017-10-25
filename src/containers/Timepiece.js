@@ -107,13 +107,14 @@ class Timepiece extends Component {
 						{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
 						<div className='taskWrapper'>
 							{ currentTasks }
-						</div>
-					</Col>
-					<Col sm={12} md={6}>
 						{ finishedTasks.length > 0 && <h2>Finished Tasks</h2> }
 						<div className='taskWrapper'>
 							{ finishedTasks }
 						</div>
+						</div>
+					</Col>
+					<Col sm={12} md={6}>
+
 					</Col>
 				</Row>
 				{showEditScreen === true && <EditTask
