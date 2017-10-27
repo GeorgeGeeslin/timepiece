@@ -52,6 +52,15 @@ const initialState = {
 	lastManualUpdate: null
 }
 
+/*
+const initialState = {
+	tasks: [],
+	selectedTaskIndex: -1,
+	editTaskIndex: -1,
+	showEditScreen: false,
+	lastManualUpdate: null
+}*/
+
 const currDate = new Date();
 const currTimeStamp = currDate.getTime();
 

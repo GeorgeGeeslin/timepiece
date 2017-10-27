@@ -115,7 +115,7 @@ class Timepiece extends Component {
 						<div className='taskWrapper'>
 							{ finishedTasks }
 						</div>
-						<Summary />
+						<Summary tasks={tasks}/>
 					</Col>
 				</Row>
 				{showEditScreen === true && <EditTask
