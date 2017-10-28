@@ -1,7 +1,7 @@
 import * as TaskActionTypes from '../actiontypes/task';
 import update from 'immutability-helper';
 
-const initialState = {
+/*const initialState = {
 	tasks: [{
 		task: 'Create CSS for landing page',
 		project: 'Acme Landing Page',
@@ -50,16 +50,25 @@ const initialState = {
 	showEditScreen: false,
 	editTaskIndex: -1,
 	lastManualUpdate: null
-}
+} */
 
-/*
+
 const initialState = {
-	tasks: [],
+	tasks: [{
+		task: "test",
+		project: "",
+		client: "",
+		time: 0,
+		timecreated: new Date().getTime(),
+		timefinished: null,
+		timeKey: 1,
+		timeintervals: []
+	}],
 	selectedTaskIndex: -1,
 	editTaskIndex: -1,
 	showEditScreen: false,
 	lastManualUpdate: null
-}*/
+}
 
 const currDate = new Date();
 const currTimeStamp = currDate.getTime();

@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 
 const formatTime = (sec) =>
-	Math.floor(sec / 3600) % 60 + 
+	Math.floor(sec / 3600) + 
 		':' + 
 		('0' + Math.floor(sec / 60) % 60).slice(-2) + 
 		':' + 
@@ -11,8 +11,8 @@ const formatTime = (sec) =>
 
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-const weekStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000))
-const weekEnd = new Date( ((6 - currDay.getDay()) * 86400000) + 86399999 + currDay.getTime() ) 
+const weekStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000)).getTime()
+const weekEnd = new Date(((6 - currDay.getDay()) * 86400000) + 86400000 + currDay.getTime()).getTime()
 
 export default class Summary extends Component {
 
@@ -83,11 +83,29 @@ export default class Summary extends Component {
 	}
 
 	weeklyTime() {
-	//	console.log(now);
-	//	console.log(currDay);
-		console.log(weekStart.getTime())
-		console.log(weekEnd.getTime())
-		
+		var total = 0;
+		for (let i = 0; i < this.props.tasks.length; i++) {
+			let task = this.props.tasks[i];
+			if (task.timeintervals !== undefined && task.timeintervals.length > 0) {
+				for (let j = 0; j < task.timeintervals.length; j++) {
+					let timeinterval = task.timeintervals[j];
+					//interval longer than a weeek. Only count time that falls within the week.
+					if (timeinterval.startTime <= weekStart && timeinterval.stopTime >= weekEnd) {
+						total = (total + (weekEnd - weekStart)) / 1000;
+						//interval that starts before the week and ends during the week. 
+					} else if (timeinterval.startTime <= weekStart && timeinterval.stopTime <= weekEnd) {
+						total = (total + (timeinterval.stopTime - weekStart) / 1000);
+						//interval that starts during the week and ends after the week. 
+					} else if (timeinterval.startTime >= weekStart && timeinterval.stopTime >= weekEnd) {
+						total = (total + (weekEnd - timeinterval.startTime)) / 1000;
+						//interval with start and end times inside the week.
+					} else if (timeinterval.startTime >= weekStart && timeinterval.stopTime <= weekEnd) {
+						total = (total + (timeinterval.stopTime - timeinterval.startTime)) / 1000;
+					}
+				}
+			}
+		}
+		return total; 
 	}
 
 	render() {
@@ -108,7 +126,7 @@ export default class Summary extends Component {
 							<p><span className='taskLabel'>TOTAL CLIENTS: </span>{this.totalClients().length}</p>
 						</Col>
 					</Row>
-					<p><span className='taskLabel'>TIME THIS WEEK: </span>{this.weeklyTime()}</p>
+					<p><span className='taskLabel'>TIME THIS WEEK: </span>{formatTime(this.weeklyTime())}</p>
 					<p><span className='taskLabel'>TIME THIS MONTH: </span>100</p>
 					<p><span className='taskLabel'>TOTAL TIME SPENT: </span>{formatTime(this.totalTime())}</p>
 					<div className='task-button-container'>
