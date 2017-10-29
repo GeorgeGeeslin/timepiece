@@ -10,6 +10,7 @@ import CreateTaskForm from '../components/CreateTaskForm';
 import CurrentTask from '../components/CurrentTask';
 import FinishedTask from '../components/FinishedTask';
 import EditTask from '../components/EditTask';
+import Summary from '../components/Summary'
 
 class Timepiece extends Component {
 	static propTypes = {
@@ -93,7 +94,7 @@ class Timepiece extends Component {
 		return (
 			<Grid>
 				<Row className="show-grid">
-					<Col sm={12} md={6}>
+					<Col className={'leftCol'} sm={12} md={6}>
 						<ActiveTask 
 							selectedTask={selectedTask} />
 						<Timer
@@ -109,11 +110,12 @@ class Timepiece extends Component {
 							{ currentTasks }
 						</div>
 					</Col>
-					<Col sm={12} md={6}>
+					<Col className={'rightCol'} sm={12} md={6}>
 						{ finishedTasks.length > 0 && <h2>Finished Tasks</h2> }
 						<div className='taskWrapper'>
 							{ finishedTasks }
 						</div>
+						<Summary tasks={tasks}/>
 					</Col>
 				</Row>
 				{showEditScreen === true && <EditTask

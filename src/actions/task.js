@@ -33,12 +33,13 @@ export const deleteTask = (timeKey, selectedTaskIndex) => {
 	}
 }
 
-export const pauseTask = (time, startTime, stopTime) => {
+export const pauseTask = (time, startTime, stopTime, selectedTaskIndex) => {
 	return {
 		type: TaskActionTypes.PAUSE_TASK,
 		time,
 		startTime,
-		stopTime
+		stopTime,
+		selectedTaskIndex
 	}
 }
 

@@ -4,11 +4,12 @@ import { Button } from 'react-bootstrap';
 
 //TODO put this function in one place to share across modules.
 const formatTime = (sec) =>
-	Math.floor(sec / 3600) % 60 + 
+	Math.floor(sec / 3600) + 
 		':' + 
 		('0' + Math.floor(sec / 60) % 60).slice(-2) + 
 		':' + 
 		('0' + sec % 60).slice(-2)
+
 
 class Timer extends Component {
 	constructor(props) {
@@ -74,7 +75,7 @@ class Timer extends Component {
 
 	validatePauseTask() {
 		if (this.state.startTime !== null && this.state.stopTime !== null) {
-			this.props.pauseTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime);
+			this.props.pauseTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime, this.props.selectedTaskIndex);
 		}
 	}
 

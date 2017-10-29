@@ -3,8 +3,21 @@
 
 
 // VARIABLES ------------------------------ /
+// screen sizes
+//$phone: '(max-width: 480px)';
+$tablet-portrait: '(min-width: 767px)';
+$tablet-landscape: '(min-width: 768px) and (max-width: 979px)';
+$large-desktop: '(min-width: 12000px)';
+$non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
+$retina: '(min--moz-device-pixel-ratio: 1.5), 
+                    (-o-min-device-pixel-ratio: 3/2), 
+                    (-webkit-min-device-pixel-ratio: 1.5), 
+                    (min-device-pixel-ratio: 1.5), 
+                    (min-resolution: 144dpi), 
+                    (min-resolution: 1.5dppx)';
+
 //$color-primary: #2cf1ff; //teal
-//$color-secondary: #ffa755; //orange 
+$color-secondary: #ffa755; //orange 
 $color-borders: #9d138c; 
 $color-accent: #623353;
 $color-shade: #74546a; 
@@ -30,7 +43,14 @@ $button-gutter: 5px;
 
 $max-width: 1000px;
 
-// MIXINS ------------------------------ /
+// MIXINS ------------------------------ 
+
+@mixin respond-to($media) {
+    @media only screen and #{$media} {
+        @content;
+    }
+}
+
 @mixin center {
 	width: 100%;
 	max-width: $max-width;
@@ -69,6 +89,7 @@ body{
 	font-family: $font-stack-primary;
 	background-color: $color-bg;
 	color: $color-text;
+	height: 100%;
 }
 
 h1,
@@ -83,6 +104,13 @@ h3 {
 ul{
 	list-style: none;
 	padding-left: 0;
+}
+
+.leftCol {
+	@include respond-to($tablet-portrait) {
+		min-height: 100vh;
+		border-right: 1px solid $highlight-border;
+	}
 }
 
 .control-buttons {
@@ -232,6 +260,3 @@ input[type="text"].inputError {
 	background-color: $color-bg-light;
 	width: 100%;
 }
-
-
-// @MEDIA ------------------------------ /
