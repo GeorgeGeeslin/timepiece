@@ -123,10 +123,10 @@ input[type="text"].inputError {
     opacity: 0.7;
     -webkit-animation: rootFade 0.4s;
     animation: rootFade 0.4s; }
-  .modal-open .tasks {
-    opacity: 0.2;
-    -webkit-animation: elementFade 0.4s;
-    animation: elementFade 0.4s; }
+    .modal-open #root .tasks {
+      opacity: 0.2;
+      -webkit-animation: elementFade 0.4s;
+      animation: elementFade 0.4s; }
 
 @-webkit-keyframes rootFade {
   from {
@@ -162,6 +162,8 @@ input[type="text"].inputError {
   width: 100%;
   height: 100%;
   margin: auto; }
+  .edit-modal .tasks {
+    opacity: 1; }
 
 @-webkit-keyframes fade {
   from {
