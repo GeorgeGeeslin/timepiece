@@ -143,8 +143,7 @@ export default function Task(state=initialState, action) {
 			pauseTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
 			return {
 				...state,
-				pauseTaskList,
-				selectedTaskIndex: action.selectedTaskIndex + 1
+				pauseTaskList
 			}
 
 		case TaskActionTypes.OPEN_EDIT:

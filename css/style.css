@@ -146,7 +146,6 @@ input[type="text"].inputError {
 .modal-content {
   top: 0;
   position: fixed;
-  width: 100%;
   height: 100%;
   margin: auto;
   overflow-y: auto;
