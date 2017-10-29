@@ -36,12 +36,12 @@ $container-box-border: #2c245a;
 
 $font-stack-primary: 'Quicksand', sans-serif;
 $font-stack-labels: 'Roboto Condensed', sans-serif;
-//$font-stack-primary: 'Raleway', sans-serif;
-//$font-stack-secondary: 'Bree Serif', serif;
 
 $button-gutter: 5px;
 
 $max-width: 1000px;
+
+$animation-time: 0.4s;
 
 // MIXINS ------------------------------ 
 
@@ -190,25 +190,54 @@ input[type="text"].inputError {
 
 // MODALS ------------------------------ /
 .modal-open {
-	background-color: $container-box-border;
+	background-color: #A9A9A9;
+	#root {
+		background-color: $color-bg;
+		opacity: 0.7;
+		 -webkit-animation: rootFade $animation-time;
+  	animation: rootFade $animation-time;
+	}
+	.tasks {
+		opacity: 0.2;
+		-webkit-animation: elementFade $animation-time;
+  	animation: elementFade $animation-time;
+	}
+}
+
+@-webkit-keyframes rootFade {
+    from {opacity: 1}
+    to {opacity: 0.7}
+}@keyframes fade {
+    from {opacity: 1}
+    to {opacity: 0.7}
+}
+
+@-webkit-keyframes elementFade {
+    from {opacity: 1}
+    to {opacity: 0.2}
+}@keyframes fade {
+    from {opacity: 1}
+    to {opacity: 0.2}
 }
 
 //transform unset fixes react-bootstrap bug. default transform animation was broken
 .modal-dialog {
-	margin: auto;
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
 	transform: unset !important;
 	-webkit-transform: unset !important;
 }
 
 //div hidden behind modal. could be used for fade or to cover main content
 .edit-modal {
-    -webkit-animation: fade 0.4s;
-    animation: fade 0.4s;
-    opacity: 1;
+  -webkit-animation: fade $animation-time;
+  animation: fade $animation-time;
+  opacity: 1;
 	width: 100%;
 	height: 100%;
 	margin: auto;
-	background-color: $color-accent;
+	//background-color: $color-accent;
 }
 
 @-webkit-keyframes fade {
@@ -220,11 +249,11 @@ input[type="text"].inputError {
 }
 
 .modal-content {
-	top: 0;
+	//top: 0;
 	position: fixed;
 	//width: 100%;
 	height: 100%;
-	margin: auto;
+	margin: 0 auto;
 	overflow-y: auto;
 	background-color: $color-bg;
 }
