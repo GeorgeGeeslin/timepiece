@@ -191,9 +191,6 @@ export default class EditTask extends Component {
 								type='datetime-local'
 								value={this.formatTimeStamp(timeInterval.stopTime)}
 								onChange={(e) => this.onChangeStopTime(index, e)}/>
-
-								<p> { timeInterval.stopTime - timeInterval.startTime } </p>
-
 						</Col>
 					</Row>
 				</Grid>
