@@ -11,8 +11,10 @@ const formatTime = (sec) =>
 
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-const weekStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000)).getTime()
-const weekEnd = new Date(((6 - currDay.getDay()) * 86400000) + 86400000 + currDay.getTime()).getTime()
+const weekStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000)).getTime();
+const weekEnd = new Date(((6 - currDay.getDay()) * 86400000) + 86400000 + currDay.getTime()).getTime();
+const monthStart = new Date(currDay.getFullYear(), currDay.getMonth(), 1).getTime();
+const monthEnd = new Date(currDay.getFullYear(), currDay.getMonth() + 1, 0, 23, 59, 59).getTime();
 
 export default class Summary extends Component {
 
@@ -82,24 +84,31 @@ export default class Summary extends Component {
 		return this.props.tasks.reduce((sum, task) => sum + task.time ,0)
 	}
 
-	weeklyTime() {
-		var total = 0;
+	timePeriodTotal(period) {
+		if (period === 'week') {
+			var periodStart = weekStart;
+			var periodEnd = weekEnd;
+		} else {
+			var periodStart = monthStart;
+			var periodEnd = monthEnd;
+		}
+		let total = 0;
 		for (let i = 0; i < this.props.tasks.length; i++) {
 			let task = this.props.tasks[i];
 			if (task.timeintervals !== undefined && task.timeintervals.length > 0) {
 				for (let j = 0; j < task.timeintervals.length; j++) {
 					let timeinterval = task.timeintervals[j];
 					//interval longer than a weeek. Only count time that falls within the week.
-					if (timeinterval.startTime <= weekStart && timeinterval.stopTime >= weekEnd) {
-						total = total + ((weekEnd - weekStart) / 1000);
+					if (timeinterval.startTime <= periodStart && timeinterval.stopTime >= periodEnd) {
+						total = total + ((periodEnd - periodStart) / 1000);
 						//interval that starts before the week and ends during the week. 
-					} else if (timeinterval.startTime <= weekStart && timeinterval.stopTime <= weekEnd && timeinterval.stopTime >= weekStart) {
-							total = total + ((timeinterval.stopTime - weekStart) / 1000); 
+					} else if (timeinterval.startTime <= periodStart && timeinterval.stopTime <= periodEnd && timeinterval.stopTime >= periodStart) {
+							total = total + ((timeinterval.stopTime - periodStart) / 1000); 
 						//interval that starts during the week and ends after the week. 
-					} else if (timeinterval.startTime >= weekStart && timeinterval.stopTime >= weekEnd && timeinterval.startTime <= weekEnd) {
-						total = total + ((weekEnd - timeinterval.startTime) / 1000);
+					} else if (timeinterval.startTime >= periodStart && timeinterval.stopTime >= periodEnd && timeinterval.startTime <= periodEnd) {
+						total = total + ((periodEnd - timeinterval.startTime) / 1000);
 						//interval with start and end times inside the week.
-					} else if (timeinterval.startTime >= weekStart && timeinterval.stopTime <= weekEnd) {
+					} else if (timeinterval.startTime >= periodStart && timeinterval.stopTime <= periodEnd) {
 						total = total + ((timeinterval.stopTime - timeinterval.startTime) / 1000);
 					}
 				}
@@ -126,8 +135,8 @@ export default class Summary extends Component {
 							<p><span className='taskLabel'>TOTAL CLIENTS: </span>{this.totalClients().length}</p>
 						</Col>
 					</Row>
-					<p><span className='taskLabel'>TIME THIS WEEK: </span>{formatTime(this.weeklyTime())}</p>
-					<p><span className='taskLabel'>TIME THIS MONTH: </span>100</p>
+					<p><span className='taskLabel'>TIME THIS WEEK: </span>{formatTime(this.timePeriodTotal('week'))}</p>
+					<p><span className='taskLabel'>TIME THIS MONTH: </span>{formatTime(this.timePeriodTotal('month'))}</p>
 					<p><span className='taskLabel'>TOTAL TIME SPENT: </span>{formatTime(this.totalTime())}</p>
 					<div className='task-button-container'>
 						<button className='task-buttons'>Charts and Time Sheets</button>
