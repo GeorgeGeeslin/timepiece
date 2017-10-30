@@ -92,13 +92,9 @@ class Timer extends Component {
 	}
 
 	validateFinishTask() {
-		if (typeof(Storage) !== "undefined") {
-			if (this.state.startTime !== null && this.state.stopTime !== null) {
-				this.props.finishTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime);
-				this.setState({secondsElapsed: 0})
-			}
-		} else {
-			alert("Sorry, the browser you're using doesn't support HTML5 storage.")
+		if (this.state.startTime !== null && this.state.stopTime !== null) {
+			this.props.finishTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime);
+			this.setState({secondsElapsed: 0})
 		}
 	}
 

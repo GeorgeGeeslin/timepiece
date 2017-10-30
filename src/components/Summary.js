@@ -100,21 +100,21 @@ export default class Summary extends Component {
 					let timeinterval = task.timeintervals[j];
 					//interval longer than a weeek. Only count time that falls within the week.
 					if (timeinterval.startTime <= periodStart && timeinterval.stopTime >= periodEnd) {
-						total = total + ((periodEnd - periodStart) / 1000);
+						total = total + (periodEnd - periodStart);
 						//interval that starts before the week and ends during the week. 
 					} else if (timeinterval.startTime <= periodStart && timeinterval.stopTime <= periodEnd && timeinterval.stopTime >= periodStart) {
-							total = total + ((timeinterval.stopTime - periodStart) / 1000); 
+							total = total + (timeinterval.stopTime - periodStart); 
 						//interval that starts during the week and ends after the week. 
 					} else if (timeinterval.startTime >= periodStart && timeinterval.stopTime >= periodEnd && timeinterval.startTime <= periodEnd) {
-						total = total + ((periodEnd - timeinterval.startTime) / 1000);
+						total = total + (periodEnd - timeinterval.startTime);
 						//interval with start and end times inside the week.
 					} else if (timeinterval.startTime >= periodStart && timeinterval.stopTime <= periodEnd) {
-						total = total + ((timeinterval.stopTime - timeinterval.startTime) / 1000);
+						total = total + (timeinterval.stopTime - timeinterval.startTime);
 					}
 				}
 			}
 		}
-		return total; 
+		return (Math.floor(total / 1000)); 
 	}
 
 	render() {
