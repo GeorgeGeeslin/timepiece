@@ -67,13 +67,14 @@ export default class EditTask extends Component {
 	};
 
 	onChangeStartTime = (index, e) => {
+		let timeintervals = [];
 		if (e.target.value === "") {
-			const dateTime = new Date();
+			const dateTime = this.minuteRoundedTime().getTime();
+			var currInterval = {startTime: dateTime, stopTime: this.state.timeintervals[index].stopTime};
 		} else {
 			const dateTime = e.target.value;
 			const unixTime = this.formatUnixTime(dateTime);
 			var currInterval = {startTime: unixTime, stopTime: this.state.timeintervals[index].stopTime};
-			var timeintervals = [];
 		}
 		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ));
 		timeintervals[index] = currInterval;
@@ -81,21 +82,21 @@ export default class EditTask extends Component {
 	};
 
 	onChangeStopTime = (index, e) => {
+		let timeintervals = [];
 		if (e.target.value === "") {
-			const dateTime = new Date();
+			const dateTime = this.minuteRoundedTime().getTime();
+			var currInterval = {startTime: this.state.timeintervals[index].startTime, stopTime: dateTime};
 		} else {
 			const dateTime = e.target.value;
 			const unixTime = this.formatUnixTime(dateTime);
 			var currInterval = {startTime: this.state.timeintervals[index].startTime, stopTime: unixTime};
-			var timeintervals = [];
 		}
 		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ));
 		timeintervals[index] = currInterval;
 		this.setState({timeintervals: timeintervals});
 	};
 
-	onAddTime = () => {
-		let timeintervals = [];
+	minuteRoundedTime() {
 		const currDate = new Date();
 		const year = currDate.getFullYear();
 		const month = currDate.getMonth();
@@ -103,12 +104,16 @@ export default class EditTask extends Component {
 		const hours = currDate.getHours();
 		const minutes = currDate.getMinutes();
 		const roundedToMinute = new Date(year, month, date, hours, minutes);
+		return roundedToMinute;
+	};
 
+	onAddTime = () => {
+		let timeintervals = [];
 		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ))
 		timeintervals.push(
 			{
-				startTime: Math.floor(roundedToMinute.getTime()), 
-				stopTime: Math.floor(roundedToMinute.getTime()) 
+				startTime: Math.floor(this.minuteRoundedTime().getTime()), 
+				stopTime: Math.floor(this.minuteRoundedTime().getTime()) 
 			}
 		);
 		this.setState({timeintervals: timeintervals});

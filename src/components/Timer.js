@@ -28,7 +28,6 @@ class Timer extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		//console.log("timer updated")
 		if (prevProps.selectedTaskIndex !== this.props.selectedTaskIndex && this.props.selectedTask === undefined) {
 			this.setState({
 				secondsElapsed: 0,
@@ -94,7 +93,6 @@ class Timer extends Component {
 
 	validateFinishTask() {
 		if (typeof(Storage) !== "undefined") {
-			//localStorage.secondsElapsed = this.state.secondsElapsed.toString();
 			if (this.state.startTime !== null && this.state.stopTime !== null) {
 				this.props.finishTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime);
 				this.setState({secondsElapsed: 0})
