@@ -95,9 +95,22 @@ export default class EditTask extends Component {
 	};
 
 	onAddTime = () => {
-		var timeintervals = [];
+		let timeintervals = [];
+		const currDate = new Date();
+		const year = currDate.getFullYear();
+		const month = currDate.getMonth();
+		const date = currDate.getDate();
+		const hours = currDate.getHours();
+		const minutes = currDate.getMinutes();
+		const roundedToMinute = new Date(year, month, date, hours, minutes);
+
 		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ))
-		timeintervals.push({startTime: new Date().getTime(), stopTime: new Date().getTime()});
+		timeintervals.push(
+			{
+				startTime: Math.floor(roundedToMinute.getTime()), 
+				stopTime: Math.floor(roundedToMinute.getTime()) 
+			}
+		);
 		this.setState({timeintervals: timeintervals});
 	}
 
