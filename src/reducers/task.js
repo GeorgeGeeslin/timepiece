@@ -1,5 +1,6 @@
 import * as TaskActionTypes from '../actiontypes/task';
-import update from 'immutability-helper';
+//import firebase from '../firebase';
+
 
 /*const initialState = {
 	tasks: [{
@@ -89,6 +90,7 @@ export default function Task(state=initialState, action) {
 					timeintervals: []
 				}
 			]
+
 			return {
 				...state,
 				selectedTaskIndex: addTaskList.sort(function(a,b){return b.timeKey - a.timeKey})[0].timeKey,

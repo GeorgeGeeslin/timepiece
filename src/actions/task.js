@@ -1,12 +1,19 @@
 import * as TaskActionTypes from '../actiontypes/task';
+import firebase from '../firebase';
 
 export const addTask = (task, project, client, timecreated) => {
-	return {
+return {
 		type: TaskActionTypes.ADD_TASK,
 		task,
 		project,
 		client
 	};
+
+	/*return dispatch => {
+
+	}*/
+
+	return 
 }
 
 export const selectTask = (timeKey) => {

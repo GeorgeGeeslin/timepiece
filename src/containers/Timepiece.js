@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators /*, createStore, applyMiddleware */} from 'redux';
 import { connect } from 'react-redux';
 import { Grid, Col, Row } from 'react-bootstrap';
 import * as TaskActionCreators from '../actions/task';
