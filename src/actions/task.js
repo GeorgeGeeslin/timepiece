@@ -1,20 +1,37 @@
 import * as TaskActionTypes from '../actiontypes/task';
 import firebase from '../firebase';
 
-export const addTask = (task, project, client, timecreated) => {
+export function addTask(task, project, client) {
+	return dispatch => {
+		//dispatch()
+		const taskRef = firebase.database().ref('/tasks');
+		taskRef.push({
+			task: task,
+			project: project,
+			client: client,
+			timecreated: new Date().getTime()
+		})
+		.then(() => {
+			dispatch(addTaskLocal(task, project, client));
+		});
+	}
+}
+
+
+export const addTaskLocal = (task, project, client) => {
 return {
 		type: TaskActionTypes.ADD_TASK,
 		task,
 		project,
 		client
 	};
-
-	/*return dispatch => {
-
-	}*/
-
-	return 
 }
+
+/*export const addSection = (name) => {
+  let key = database.ref('/').push().key
+  let model = sectionModel(key, name, firebase.database.ServerValue.TIMESTAMP)
+  return database.ref('/'+ key).set(model)
+}*/
 
 export const selectTask = (timeKey) => {
 	return {
