@@ -55,20 +55,13 @@ import * as TaskActionTypes from '../actiontypes/task';
 
 
 const initialState = {
-	tasks: [{
-		task: "test",
-		project: "",
-		client: "",
-		time: 0,
-		timecreated: new Date().getTime(),
-		timefinished: null,
-		timeKey: 1,
-		timeintervals: []
-	}],
+	tasks: [],
 	selectedTaskIndex: -1,
 	editTaskIndex: -1,
 	showEditScreen: false,
-	lastManualUpdate: null
+	lastManualUpdate: null,
+	username: null,
+	uid: null
 }
 
 const currDate = new Date();

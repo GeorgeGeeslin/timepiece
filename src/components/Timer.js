@@ -142,10 +142,10 @@ class Timer extends Component {
 	}
 }
 
-Timer.propTypes = {
+/*Timer.propTypes = {
 	finishTask: PropTypes.func.isRequired,
 	secondsElapsed: PropTypes.number.isRequired,
 	selectedTaskIndex: PropTypes.number.isRequired
-}
+}*/
 
 module.exports = Timer;

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 
 export default class CreatTaskForm extends Component {
-	 static propTypes = {
+	/* static propTypes = {
 	 	addTask: PropTypes.func.isRequired,
-	 }
+	 }*/
 
 	state = {
 		task: '',

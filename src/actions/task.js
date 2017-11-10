@@ -1,10 +1,12 @@
 import * as TaskActionTypes from '../actiontypes/task';
-import firebase from '../firebase';
+import {database, provider, auth} from '../firebase';
+
+
 
 export function addTask(task, project, client) {
 	return dispatch => {
 		//dispatch()
-		const taskRef = firebase.database().ref('/tasks');
+		const taskRef = database.ref('/tasks');
 		taskRef.push({
 			task: task,
 			project: project,
