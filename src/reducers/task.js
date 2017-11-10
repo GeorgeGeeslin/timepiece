@@ -69,6 +69,15 @@ const currTimeStamp = currDate.getTime();
 
 export default function Task(state=initialState, action) {
 	switch(action.type){
+		case TaskActionTypes.SUCCESSFUL_LOGIN: {
+			return {
+				...state,
+				uid: action.token,
+				username: action.user
+			}
+		}
+
+
 		case TaskActionTypes.ADD_TASK: {
 			const addTaskList = [
 				...state.tasks,

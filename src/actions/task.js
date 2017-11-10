@@ -1,11 +1,31 @@
 import * as TaskActionTypes from '../actiontypes/task';
-import {database, provider, auth} from '../firebase';
+import {database, auth} from '../firebase';
 
+export function attemptLogin(provider) {
+	return dispatch => {
+		auth.signInWithPopup(provider).then(function(result){
+			const token = result.credential.accessToken;
+			const user = result.user;
+			dispatch(successfulLogin(token, user));
+		}).catch(function(error) {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			const email = error.email;
+			const credential = error.credential;
+		});
+	}
+}
 
+export const successfulLogin = (token, user) => {
+	return {
+		type: TaskActionTypes.SUCCESSFUL_LOGIN,
+		token,
+		user
+	};
+}
 
 export function addTask(task, project, client) {
 	return dispatch => {
-		//dispatch()
 		const taskRef = database.ref('/tasks');
 		taskRef.push({
 			task: task,
@@ -15,7 +35,7 @@ export function addTask(task, project, client) {
 		})
 		.then(() => {
 			dispatch(addTaskLocal(task, project, client));
-		});
+		}); /*TODO add Catch */
 	}
 }
 

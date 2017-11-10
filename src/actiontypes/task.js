@@ -1,4 +1,5 @@
 export const ATTEMPT_LOGIN = 'task/ATTEMPT_LOGIN';
+export const SUCCESSFUL_LOGIN = 'task/'
 export const LOGOUT = 'task/LOGOUT';
 export const ADD_TASK = 'task/ADD_TASK';
 export const SELECT_TASK = 'task/SELECT_TASK';
