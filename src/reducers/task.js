@@ -60,8 +60,10 @@ const initialState = {
 	editTaskIndex: -1,
 	showEditScreen: false,
 	lastManualUpdate: null,
-	username: null,
-	uid: null
+	user: {
+		displayName: "George Geeslin",
+		photoURL: "https://lh5.googleusercontent.com/-lU84yBpvetk/AAAAAAAAAAI/AAAAAAAACaQ/06os67VOsqY/photo.jpg"
+	},
 }
 
 const currDate = new Date();
@@ -72,11 +74,16 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.SUCCESSFUL_LOGIN: {
 			return {
 				...state,
-				uid: action.user.uid,
-				username: action.user
+				user: action.user
 			}
 		}
 
+		case TaskActionTypes.SUCCESSFUL_SIGNOUT: {
+			return {
+				...state,
+				user: null
+			}
+		}
 
 		case TaskActionTypes.ADD_TASK: {
 			const addTaskList = [
@@ -92,13 +99,13 @@ export default function Task(state=initialState, action) {
 					timeintervals: []
 				}
 			]
-
 			return {
 				...state,
 				selectedTaskIndex: addTaskList.sort(function(a,b){return b.timeKey - a.timeKey})[0].timeKey,
 				tasks: addTaskList
 			}
 		}
+
 		case TaskActionTypes.SELECT_TASK:
 			return {
 				...state,

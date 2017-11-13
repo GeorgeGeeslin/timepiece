@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
+import UserHeader from '../components/UserHeader';
 import ActiveTask from '../components/ActiveTask';
 import Timer from '../components/Timer';
 import CreateTaskForm from '../components/CreateTaskForm';
@@ -21,8 +22,7 @@ export default class Timepiece extends Component {
 		const showEditScreen = this.props.showEditScreen;
 		const editTaskIndex = this.props.editTaskIndex;
 		const lastManualUpdate = this.props.lastManualUpdate;
-		//const username = this.props.username;
-		//const uid = this.props.uid;
+		const user = this.props.user;
 
 		let selectedTask;
 		if (selectedTaskIndex !== -1) {
@@ -85,6 +85,9 @@ export default class Timepiece extends Component {
 				timeIntervals: []
 			}
 		}
+
+		console.log(user)
+		console.log(user.displayName)
 
 		return (
 			<Grid>

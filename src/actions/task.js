@@ -16,12 +16,28 @@ export function attemptLogin(provider) {
 	}
 }
 
-
 export const successfulLogin = (user) => {
 	return {
 		type: TaskActionTypes.SUCCESSFUL_LOGIN,
 		user
 	};
+}
+
+export function attemptSignOut() {
+	return dispatch => {
+		auth.signOut().then(function(){
+			const user = null;
+			dispatch(seccessfullSignOut());
+		}).catch(function(error) {
+			const errorMessage = error;
+		})
+	}
+}
+
+export const seccessfullSignOut = () => {
+	return {
+		type: TaskActionTypes.SUCCESSFUL_SIGNOUT
+	}
 }
 
 export function addTask(task, project, client) {

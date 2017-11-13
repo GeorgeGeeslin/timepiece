@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TaskActionCreators from '../actions/task';
+import UserHeader from '../components/UserHeader';
 import Timepiece from './Timepiece';
 import Login from '../components/Login';
 
@@ -16,8 +17,9 @@ class App extends Component {
 	//}
 	
 	render() {
-		const { dispatch, tasks, selectedTaskIndex, showEditScreen, editTaskIndex, lastManualUpdate, username, uid} = this.props;
+		const { dispatch, tasks, selectedTaskIndex, showEditScreen, editTaskIndex, lastManualUpdate, user} = this.props;
 		const attemptLogin = bindActionCreators(TaskActionCreators.attemptLogin, dispatch);
+		const attemptSignOut = bindActionCreators(TaskActionCreators.attemptSignOut, dispatch);
 		const addTask = bindActionCreators(TaskActionCreators.addTask, dispatch);
 		const selectTask = bindActionCreators(TaskActionCreators.selectTask, dispatch);
 		const finishTask = bindActionCreators(TaskActionCreators.finishTask, dispatch);
@@ -30,19 +32,22 @@ class App extends Component {
 
 		return (
 			<div>
-			{ uid === null && 
+			{ user === null && 
 				<Login 
-					attemptLogin = {attemptLogin}	/>
+					attemptLogin = {attemptLogin}
+					attemptSignOut = {attemptSignOut}	/>
 			}
-			{ uid !== null &&
+			{ user !== null && 
+				<UserHeader user={this.props.user} />
+			}
+			{ user !== null &&
 				<Timepiece
 					tasks = {this.props.tasks}
 					selectedTaskIndex = {this.props.selectedTaskIndex}
 					showEditScreen = {this.props.showEditScreen}
 					editTaskIndex = {this.props.editTaskIndex}
 					lastManualUpdate = {this.props.lastManualUpdate}
-					username = {this.props.username}
-					uid = {this.props.uid} 
+					user = {this.props.user}
 					addTask = {addTask}
 					selectTask = {selectTask}
 					finishTask = {finishTask}
@@ -65,8 +70,7 @@ const mapStateToProps = state => (
 		showEditScreen: state.showEditScreen,
 		editTaskIndex: state.editTaskIndex,
 		lastManualUpdate: state.lastManualUpdate,
-		username: state.username,
-		uid: state.uid
+		user: state.user,
 	}
 );
 
