@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TaskActionCreators from '../actions/task';
 import Timepiece from './Timepiece';
-import Login from './Login';
+import Login from '../components/Login';
 
 class App extends Component {
 	static propTypes = {

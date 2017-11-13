@@ -6,7 +6,7 @@ export function attemptLogin(provider) {
 		auth.signInWithPopup(provider).then(function(result){
 			const token = result.credential.accessToken;
 			const user = result.user;
-			dispatch(successfulLogin(token, user));
+			dispatch(successfulLogin(user));
 		}).catch(function(error) {
 			const errorCode = error.code;
 			const errorMessage = error.message;
@@ -16,10 +16,10 @@ export function attemptLogin(provider) {
 	}
 }
 
-export const successfulLogin = (token, user) => {
+
+export const successfulLogin = (user) => {
 	return {
 		type: TaskActionTypes.SUCCESSFUL_LOGIN,
-		token,
 		user
 	};
 }

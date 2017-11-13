@@ -72,7 +72,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.SUCCESSFUL_LOGIN: {
 			return {
 				...state,
-				uid: action.token,
+				uid: action.user.uid,
 				username: action.user
 			}
 		}
