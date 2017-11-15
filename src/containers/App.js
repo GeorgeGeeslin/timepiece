@@ -38,7 +38,8 @@ class App extends Component {
 					attemptSignOut = {attemptSignOut}	/>
 			}
 			{ user !== null && 
-				<UserHeader user={this.props.user} />
+				<UserHeader user={this.props.user}
+					attemptSignOut={attemptSignOut} />
 			}
 			{ user !== null &&
 				<Timepiece

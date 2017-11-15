@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
-import UserHeader from '../components/UserHeader';
 import ActiveTask from '../components/ActiveTask';
 import Timer from '../components/Timer';
 import CreateTaskForm from '../components/CreateTaskForm';
@@ -85,9 +84,6 @@ export default class Timepiece extends Component {
 				timeIntervals: []
 			}
 		}
-
-		console.log(user)
-		console.log(user.displayName)
 
 		return (
 			<Grid>

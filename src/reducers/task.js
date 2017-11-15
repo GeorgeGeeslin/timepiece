@@ -62,10 +62,20 @@ const initialState = {
 	lastManualUpdate: null,
 	user: {
 		displayName: "George Geeslin",
-		photoURL: "https://lh5.googleusercontent.com/-lU84yBpvetk/AAAAAAAAAAI/AAAAAAAACaQ/06os67VOsqY/photo.jpg"
+		photoURL: "https://lh5.googleusercontent.com/-lU84yBpvetk/AAAAAAAAAAI/AAAAAAAACaQ/06os67VOsqY/photo.jpg",
+		email: "george.geeslin@gmail.com"
 	},
 }
 
+/*
+const initialState = {
+	tasks: [],
+	selectedTaskIndex: -1,
+	showEditScreen: false,
+	lastManualUpdate: null,
+	user: null
+}
+*/
 const currDate = new Date();
 const currTimeStamp = currDate.getTime();
 

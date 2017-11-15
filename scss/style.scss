@@ -7,6 +7,7 @@
 //$phone: '(max-width: 480px)';
 $tablet-portrait: '(min-width: 767px)';
 $tablet-landscape: '(min-width: 768px) and (max-width: 979px)';
+$small-desktop: '(min-width: 1024px) and (max-width:  11999px)';
 $large-desktop: '(min-width: 12000px)';
 $non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
 $retina: '(min--moz-device-pixel-ratio: 1.5), 
@@ -205,6 +206,20 @@ input[type="text"] {
 	}
 }
 
+.userProfileDropDown {
+	color: $color-bg;
+	z-index: 1;
+	position: absolute;
+	float: right;
+	top:40px;
+	background-color: $color-bg-light;
+	@include respond-to($tablet-portrait) {
+		left: 66%;
+	}
+	@include respond-to($small-desktop) {
+		left: 74%;
+	}
+}
 
 
 // ERRORS ------------------------------ /

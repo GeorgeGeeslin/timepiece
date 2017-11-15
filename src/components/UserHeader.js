@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 
-const UserHeader = ({user}) => {
-	if (user) {
+export default class UserHeader extends Component {
+	/*static propTypes = {
+	
+	}*/
+
+	state = {
+		profileDropDown: false
+	}
+
+	toggleDropDown = (dropDown) => {
+		this.setState({profileDropDown: !dropDown});
+	}
+
+	render () {
 		return (
-						<div className='masthead'>
-							<button className='userAvatar'>
-								<img src={user.photoURL} alt='User Icon' />
-							</button>
-							<span className='displayName'>{user.displayName}</span>
-						</div>
+			<div>
+			<div className='masthead'>
+				<button onClick={ () => this.toggleDropDown(this.state.profileDropDown) }className='userAvatar'>
+					<img src={this.props.user.photoURL} alt='User Icon' />
+				</button>
+				<span className='displayName'>{this.props.user.displayName}</span>
+			</div>
+				{ this.state.profileDropDown === true &&
+					<Grid>
+						<Row>
+							<Col className='userProfileDropDown' sm={12} md={4} lg={3}>
+							<p>{this.props.user.email}</p>
+							<button onClick={ () => this.props.attemptSignOut()}>Sign Out</button>
+							</Col>
+						</Row>
+					</Grid>
+			  }
+			</div>
 		)
 	} 
-	else {
-		return null;
-	}
 };
 
-
-/*
-required prop types
- */
-
-export default UserHeader;

@@ -129,6 +129,20 @@ input[type="text"] {
     height: 35px;
     border-radius: 50%; }
 
+.userProfileDropDown {
+  color: #130918;
+  z-index: 1;
+  position: absolute;
+  float: right;
+  top: 40px;
+  background-color: #fbf3e6; }
+  @media only screen and (min-width: 767px) {
+    .userProfileDropDown {
+      left: 66%; } }
+  @media only screen and (min-width: 1024px) and (max-width: 11999px) {
+    .userProfileDropDown {
+      left: 74%; } }
+
 input[type="text"].inputError {
   background-color: #f04e7d; }
 
