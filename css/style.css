@@ -135,13 +135,17 @@ input[type="text"] {
   position: absolute;
   float: right;
   top: 40px;
-  background-color: #fbf3e6; }
+  background-color: #fafafa;
+  text-align: center; }
   @media only screen and (min-width: 767px) {
     .userProfileDropDown {
       left: 66%; } }
   @media only screen and (min-width: 1024px) and (max-width: 11999px) {
     .userProfileDropDown {
       left: 74%; } }
+  .userProfileDropDown button {
+    color: #130918;
+    background-color: #ffffff; }
 
 input[type="text"].inputError {
   background-color: #f04e7d; }

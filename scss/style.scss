@@ -191,7 +191,6 @@ input[type="text"] {
 	width: 60px;
 	height: 40px;
 	background-color: $color-masthead;
-	//border: 0px solid black;
 	border: none;
 	&:focus {
 		outline: 0;
@@ -212,12 +211,17 @@ input[type="text"] {
 	position: absolute;
 	float: right;
 	top:40px;
-	background-color: $color-bg-light;
+	background-color: #fafafa;
+	text-align: center;
 	@include respond-to($tablet-portrait) {
 		left: 66%;
 	}
 	@include respond-to($small-desktop) {
 		left: 74%;
+	}
+	button {
+		color: $color-bg;
+		background-color: #ffffff;
 	}
 }
 

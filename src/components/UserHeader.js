@@ -12,14 +12,15 @@ export default class UserHeader extends Component {
 	}
 
 	toggleDropDown = (dropDown) => {
-		this.setState({profileDropDown: !dropDown});
+			this.setState({profileDropDown: !dropDown});	
 	}
 
 	render () {
 		return (
 			<div>
 			<div className='masthead'>
-				<button onClick={ () => this.toggleDropDown(this.state.profileDropDown) }className='userAvatar'>
+				<button tabIndex='0' 
+					onClick={ (e) => this.toggleDropDown(this.state.profileDropDown, e) }className='userAvatar'>
 					<img src={this.props.user.photoURL} alt='User Icon' />
 				</button>
 				<span className='displayName'>{this.props.user.displayName}</span>
@@ -29,7 +30,7 @@ export default class UserHeader extends Component {
 						<Row>
 							<Col className='userProfileDropDown' sm={12} md={4} lg={3}>
 							<p>{this.props.user.email}</p>
-							<button onClick={ () => this.props.attemptSignOut()}>Sign Out</button>
+							<button className='control-buttons' onClick={ () => this.props.attemptSignOut()}>Sign Out</button>
 							</Col>
 						</Row>
 					</Grid>
