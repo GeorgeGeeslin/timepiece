@@ -41,6 +41,15 @@ ul {
     border: 1px solid #623353;
     color: #74546a; }
 
+/*
+.signOut {
+	width: 100%;
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+}
+*/
 input:focus {
   outline: none; }
 
@@ -143,9 +152,27 @@ input[type="text"] {
   @media only screen and (min-width: 1024px) and (max-width: 11999px) {
     .userProfileDropDown {
       left: 74%; } }
-  .userProfileDropDown button {
-    color: #130918;
-    background-color: #ffffff; }
+  .userProfileDropDown:focus {
+    outline: 0; }
+
+.signOut {
+  width: 100%;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #eadef2;
+  background-color: transparent;
+  border: 1px solid #9d138c;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #130918;
+  margin-bottom: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+  .signOut:disabled {
+    border: 1px solid #623353;
+    color: #74546a; }
 
 input[type="text"].inputError {
   background-color: #f04e7d; }

@@ -60,7 +60,7 @@ export default class UserHeader extends Component {
 							<Col tabIndex='0' className='userProfileDropDown' sm={12} md={4} lg={3} id='userProfileDropDown'
 								onBlur={ () => this.closeDropDown(this.state.profileDropDown)}>
 							<p>{this.props.user.email}</p>
-							<p className='control-buttons' id='signOut' onClick={ () => this.props.attemptSignOut()}>Sign Out</p>
+							<p className='signOut' onClick={ () => this.props.attemptSignOut()}>Sign Out</p>
 							</Col>
 						</Row>
 					</Grid>

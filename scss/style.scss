@@ -122,7 +122,15 @@ ul{
 	}
 	@include center;
 }
-
+/*
+.signOut {
+	width: 100%;
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+}
+*/
 input:focus {
 	outline: none;
 }
@@ -219,12 +227,22 @@ input[type="text"] {
 	@include respond-to($small-desktop) {
 		left: 74%;
 	}
-	button {
-		color: $color-bg;
-		background-color: #ffffff;
+	&:focus {
+		outline: 0;
 	}
 }
 
+.signOut {
+	width: 100%;
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+	color: $color-bg;
+	margin-bottom: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
 
 // ERRORS ------------------------------ /
 
