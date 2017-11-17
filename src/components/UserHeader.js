@@ -8,23 +8,32 @@ export default class UserHeader extends Component {
 	}*/
 
 	state = {
-		profileDropDown: false
+		profileDropDown: false,
+		userIconDisabled: false
 	}
 
-	componentDidUpdate(prevProps) {
-		console.log(prevProps)
+	componentDidUpdate(prevState, prevProps) {
 		if (prevProps.profileDropDown === false && this.state.profileDropDown === true) {
 			document.getElementById("userProfileDropDown").focus();
 		}
 	}
 
-	toggleDropDown = (dropDown) => {
-		this.setState({profileDropDown: !dropDown});
+	openDropDown = (dropDown) => {
+		if (dropDown === false && this.state.userIconDisabled === false) {
+			this.setState({
+				profileDropDown: true,
+				userIconDisabled: true
+			});
+		} 
 	}
 
 	closeDropDown = (dropDown) => {
 		if (dropDown === true) {
-			this.setState({profileDropDown: false});
+			console.log("test")
+			this.setState({
+				profileDropDown: false,
+				userIconDisabled: false
+			});
 		}
 	}
 
@@ -32,9 +41,17 @@ export default class UserHeader extends Component {
 		return (
 			<div>
 			<div className='masthead'>
-				<button tabIndex='0' onClick={ () => this.toggleDropDown(this.state.profileDropDown)}className='userAvatar' id='userAvatar'>
+				{ this.state.userIconDisabled === true &&
+					<button className='userAvatar'>
+						<img src={this.props.user.photoURL} alt='User Icon' />
+					</button>
+				}
+				{ this.state.userIconDisabled === false &&
+					<button onClick={ () => this.openDropDown(this.state.profileDropDown)} 
+					disabled={this.state.userIconDisabled} className='userAvatar'>
 					<img src={this.props.user.photoURL} alt='User Icon' />
 				</button>
+				}
 				<span className='displayName'>{this.props.user.displayName}</span>
 			</div>
 				{ this.state.profileDropDown === true &&
@@ -43,7 +60,7 @@ export default class UserHeader extends Component {
 							<Col tabIndex='0' className='userProfileDropDown' sm={12} md={4} lg={3} id='userProfileDropDown'
 								onBlur={ () => this.closeDropDown(this.state.profileDropDown)}>
 							<p>{this.props.user.email}</p>
-							<button className='control-buttons' onClick={ () => this.props.attemptSignOut()}>Sign Out</button>
+							<p className='control-buttons' id='signOut' onClick={ () => this.props.attemptSignOut()}>Sign Out</p>
 							</Col>
 						</Row>
 					</Grid>
