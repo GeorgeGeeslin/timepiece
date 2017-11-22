@@ -97,7 +97,7 @@ export default class Timepiece extends Component {
 							secondsElapsed={secondsElapsed} 
 							finishTask={this.props.finishTask} 
 							pauseTask={this.props.pauseTask}
-							selectedTask={this.props.selectedTask}
+							selectedTask={selectedTask}
 							lastManualUpdate={lastManualUpdate} />
 						<CreateTaskForm addTask={this.props.addTask} 
 							uid={uid}/>
