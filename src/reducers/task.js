@@ -10,7 +10,7 @@ import * as TaskActionTypes from '../actiontypes/task';
 		time: 6100,
 		timecreated: new Date().getTime(),
 		timefinished: null,
-		timeKey: 1,
+		taskId: 1,
 		timeintervals: [
 			{
 				startTime: 1483990440000,
@@ -29,7 +29,7 @@ import * as TaskActionTypes from '../actiontypes/task';
 		time: 8200,
 		timecreated: new Date().getTime(),
 		timefinished: null,
-		timeKey: 2,
+		taskId: 2,
 		timeintervals: []
 	},
 	{
@@ -39,7 +39,7 @@ import * as TaskActionTypes from '../actiontypes/task';
 		time: 2500,
 		timecreated: new Date().getTime(),
 		timefinished: new Date().getTime(),
-		timeKey: 3,
+		taskId: 3,
 		timeintervals: [
 			{
 				startTime: new Date().getTime() - 5000,
@@ -53,7 +53,7 @@ import * as TaskActionTypes from '../actiontypes/task';
 	lastManualUpdate: null
 } */
 
-
+/*
 const initialState = {
 	tasks: [],
 	selectedTaskIndex: -1,
@@ -66,8 +66,8 @@ const initialState = {
 		email: "george.geeslin@gmail.com"
 	},
 }
+*/
 
-/*
 const initialState = {
 	tasks: [],
 	selectedTaskIndex: -1,
@@ -75,7 +75,7 @@ const initialState = {
 	lastManualUpdate: null,
 	user: null
 }
-*/
+
 const currDate = new Date();
 const currTimeStamp = currDate.getTime();
 
@@ -103,29 +103,31 @@ export default function Task(state=initialState, action) {
 					project: action.project,
 					client: action.client,
 					time: 0,
-					timecreated: new Date().getTime(),
+					timecreated: action.timecreated,
 					timefinished: null,
-					timeKey: new Date().getTime(),
+					taskId: action.taskId,
+					uid: action.uid,
 					timeintervals: []
 				}
 			]
 			return {
 				...state,
-				selectedTaskIndex: addTaskList.sort(function(a,b){return b.timeKey - a.timeKey})[0].timeKey,
+				selectedTaskIndex: addTaskList.sort(function(a,b){return b.taskId - a.taskId})[0].taskId,
 				tasks: addTaskList
 			}
 		}
 
-		case TaskActionTypes.SELECT_TASK:
+		case TaskActionTypes.SELECT_TASK: {
 			return {
 				...state,
-				selectedTaskIndex :action.timeKey
+				selectedTaskIndex: action.taskId
 			}
+		}
 
 		case TaskActionTypes.FINISH_TASK:
 			const finishTaskList = Object.assign({}, state);
 			const finishTask = finishTaskList.tasks.filter(function(task){
-				return task.timeKey === finishTaskList.selectedTaskIndex;
+				return task.taskId === finishTaskList.selectedTaskIndex;
 			})[0];
 			finishTask.timefinished = new Date().getTime(),
 			finishTask.time = action.time
@@ -139,9 +141,9 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.DELETE_TASK:
 			const deleteTaskList = Object.assign({}, state);
 			const deleteTask = deleteTaskList.tasks.filter(function(task){
-				return task.timeKey !== action.timeKey
+				return task.taskId !== action.taskId
 			})
-			if (action.timeKey === action.selectedTaskIndex) {
+			if (action.taskId === action.selectedTaskIndex) {
 				return {
 					...state,
 					tasks: deleteTask,
@@ -158,7 +160,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.PAUSE_TASK:
 			const pauseTaskList =  Object.assign({}, state);
 			const pauseTask = pauseTaskList.tasks.filter(function(task){
-				return task.timeKey === pauseTaskList.selectedTaskIndex;
+				return task.taskId === pauseTaskList.selectedTaskIndex;
 			})[0];
 			pauseTask.time = action.time
 			pauseTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
@@ -170,7 +172,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.OPEN_EDIT:
 			return {
 				...state,
-				editTaskIndex: action.timeKey,
+				editTaskIndex: action.taskId,
 				showEditScreen: true
 			}
 
@@ -184,7 +186,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.UPDATE_TASK:
 			const updateTaskList = Object.assign({}, state);
 			const updateTask = updateTaskList.tasks.filter(function(task){
-				return task.timeKey === action.editTaskIndex;
+				return task.taskId === action.editTaskIndex;
 			})[0];
 			updateTask.task = action.task
 			updateTask.project = action.project
@@ -201,12 +203,12 @@ export default function Task(state=initialState, action) {
 			case TaskActionTypes.RESUME_TASK:
 				const resumeTaskList = Object.assign({}, state);
 				const resumeTask = resumeTaskList.tasks.filter(function(task){
-					return task.timeKey === action.timeKey;
+					return task.taskId === action.taskId;
 				})[0];
 				resumeTask.timefinished = null;
 				return {
 					...state,
-					selectedTaskIndex: action.timeKey,
+					selectedTaskIndex: action.taskId,
 					resumeTaskList
 				}
 

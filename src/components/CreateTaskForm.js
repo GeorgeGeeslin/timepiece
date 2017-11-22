@@ -46,7 +46,7 @@ export default class CreatTaskForm extends Component {
 				this.state.task,
 				this.state.project,
 				this.state.client,
-				this.state.timecreated
+				this.props.uid
 			);
 			this.setState({
 				task: '',
@@ -57,6 +57,7 @@ export default class CreatTaskForm extends Component {
 	};
 
 	render() {
+
 		return(
 			<div className='creatTaskForm'>
 				<form onSubmit={this.addTask}>

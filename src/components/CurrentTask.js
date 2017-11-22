@@ -13,17 +13,17 @@ const CurrentTask = props => (
 			<Col className='task-button-container' sm={12}>
 				<button
 					className='task-buttons' 
-					onClick={ () => props.selectTask(props.timeKey)}>
+					onClick={() => props.selectTask(props.taskId)}>
 					SELECT
 				</button>
 				<button
 					className='task-buttons'
-					onClick={ () => props.deleteTask(props.timeKey, props.selectedTaskIndex)}>
+					onClick={ () => props.deleteTask(props.taskId, props.selectedTaskIndex)}>
 					DELETE
 				</button>
 				<button
 					className='task-buttons'
-					onClick={ () => props.openEdit(props.timeKey)}>
+					onClick={ () => props.openEdit(props.taskId)}>
 					EDIT
 				</button>
 			</Col>
