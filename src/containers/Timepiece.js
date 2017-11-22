@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { bindActionCreators /*, createStore, applyMiddleware */} from 'redux';
-import { connect } from 'react-redux';
 import { Grid, Col, Row } from 'react-bootstrap';
-import * as TaskActionCreators from '../actions/task';
 import ActiveTask from '../components/ActiveTask';
 import Timer from '../components/Timer';
 import CreateTaskForm from '../components/CreateTaskForm';
@@ -12,27 +9,25 @@ import FinishedTask from '../components/FinishedTask';
 import EditTask from '../components/EditTask';
 import Summary from '../components/Summary'
 
-class Timepiece extends Component {
-	static propTypes = {
-		tasks: PropTypes.array.isRequired
-	};
-	
+export default class Timepiece extends Component {
+//		static propTypes = {
+//		tasks: PropTypes.array.isRequired
+//	};
+
 	render() {
-		const { dispatch, tasks, selectedTaskIndex, showEditScreen, editTaskIndex, lastManualUpdate} = this.props;
-		const addTask = bindActionCreators(TaskActionCreators.addTask, dispatch);
-		const selectTask = bindActionCreators(TaskActionCreators.selectTask, dispatch);
-		const finishTask = bindActionCreators(TaskActionCreators.finishTask, dispatch);
-		const deleteTask = bindActionCreators(TaskActionCreators.deleteTask, dispatch);
-		const pauseTask = bindActionCreators(TaskActionCreators.pauseTask, dispatch);
-		const openEdit = bindActionCreators(TaskActionCreators.openEdit, dispatch);
-		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
-		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
-		const resumeTask = bindActionCreators(TaskActionCreators.resumeTask, dispatch);
+
+		const tasks = this.props.tasks;
+		const selectedTaskIndex = this.props.selectedTaskIndex;
+		const showEditScreen = this.props.showEditScreen;
+		const editTaskIndex = this.props.editTaskIndex;
+		const lastManualUpdate = this.props.lastManualUpdate;
+		const user = this.props.user;
+		const uid = user.uid;
 
 		let selectedTask;
 		if (selectedTaskIndex !== -1) {
 			selectedTask = tasks.filter(function(task){
-				return task.timeKey === selectedTaskIndex;
+				return task.taskId === selectedTaskIndex;
 			})[0];
 		}
 
@@ -52,10 +47,10 @@ class Timepiece extends Component {
 				project={tasks.project}
 				client={tasks.client}
 				key={index}
-				timeKey={tasks.timeKey}
-				selectTask={selectTask}
-				deleteTask={deleteTask}
-				openEdit={openEdit}
+				taskId={tasks.taskId}
+				selectTask={this.props.selectTask}
+				deleteTask={this.props.deleteTask}
+				openEdit={this.props.openEdit}
 				selectedTaskIndex={selectedTaskIndex}
 			/>
 		));
@@ -69,10 +64,10 @@ class Timepiece extends Component {
 				project={tasks.project}
 				client={tasks.client}
 				key={index}
-				timeKey={tasks.timeKey}
-				resumeTask={resumeTask}
-				deleteTask={deleteTask}
-				openEdit={openEdit}
+				taskId={tasks.taskId}
+				resumeTask={this.props.resumeTask}
+				deleteTask={this.props.deleteTask}
+				openEdit={this.props.openEdit}
 				selectedTaskIndex={selectedTaskIndex}
 			/>
 		));
@@ -80,7 +75,7 @@ class Timepiece extends Component {
 		let editTask;
 		if (editTaskIndex !== -1) {
 			editTask = tasks.filter(function(task){
-				return task.timeKey === editTaskIndex;
+				return task.taskId === editTaskIndex;
 			})[0];
 		} else {
 			editTask = {
@@ -100,11 +95,12 @@ class Timepiece extends Component {
 						<Timer
 							selectedTaskIndex={selectedTaskIndex} 
 							secondsElapsed={secondsElapsed} 
-							finishTask={finishTask} 
-							pauseTask={pauseTask}
-							selectedTask={selectedTask}
+							finishTask={this.props.finishTask} 
+							pauseTask={this.props.pauseTask}
+							selectedTask={this.props.selectedTask}
 							lastManualUpdate={lastManualUpdate} />
-						<CreateTaskForm addTask={addTask} />
+						<CreateTaskForm addTask={this.props.addTask} 
+							uid={uid}/>
 						{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
 						<div className='taskWrapper'>
 							{ currentTasks }
@@ -118,25 +114,15 @@ class Timepiece extends Component {
 						<Summary tasks={tasks}/>
 					</Col>
 				</Row>
-				{showEditScreen === true && <EditTask
-				closeEdit={closeEdit} 
-				updateTask={updateTask}
-				showEditScreen={showEditScreen}
-				editTaskIndex={editTaskIndex}
-				editTask={editTask}/>}
+				{this.props.showEditScreen === true && <EditTask
+				closeEdit={this.props.closeEdit} 
+				updateTask={this.props.updateTask}
+				showEditScreen={this.props.showEditScreen}
+				editTaskIndex={this.props.editTaskIndex}
+				editTask={editTask}/>}		
 			</Grid>
-		)
+		)	
+
 	}
 }
 
-const mapStateToProps = state => (
-	{
-		tasks: state.tasks,
-		selectedTaskIndex: state.selectedTaskIndex,
-		showEditScreen: state.showEditScreen,
-		editTaskIndex: state.editTaskIndex,
-		lastManualUpdate: state.lastManualUpdate
-	}
-);
-
-export default connect(mapStateToProps)(Timepiece);

@@ -1,29 +1,73 @@
 import * as TaskActionTypes from '../actiontypes/task';
-import firebase from '../firebase';
+import {database, auth} from '../firebase';
 
-export function addTask(task, project, client) {
+export function attemptLogin(provider) {
 	return dispatch => {
-		//dispatch()
-		const taskRef = firebase.database().ref('/tasks');
-		taskRef.push({
-			task: task,
-			project: project,
-			client: client,
-			timecreated: new Date().getTime()
-		})
-		.then(() => {
-			dispatch(addTaskLocal(task, project, client));
+		auth.signInWithPopup(provider).then(function(result){
+			const token = result.credential.accessToken;
+			const user = result.user;
+			dispatch(successfulLogin(user));
+		}).catch(function(error) {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			const email = error.email;
+			const credential = error.credential;
 		});
 	}
 }
 
+export const successfulLogin = (user) => {
+	return {
+		type: TaskActionTypes.SUCCESSFUL_LOGIN,
+		user
+	};
+}
 
-export const addTaskLocal = (task, project, client) => {
+export function attemptSignOut() {
+	return dispatch => {
+		auth.signOut().then(function(){
+			const user = null;
+			dispatch(seccessfullSignOut());
+		}).catch(function(error) {
+			const errorMessage = error;
+		})
+	}
+}
+
+export const seccessfullSignOut = () => {
+	return {
+		type: TaskActionTypes.SUCCESSFUL_SIGNOUT
+	}
+}
+
+export function addTask(task, project, client, uid) {
+	let time = new Date().getTime();
+	return dispatch => {
+		const taskRef = database.ref('/tasks');
+		taskRef.push({
+			task: task,
+			project: project,
+			client: client,
+			timecreated: time,
+			taskId: uid + time,
+			uid: uid
+		})
+		.then(() => {
+			dispatch(addTaskLocal(task, project, client, time, uid+time, uid));
+		}); /*TODO add Catch */
+	}
+}
+
+
+export const addTaskLocal = (task, project, client, timecreated, taskId, uid) => {
 return {
 		type: TaskActionTypes.ADD_TASK,
 		task,
 		project,
-		client
+		client,
+		timecreated,
+		taskId,
+		uid
 	};
 }
 
@@ -33,10 +77,10 @@ return {
   return database.ref('/'+ key).set(model)
 }*/
 
-export const selectTask = (timeKey) => {
+export const selectTask = (taskId) => {
 	return {
 		type: TaskActionTypes.SELECT_TASK,
-		timeKey
+		taskId
 	};
 }
 
@@ -49,10 +93,10 @@ export const finishTask = (time, startTime, stopTime) => {
 	};
 }
 
-export const deleteTask = (timeKey, selectedTaskIndex) => {
+export const deleteTask = (taskId, selectedTaskIndex) => {
 	return {
 		type: TaskActionTypes.DELETE_TASK,
-		timeKey,
+		taskId,
 		selectedTaskIndex
 	}
 }
@@ -67,10 +111,10 @@ export const pauseTask = (time, startTime, stopTime, selectedTaskIndex) => {
 	}
 }
 
-export const openEdit = (timeKey) => {
+export const openEdit = (taskId) => {
 	return {
 		type: TaskActionTypes.OPEN_EDIT,
-		timeKey
+		taskId
 	}
 }
 
@@ -92,9 +136,9 @@ export const updateTask = (task, project, client, time, timeintervals, editTaskI
 	}
 }
 
-export const resumeTask = (timeKey) => {
+export const resumeTask = (taskId) => {
 	return {
 		type: TaskActionTypes.RESUME_TASK,
-		timeKey
+		taskId
 	}
 }

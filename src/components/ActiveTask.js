@@ -24,7 +24,7 @@ const ActiveTask = ({ selectedTask }) => {
 	}
 };
 
-ActiveTask.propTypes = {
+/*ActiveTask.propTypes = {
 	selectedTask: PropTypes.shape({
 		client: PropTypes.string.isRequired,
 		project: PropTypes.string.isRequired,
@@ -34,6 +34,6 @@ ActiveTask.propTypes = {
 		timecreated: PropTypes.number.isRequired,
 		timefinished: PropTypes.number
 	})
-}
+}*/
 
 export default ActiveTask;

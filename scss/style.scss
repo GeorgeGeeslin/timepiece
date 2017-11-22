@@ -7,6 +7,7 @@
 //$phone: '(max-width: 480px)';
 $tablet-portrait: '(min-width: 767px)';
 $tablet-landscape: '(min-width: 768px) and (max-width: 979px)';
+$small-desktop: '(min-width: 1024px) and (max-width:  11999px)';
 $large-desktop: '(min-width: 12000px)';
 $non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
 $retina: '(min--moz-device-pixel-ratio: 1.5), 
@@ -21,6 +22,7 @@ $color-secondary: #ffa755; //orange
 $color-borders: #9d138c; 
 $color-accent: #623353;
 $color-shade: #74546a; 
+$color-masthead: #1e2f51;
 
 $highlight-text: #dead80;
 $highlight-border: #96a2ec;
@@ -120,7 +122,15 @@ ul{
 	}
 	@include center;
 }
-
+/*
+.signOut {
+	width: 100%;
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+}
+*/
 input:focus {
 	outline: none;
 }
@@ -139,6 +149,9 @@ input[type="submit"] {
 .task-buttons {
 	@include inputs {
 		border: 1px solid $color-borders;
+	}
+	&:focus {
+		outline: 0;
 	}
 }
 
@@ -161,6 +174,12 @@ input[type="text"] {
 	@include center;
 }
 
+.masthead {
+	width: 100%;
+	height: 40px;
+	background-color: $color-masthead;
+}
+
 .taskLabel {
 	@include label;
 }
@@ -168,6 +187,61 @@ input[type="text"] {
 .inputLabel {
 	@include label;
 	display: block;
+}
+
+.displayName {
+	float: right;
+	line-height: 40px;
+}
+
+.userAvatar {
+	float: right;
+	width: 60px;
+	height: 40px;
+	background-color: $color-masthead;
+	border: none;
+	&:focus {
+		outline: 0;
+	}
+	&:hover {
+		cursor: pointer;
+	}
+	img {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+	}
+}
+
+.userProfileDropDown {
+	color: $color-bg;
+	z-index: 1;
+	position: absolute;
+	float: right;
+	top:40px;
+	background-color: #fafafa;
+	text-align: center;
+	@include respond-to($tablet-portrait) {
+		left: 66%;
+	}
+	@include respond-to($small-desktop) {
+		left: 74%;
+	}
+	&:focus {
+		outline: 0;
+	}
+}
+
+.signOut {
+	width: 100%;
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+	color: $color-bg;
+	margin-bottom: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 // ERRORS ------------------------------ /
