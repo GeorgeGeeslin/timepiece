@@ -6,7 +6,6 @@ export function attemptLogin(provider) {
 		auth.signInWithPopup(provider).then(function(result){
 			const token = result.credential.accessToken;
 			const user = result.user;
-			console.log(user.displayName)
 			dispatch(successfulLogin(user));
 		}).catch(function(error) {
 			const errorCode = error.code;
@@ -105,9 +104,9 @@ export const deleteTask = (taskKey, selectedTaskIndex) => {
 //
 export function pauseTask(time, startTime, stopTime, selectedTaskIndex, uid, taskKey) {
 	return dispatch => {
-		const timeRef = database.ref(uid+'/'+taskKey);
-		const intervalRef = database.ref(uid+'/'+taskKey+'/timeintervals')
-		taskRef.set({time: time})
+		const timeRef = database.ref(uid+'/tasks/'+taskKey);
+		const intervalRef = database.ref(uid+'/tasks/'+taskKey+'/timeintervals')
+		timeRef.set({time: time})
 		.then(intervalRef.push(
 			{
 				startTime: startTime,
@@ -119,6 +118,7 @@ export function pauseTask(time, startTime, stopTime, selectedTaskIndex, uid, tas
 			}); /*TODO add Catch*/
 	}
 }
+
 
 export const pauseTaskLocal = (time, startTime, stopTime, selectedTaskIndex) => {
 	return {
