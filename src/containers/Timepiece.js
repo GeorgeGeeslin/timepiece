@@ -27,7 +27,7 @@ export default class Timepiece extends Component {
 		let selectedTask;
 		if (selectedTaskIndex !== -1) {
 			selectedTask = tasks.filter(function(task){
-				return task.taskId === selectedTaskIndex;
+				return task.taskKey === selectedTaskIndex;
 			})[0];
 		}
 
@@ -47,11 +47,12 @@ export default class Timepiece extends Component {
 				project={tasks.project}
 				client={tasks.client}
 				key={index}
-				taskId={tasks.taskId}
+				taskKey={tasks.taskKey}
 				selectTask={this.props.selectTask}
 				deleteTask={this.props.deleteTask}
 				openEdit={this.props.openEdit}
 				selectedTaskIndex={selectedTaskIndex}
+				uid={uid}
 			/>
 		));
 
@@ -64,7 +65,7 @@ export default class Timepiece extends Component {
 				project={tasks.project}
 				client={tasks.client}
 				key={index}
-				taskId={tasks.taskId}
+				taskKey={tasks.taskKey}
 				resumeTask={this.props.resumeTask}
 				deleteTask={this.props.deleteTask}
 				openEdit={this.props.openEdit}
@@ -75,7 +76,7 @@ export default class Timepiece extends Component {
 		let editTask;
 		if (editTaskIndex !== -1) {
 			editTask = tasks.filter(function(task){
-				return task.taskId === editTaskIndex;
+				return task.taskKey === editTaskIndex;
 			})[0];
 		} else {
 			editTask = {
@@ -98,7 +99,9 @@ export default class Timepiece extends Component {
 							finishTask={this.props.finishTask} 
 							pauseTask={this.props.pauseTask}
 							selectedTask={selectedTask}
-							lastManualUpdate={lastManualUpdate} />
+							lastManualUpdate={lastManualUpdate}
+							uid={uid}
+							/>
 						<CreateTaskForm addTask={this.props.addTask} 
 							uid={uid}/>
 						{ currentTasks.length > 0 && <h2>Current Tasks</h2> }

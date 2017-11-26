@@ -10,7 +10,7 @@ import * as TaskActionTypes from '../actiontypes/task';
 		time: 6100,
 		timecreated: new Date().getTime(),
 		timefinished: null,
-		taskId: 1,
+		taskKey: 1,
 		timeintervals: [
 			{
 				startTime: 1483990440000,
@@ -29,7 +29,7 @@ import * as TaskActionTypes from '../actiontypes/task';
 		time: 8200,
 		timecreated: new Date().getTime(),
 		timefinished: null,
-		taskId: 2,
+		taskKey: 2,
 		timeintervals: []
 	},
 	{
@@ -39,7 +39,7 @@ import * as TaskActionTypes from '../actiontypes/task';
 		time: 2500,
 		timecreated: new Date().getTime(),
 		timefinished: new Date().getTime(),
-		taskId: 3,
+		taskKey: 3,
 		timeintervals: [
 			{
 				startTime: new Date().getTime() - 5000,
@@ -63,7 +63,8 @@ const initialState = {
 	user: {
 		displayName: "George Geeslin",
 		photoURL: "https://lh5.googleusercontent.com/-lU84yBpvetk/AAAAAAAAAAI/AAAAAAAACaQ/06os67VOsqY/photo.jpg",
-		email: "george.geeslin@gmail.com"
+		email: "george.geeslin@gmail.com",
+		uid: "E2K4Tb5ffuU4y2or9mSn7nMaNAF3"
 	},
 }
 */
@@ -105,14 +106,13 @@ export default function Task(state=initialState, action) {
 					time: 0,
 					timecreated: action.timecreated,
 					timefinished: null,
-					taskId: action.taskId,
-					uid: action.uid,
+					taskKey: action.taskKey,
 					timeintervals: []
 				}
 			]
 			return {
 				...state,
-				selectedTaskIndex: addTaskList.sort(function(a,b){return b.taskId - a.taskId})[0].taskId,
+				selectedTaskIndex: addTaskList.sort(function(a,b){return b.taskKey - a.taskKey})[0].taskKey,
 				tasks: addTaskList
 			}
 		}
@@ -120,14 +120,14 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.SELECT_TASK: {
 			return {
 				...state,
-				selectedTaskIndex: action.taskId
+				selectedTaskIndex: action.taskKey
 			}
 		}
 
 		case TaskActionTypes.FINISH_TASK:
 			const finishTaskList = Object.assign({}, state);
 			const finishTask = finishTaskList.tasks.filter(function(task){
-				return task.taskId === finishTaskList.selectedTaskIndex;
+				return task.taskKey === finishTaskList.selectedTaskIndex;
 			})[0];
 			finishTask.timefinished = new Date().getTime(),
 			finishTask.time = action.time
@@ -141,9 +141,9 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.DELETE_TASK:
 			const deleteTaskList = Object.assign({}, state);
 			const deleteTask = deleteTaskList.tasks.filter(function(task){
-				return task.taskId !== action.taskId
+				return task.taskKey !== action.taskKey
 			})
-			if (action.taskId === action.selectedTaskIndex) {
+			if (action.taskKey === action.selectedTaskIndex) {
 				return {
 					...state,
 					tasks: deleteTask,
@@ -160,7 +160,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.PAUSE_TASK:
 			const pauseTaskList =  Object.assign({}, state);
 			const pauseTask = pauseTaskList.tasks.filter(function(task){
-				return task.taskId === pauseTaskList.selectedTaskIndex;
+				return task.taskKey === pauseTaskList.selectedTaskIndex;
 			})[0];
 			pauseTask.time = action.time
 			pauseTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
@@ -172,7 +172,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.OPEN_EDIT:
 			return {
 				...state,
-				editTaskIndex: action.taskId,
+				editTaskIndex: action.taskKey,
 				showEditScreen: true
 			}
 
@@ -186,7 +186,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.UPDATE_TASK:
 			const updateTaskList = Object.assign({}, state);
 			const updateTask = updateTaskList.tasks.filter(function(task){
-				return task.taskId === action.editTaskIndex;
+				return task.taskKey === action.editTaskIndex;
 			})[0];
 			updateTask.task = action.task
 			updateTask.project = action.project
@@ -203,12 +203,12 @@ export default function Task(state=initialState, action) {
 			case TaskActionTypes.RESUME_TASK:
 				const resumeTaskList = Object.assign({}, state);
 				const resumeTask = resumeTaskList.tasks.filter(function(task){
-					return task.taskId === action.taskId;
+					return task.taskKey === action.taskKey;
 				})[0];
 				resumeTask.timefinished = null;
 				return {
 					...state,
-					selectedTaskIndex: action.taskId,
+					selectedTaskIndex: action.taskKey,
 					resumeTaskList
 				}
 
