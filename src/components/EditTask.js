@@ -130,7 +130,7 @@ export default class EditTask extends Component {
 		var overlappingTimes = [];
 		for (var i = 0; i < intervals.length; i++) {
 			for ( var j = 0; j < intervals.length; j ++) {
-				if (intervals[j].startTime > intervals[i].startTime && intervals[j].startTime < intervals[i].stopTime) {
+				if ( (intervals[j].startTime >= intervals[i].startTime && intervals[j].startTime <= intervals[i].stopTime) && i !== j) {
 				overlappingTimes.push(j);
 				}
 			}

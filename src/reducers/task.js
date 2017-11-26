@@ -53,9 +53,30 @@ import * as TaskActionTypes from '../actiontypes/task';
 	lastManualUpdate: null
 } */
 
-/*
+
 const initialState = {
-	tasks: [],
+	tasks: [
+		{
+			client:"",
+			project:"",
+			task: "test 1",
+			taskKey: "-Kzpxl3JKeLAU-_A-lwX",
+			time: 0,
+			timecreated: 1511660130628,
+			timefinished: null,
+			timeintervals: []
+		},
+		{
+			client: "",
+			project: "",
+			task: "test 2",
+			taskKey: "-KzpxlxsNxXgBDcBpfXs",
+			time: 0,
+			timecreated: 1511660134313,
+			timefinished: null,
+			timeintervals: []
+		}
+	],
 	selectedTaskIndex: -1,
 	editTaskIndex: -1,
 	showEditScreen: false,
@@ -67,8 +88,9 @@ const initialState = {
 		uid: "E2K4Tb5ffuU4y2or9mSn7nMaNAF3"
 	},
 }
-*/
 
+
+/*
 const initialState = {
 	tasks: [],
 	selectedTaskIndex: -1,
@@ -76,7 +98,7 @@ const initialState = {
 	lastManualUpdate: null,
 	user: null
 }
-
+*/
 const currDate = new Date();
 const currTimeStamp = currDate.getTime();
 
@@ -112,7 +134,7 @@ export default function Task(state=initialState, action) {
 			]
 			return {
 				...state,
-				selectedTaskIndex: addTaskList.sort(function(a,b){return b.taskKey - a.taskKey})[0].taskKey,
+				selectedTaskIndex: action.taskKey,
 				tasks: addTaskList
 			}
 		}
