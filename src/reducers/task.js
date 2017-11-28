@@ -53,7 +53,7 @@ import * as TaskActionTypes from '../actiontypes/task';
 	lastManualUpdate: null
 } */
 
-
+/*
 const initialState = {
 	tasks: [
 		{
@@ -88,9 +88,9 @@ const initialState = {
 		uid: "E2K4Tb5ffuU4y2or9mSn7nMaNAF3"
 	},
 }
+*/
 
 
-/*
 const initialState = {
 	tasks: [],
 	selectedTaskIndex: -1,
@@ -98,7 +98,7 @@ const initialState = {
 	lastManualUpdate: null,
 	user: null
 }
-*/
+
 const currDate = new Date();
 const currTimeStamp = currDate.getTime();
 
@@ -151,9 +151,11 @@ export default function Task(state=initialState, action) {
 			const finishTask = finishTaskList.tasks.filter(function(task){
 				return task.taskKey === finishTaskList.selectedTaskIndex;
 			})[0];
-			finishTask.timefinished = new Date().getTime(),
+			finishTask.timefinished = action.stopTime
 			finishTask.time = action.time
-			finishTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
+			if (action.startTime !== null) {
+				finishTask.timeintervals.push({intervalKey: action.intervalKey, startTime: action.startTime, stopTime: action.stopTime})
+			}	
 			return {
 				...state,
 				finishTaskList,
@@ -185,7 +187,7 @@ export default function Task(state=initialState, action) {
 				return task.taskKey === pauseTaskList.selectedTaskIndex;
 			})[0];
 			pauseTask.time = action.time
-			pauseTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
+			pauseTask.timeintervals.push({intervalKey: action.intervalKey, startTime: action.startTime, stopTime: action.stopTime})
 			return {
 				...state,
 				tasks: [...pauseTaskList.tasks]

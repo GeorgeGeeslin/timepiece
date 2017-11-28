@@ -69,12 +69,6 @@ return {
 	};
 }
 
-/*export const addSection = (name) => {
-  let key = database.ref('/').push().key
-  let model = sectionModel(key, name, firebase.database.ServerValue.TIMESTAMP)
-  return database.ref('/'+ key).set(model)
-}*/
-
 export const selectTask = (taskKey) => {
 	return {
 		type: TaskActionTypes.SELECT_TASK,
@@ -82,16 +76,49 @@ export const selectTask = (taskKey) => {
 	};
 }
 
-export const finishTask = (time, startTime, stopTime) => {
+export function finishTask(time, startTime, stopTime, uid, taskKey) {
+	return dispatch => {
+		const taskRef = database.ref(uid+'/tasks/'+taskKey);
+		const intervalRef = database.ref(uid+'/tasks/'+taskKey+'/timeintervals')
+		taskRef.update({timefinished: stopTime})
+		.then( () => {
+			if (startTime !== null) {
+				intervalRef.push(
+					{
+						startTime: startTime,
+						stopTime: stopTime
+					}
+				).then((snapshot) => {
+					const intervalKey = snapshot.key;
+					dispatch(finishTaskLocal(time, startTime, stopTime, intervalKey));
+				})
+			} else {
+				dispatch(finishTaskLocal(time, startTime, stopTime));
+			}
+		})
+	}
+}
+
+export const finishTaskLocal = (time, startTime, stopTime, intervalKey) => {
 	return {
 		type: TaskActionTypes.FINISH_TASK,
 		time,
 		startTime,
-		stopTime
+		stopTime,
+		intervalKey
 	};
 }
 
-export const deleteTask = (taskKey, selectedTaskIndex) => {
+export function deleteTask(uid, taskKey, selectedTaskIndex) {
+	return dispatch => {
+		const taskRef = database.ref(uid+'/tasks/'+taskKey);
+		taskRef.remove().then(() => {
+			dispatch(deleteTaskLocal(taskKey, selectedTaskIndex));
+		})
+	}
+}
+
+export const deleteTaskLocal = (taskKey, selectedTaskIndex) => {
 	return {
 		type: TaskActionTypes.DELETE_TASK,
 		taskKey,
@@ -106,27 +133,29 @@ export function pauseTask(time, startTime, stopTime, selectedTaskIndex, uid, tas
 	return dispatch => {
 		const timeRef = database.ref(uid+'/tasks/'+taskKey);
 		const intervalRef = database.ref(uid+'/tasks/'+taskKey+'/timeintervals')
-		timeRef.set({time: time})
+		timeRef.update({time: time})
 		.then(intervalRef.push(
 			{
 				startTime: startTime,
 				stopTime: stopTime
 			}
-		))
-			.then(() => {
-				dispatch(pauseTaskLocal(time, startTime, stopTime, selectedTaskIndex));
-			}); /*TODO add Catch*/
+		)
+		.then((snapshot) => {
+			const intervalKey = snapshot.key;
+			dispatch(pauseTaskLocal(time, startTime, stopTime, selectedTaskIndex, intervalKey));
+			})); /*TODO add Catch*/
 	}
 }
 
 
-export const pauseTaskLocal = (time, startTime, stopTime, selectedTaskIndex) => {
+export const pauseTaskLocal = (time, startTime, stopTime, selectedTaskIndex, intervalKey) => {
 	return {
 		type: TaskActionTypes.PAUSE_TASK,
 		time,
 		startTime,
 		stopTime,
-		selectedTaskIndex
+		selectedTaskIndex,
+		intervalKey
 	}
 }
 

@@ -70,6 +70,7 @@ export default class Timepiece extends Component {
 				deleteTask={this.props.deleteTask}
 				openEdit={this.props.openEdit}
 				selectedTaskIndex={selectedTaskIndex}
+				uid={uid}
 			/>
 		));
 

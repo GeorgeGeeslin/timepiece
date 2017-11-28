@@ -75,6 +75,7 @@ class Timer extends Component {
 	validatePauseTask() {
 		if (this.state.startTime !== null && this.state.stopTime !== null) {
 			this.props.pauseTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime, this.props.selectedTaskIndex, this.props.uid, this.props.selectedTask.taskKey);
+			this.setState({startTime: null, stopTime: null})
 		}
 	}
 
@@ -92,9 +93,9 @@ class Timer extends Component {
 	}
 
 	validateFinishTask() {
-		if (this.state.startTime !== null && this.state.stopTime !== null) {
-			this.props.finishTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime);
-			this.setState({secondsElapsed: 0})
+		if (this.state.stopTime !== null) {
+			this.props.finishTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime, this.props.uid, this.props.selectedTask.taskKey);
+			this.setState({secondsElapsed: 0, startTime: null, stopTime: null})
 		}
 	}
 

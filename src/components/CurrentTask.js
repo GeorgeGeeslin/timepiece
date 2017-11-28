@@ -18,7 +18,7 @@ const CurrentTask = props => (
 				</button>
 				<button
 					className='task-buttons'
-					onClick={ () => props.deleteTask(props.taskKey, props.selectedTaskIndex)}>
+					onClick={ () => props.deleteTask(props.uid, props.taskKey, props.selectedTaskIndex)}>
 					DELETE
 				</button>
 				<button
