@@ -107,7 +107,8 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.SUCCESSFUL_LOGIN: {
 			return {
 				...state,
-				user: action.user
+				user: action.user,
+				tasks: action.tasks
 			}
 		}
 
