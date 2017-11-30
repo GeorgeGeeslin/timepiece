@@ -47,7 +47,6 @@ export function attemptLogin(provider) {
 }
 
 export const successfulLogin = (user, tasks) => {
-	//console.log('inside successfulLogin action: ' + tasks)
 	return {
 		type: TaskActionTypes.SUCCESSFUL_LOGIN,
 		user,
@@ -213,7 +212,17 @@ export const updateTask = (task, project, client, time, timeintervals, editTaskI
 	}
 }
 
-export const resumeTask = (taskKey) => {
+export function resumeTask(uid, taskKey) {
+	return dispatch => {
+		const taskRef = database.ref(uid+'/tasks/'+taskKey);
+		taskRef.update({timefinished: null})
+		.then(() => {
+			dispatch(resumeTaskLocal(taskKey));
+		})
+	}
+}
+
+export const resumeTaskLocal = (taskKey) => {
 	return {
 		type: TaskActionTypes.RESUME_TASK,
 		taskKey

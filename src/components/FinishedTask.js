@@ -13,7 +13,7 @@ const FinishedTask = props => (
 		<Col className='task-button-container' sm={12}>
 			<button 
 				className='task-buttons'
-				onClick={ () => props.resumeTask(props.taskKey)}>
+				onClick={ () => props.resumeTask(props.uid, props.taskKey)}>
 				RESUME 
 			</button>
 			<button 
