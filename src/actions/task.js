@@ -15,7 +15,7 @@ export function attemptLogin(provider) {
 					} else {
 						const val = snapshot.val();		
 						const taskKeys = Object.keys(val);
-						let tasks = [];	
+						var tasks = [];	
 						for (let i = 0; i < taskKeys.length; i++) {
 							tasks.push(val[taskKeys[i]]);
 							tasks[i].taskKey = taskKeys[i];
@@ -33,7 +33,7 @@ export function attemptLogin(provider) {
 					dispatch(successfulLogin(user, tasks));
 				})
 				.catch((error) => {
-					console.log(error);
+					console.error(error)
 				})
 		})
 		.catch((error) => {
@@ -41,12 +41,13 @@ export function attemptLogin(provider) {
 			const errorMessage = error.message;
 			const email = error.email;
 			const credential = error.credential;
-			console.log(errorMessage);
+			console.error(errorMessage);
 		});
 	}
 }
 
 export const successfulLogin = (user, tasks) => {
+	//console.log('inside successfulLogin action: ' + tasks)
 	return {
 		type: TaskActionTypes.SUCCESSFUL_LOGIN,
 		user,
@@ -110,22 +111,22 @@ export function finishTask(time, startTime, stopTime, uid, taskKey) {
 	return dispatch => {
 		const taskRef = database.ref(uid+'/tasks/'+taskKey);
 		const intervalRef = database.ref(uid+'/tasks/'+taskKey+'/timeintervals')
-		taskRef.update({timefinished: stopTime})
-		.then( () => {
-			if (startTime !== null) {
-				intervalRef.push(
-					{
-						startTime: startTime,
-						stopTime: stopTime
-					}
-				).then((snapshot) => {
-					const intervalKey = snapshot.key;
-					dispatch(finishTaskLocal(time, startTime, stopTime, intervalKey));
-				})
-			} else {
-				dispatch(finishTaskLocal(time, startTime, stopTime));
-			}
-		})
+			taskRef.update({timefinished: stopTime})
+			.then( () => {
+				if (startTime !== null) {
+					intervalRef.push(
+						{
+							startTime: startTime,
+							stopTime: stopTime
+						}
+					).then((snapshot) => {
+						const intervalKey = snapshot.key;
+						dispatch(finishTaskLocal(time, startTime, stopTime, intervalKey));
+					})
+				} else {
+					dispatch(finishTaskLocal(time, startTime, stopTime));
+				}
+			})
 	}
 }
 
@@ -197,6 +198,8 @@ export const closeEdit = () => {
 		type: TaskActionTypes.CLOSE_EDIT
 	}
 }
+
+//export function updateTask = (task, project, client, time, timeintervals, editTaskIndex)
 
 export const updateTask = (task, project, client, time, timeintervals, editTaskIndex) => {
 	return {
