@@ -13,7 +13,7 @@ const CurrentTask = props => (
 			<Col className='task-button-container' sm={12}>
 				<button
 					className='task-buttons' 
-					onClick={() => props.selectTask(props.uid, props.taskKey)}>
+					onClick={() => props.selectTask(props.taskKey)}>
 					SELECT
 				</button>
 				<button

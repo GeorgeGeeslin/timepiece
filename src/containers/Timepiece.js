@@ -57,7 +57,7 @@ export default class Timepiece extends Component {
 		));
 
 		const finishedTasks = tasks.filter(function(task) {
-			return task.timefinished !== null
+			return (task.timefinished !== null && task.hasOwnProperty('timefinished') === true)
 		}).map((tasks, index) => (
 			<FinishedTask
 				index={index}
