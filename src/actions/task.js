@@ -27,6 +27,8 @@ export function attemptLogin(provider) {
 									timeintervals[j].intervalKey = intervalKeys[j];
 								}
 								tasks[i].timeintervals = timeintervals;
+							} else {
+								tasks[i].timeintervals = [];
 							}
 						}
 					}
