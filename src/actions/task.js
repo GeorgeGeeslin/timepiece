@@ -13,7 +13,6 @@ export function checkLoginStatus() {
 					} else {
 						const val = snapshot.val();
 						const taskKeys = Object.keys(val);
-						var tasks = [];
 						for (let i = 0; i < taskKeys.length; i++) {
 							tasks.push(val[taskKeys[i]]);
 							tasks[i].taskKey = taskKeys[i];
@@ -30,8 +29,8 @@ export function checkLoginStatus() {
 							}
 						}			
 					}
+					dispatch(successfulLogin(user, tasks));
 				})
-				dispatch(successfulLogin(user, tasks));
 			}		
 		});
 	}
