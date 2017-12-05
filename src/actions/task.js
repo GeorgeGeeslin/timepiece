@@ -200,9 +200,51 @@ export const closeEdit = () => {
 	}
 }
 
-//export function updateTask = (task, project, client, time, timeintervals, editTaskIndex)
+export function updateTask(uid, task, project, client, time, timecreated, timefinished, timeintervals, editTaskIndex) {
+	return dispatch => {
+		const taskRef = database.ref(uid+'/tasks/'+editTaskIndex);
+		const intervalRef = database.ref(uid+'/tasks/'+editTaskIndex+'/timeintervals');
+		if (timeintervals.length > 0) {
+			var intervals = {}
+			var newIntervals = [];
+			for (let i = 0; i < timeintervals.length; i++) {
+				if (timeintervals[i].hasOwnProperty('intervalKey')) {
+					let obj = {startTime: timeintervals[i].startTime, stopTime: timeintervals[i].stopTime}
+					let key = timeintervals[i].intervalKey;
+					intervals[key] = obj;
+				} else {
+					newIntervals.push(timeintervals[i]);
+				}
+			}
+			taskRef.set({
+				task: task,
+				project: project,
+				client: client,
+				time: time,
+				timecreated: timecreated,
+				timefinished: timefinished,
+				timeintervals: intervals
+			})
+			.then(
+				newIntervals.forEach(function(interval){
+					intervalRef.push(interval)
+				})
+			)
+		} else {
+			taskRef.set({
+				task: task,
+				project: project,
+				client: client,
+				time: time,
+				timecreated: timecreated,
+				timefinished: timefinished		
+			})
+		}
+		dispatch(updateTaskLocal(task, project, client, time, timeintervals, editTaskIndex));
+	}
+}
 
-export const updateTask = (task, project, client, time, timeintervals, editTaskIndex) => {
+export const updateTaskLocal = (task, project, client, time, timeintervals, editTaskIndex) => {
 	return {
 		type: TaskActionTypes.UPDATE_TASK,
 		task,
