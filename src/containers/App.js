@@ -11,15 +11,12 @@ class App extends Component {
 	static propTypes = {
 		tasks: PropTypes.array.isRequired
 	};
-
-	//componentWillMount() {
-	//	this.props.uid = 
-	//}
 	
 	render() {
 		const { dispatch, tasks, selectedTaskIndex, showEditScreen, editTaskIndex, lastManualUpdate, user} = this.props;
 		const attemptLogin = bindActionCreators(TaskActionCreators.attemptLogin, dispatch);
 		const attemptSignOut = bindActionCreators(TaskActionCreators.attemptSignOut, dispatch);
+		const checkLoginStatus = bindActionCreators(TaskActionCreators.checkLoginStatus, dispatch);
 		const addTask = bindActionCreators(TaskActionCreators.addTask, dispatch);
 		const selectTask = bindActionCreators(TaskActionCreators.selectTask, dispatch);
 		const finishTask = bindActionCreators(TaskActionCreators.finishTask, dispatch);
@@ -35,7 +32,8 @@ class App extends Component {
 			{ user === null && 
 				<Login 
 					attemptLogin = {attemptLogin}
-					attemptSignOut = {attemptSignOut}	/>
+					attemptSignOut = {attemptSignOut}
+					checkLoginStatus = {checkLoginStatus}	/>
 			}
 			{ user !== null && 
 				<UserHeader user={this.props.user}

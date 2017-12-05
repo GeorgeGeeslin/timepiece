@@ -6,6 +6,10 @@ export default class Login extends Component {
 	//static propTypes = {
 
 		//};
+		//
+	componentDidMount() {
+		this.props.checkLoginStatus()
+	}
 	
 	render() {
 		return (

@@ -1,6 +1,6 @@
 export const ATTEMPT_LOGIN = 'task/ATTEMPT_LOGIN';
 export const SUCCESSFUL_LOGIN = 'task/'
-//export const FAILED_LOGIN
+export const CHECK_LOGIN_STATUS = 'task/CHECK_LOGIN_STATUS';
 export const ATTEMPT_SIGNOUT = 'tasks/ATTEMPT_SIGNOUT';
 export const SUCCESSFUL_SIGNOUT = 'tasks/SUCCESSFUL_SIGNOUT';
 //export const FAILED_SIGNOUT

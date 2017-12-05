@@ -1,6 +1,42 @@
 import * as TaskActionTypes from '../actiontypes/task';
 import {database, auth} from '../firebase';
 
+export function checkLoginStatus() {
+	return dispatch => {
+		auth.onAuthStateChanged(function(user) {
+			if (user) {
+				var tasks = [];
+				const uid = user.uid;
+				database.ref(uid+'/tasks').once('value')
+				.then((snapshot) => {
+					if (snapshot.val() === null) {
+					} else {
+						const val = snapshot.val();
+						const taskKeys = Object.keys(val);
+						var tasks = [];
+						for (let i = 0; i < taskKeys.length; i++) {
+							tasks.push(val[taskKeys[i]]);
+							tasks[i].taskKey = taskKeys[i];
+							if (tasks[i].hasOwnProperty('timeintervals')) {
+								let intervalKeys = Object.keys(tasks[i]['timeintervals'])
+								let timeintervals = [];
+								for (let j = 0; j < intervalKeys.length; j++) {
+									timeintervals.push(val[taskKeys[i]]['timeintervals'][intervalKeys[j]]);
+									timeintervals[j].intervalKey = intervalKeys[j];
+								}
+								tasks[i].timeintervals = timeintervals;
+							} else {
+								tasks[i].timeintervals = [];
+							}
+						}			
+					}
+				})
+				dispatch(successfulLogin(user, tasks));
+			}		
+		});
+	}
+}
+
 export function attemptLogin(provider) {
 	return dispatch => {
 		auth.signInWithPopup(provider)
