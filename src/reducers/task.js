@@ -55,7 +55,28 @@ import * as TaskActionTypes from '../actiontypes/task';
 
 /*
 const initialState = {
-	tasks: [],
+	tasks: [
+		{
+			client:"",
+			project:"",
+			task: "test 1",
+			taskKey: "-Kzpxl3JKeLAU-_A-lwX",
+			time: 0,
+			timecreated: 1511660130628,
+			timefinished: null,
+			timeintervals: []
+		},
+		{
+			client: "",
+			project: "",
+			task: "test 2",
+			taskKey: "-KzpxlxsNxXgBDcBpfXs",
+			time: 0,
+			timecreated: 1511660134313,
+			timefinished: null,
+			timeintervals: []
+		}
+	],
 	selectedTaskIndex: -1,
 	editTaskIndex: -1,
 	showEditScreen: false,
@@ -68,6 +89,7 @@ const initialState = {
 	},
 }
 */
+
 
 const initialState = {
 	tasks: [],
@@ -85,7 +107,8 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.SUCCESSFUL_LOGIN: {
 			return {
 				...state,
-				user: action.user
+				user: action.user,
+				tasks: action.tasks
 			}
 		}
 
@@ -112,7 +135,7 @@ export default function Task(state=initialState, action) {
 			]
 			return {
 				...state,
-				selectedTaskIndex: addTaskList.sort(function(a,b){return b.taskKey - a.taskKey})[0].taskKey,
+				selectedTaskIndex: action.taskKey,
 				tasks: addTaskList
 			}
 		}
@@ -129,9 +152,11 @@ export default function Task(state=initialState, action) {
 			const finishTask = finishTaskList.tasks.filter(function(task){
 				return task.taskKey === finishTaskList.selectedTaskIndex;
 			})[0];
-			finishTask.timefinished = new Date().getTime(),
+			finishTask.timefinished = action.stopTime
 			finishTask.time = action.time
-			finishTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
+			if (action.startTime !== null) {
+				finishTask.timeintervals.push({intervalKey: action.intervalKey, startTime: action.startTime, stopTime: action.stopTime})
+			}	
 			return {
 				...state,
 				finishTaskList,
@@ -163,7 +188,7 @@ export default function Task(state=initialState, action) {
 				return task.taskKey === pauseTaskList.selectedTaskIndex;
 			})[0];
 			pauseTask.time = action.time
-			pauseTask.timeintervals.push({startTime: action.startTime, stopTime: action.stopTime})
+			pauseTask.timeintervals.push({intervalKey: action.intervalKey, startTime: action.startTime, stopTime: action.stopTime})
 			return {
 				...state,
 				tasks: [...pauseTaskList.tasks]

@@ -130,7 +130,7 @@ export default class EditTask extends Component {
 		var overlappingTimes = [];
 		for (var i = 0; i < intervals.length; i++) {
 			for ( var j = 0; j < intervals.length; j ++) {
-				if (intervals[j].startTime > intervals[i].startTime && intervals[j].startTime < intervals[i].stopTime) {
+				if ( (intervals[j].startTime >= intervals[i].startTime && intervals[j].startTime <= intervals[i].stopTime) && i !== j) {
 				overlappingTimes.push(j);
 				}
 			}
@@ -156,14 +156,32 @@ export default class EditTask extends Component {
 			this.setState({overlappingTimes: this.findOverlappingTimes(this.state.timeintervals)})
 		} else {
 			this.state.time = Math.floor(this.calculateTime() / 1000)
-			this.props.updateTask(
-				this.state.task,
-				this.state.project,
-				this.state.client,
-				this.state.time,
-				this.state.timeintervals,
-				this.props.editTaskIndex
-			)
+			if (this.props.editTask.timefinished === undefined) {
+				let timefinished = null;
+				this.props.updateTask(
+					this.props.uid,
+					this.state.task,
+					this.state.project,
+					this.state.client,
+					this.state.time,
+					this.props.editTask.timecreated,
+					timefinished,
+					this.state.timeintervals,
+					this.props.editTaskIndex
+				)
+			} else {
+				this.props.updateTask(
+					this.props.uid,
+					this.state.task,
+					this.state.project,
+					this.state.client,
+					this.state.time,
+					this.props.editTask.timecreated,
+					this.props.editTask.timefinished,
+					this.state.timeintervals,
+					this.props.editTaskIndex
+				)
+			}
 			this.props.closeEdit();
 		}
 	};
