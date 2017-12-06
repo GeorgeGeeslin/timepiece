@@ -41,15 +41,6 @@ ul {
     border: 1px solid #623353;
     color: #74546a; }
 
-/*
-.signOut {
-	width: 100%;
-	@include inputs {
-		border: 1px solid $color-borders;
-	}
-	@include center;
-}
-*/
 input:focus {
   outline: none; }
 
@@ -174,6 +165,12 @@ input[type="text"] {
     border: 1px solid #623353;
     color: #74546a; }
 
+/*
+.taskCard-right {
+	float: right;
+	clear: both;
+}
+*/
 input[type="text"].inputError {
   background-color: #f04e7d; }
 

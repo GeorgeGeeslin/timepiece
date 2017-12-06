@@ -49,7 +49,6 @@ class Timer extends Component {
 				finishIsDisabled: false
 			})
 		}
-		console.log("none!")
 	}
 
 	handleStartClick() {

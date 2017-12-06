@@ -5,28 +5,28 @@ import { Grid, Col, Row } from 'react-bootstrap';
 const FinishedTask = props => (
 	<Grid className='tasks'>
 		<Row>		
-		<Col sm={12}>
-			<p><span className='taskLabel'>TASK: </span>{props.task}</p>
-			<p><span className='taskLabel'>PROJECT: </span>{props.project}</p>
-			<p><span className='taskLabel'>CLIENT: </span>{props.client}</p>
-		</Col>
-		<Col className='task-button-container' sm={12}>
-			<button 
-				className='task-buttons'
-				onClick={ () => props.resumeTask(props.uid, props.taskKey)}>
-				RESUME 
-			</button>
-			<button 
-				className='task-buttons'
-				onClick={ () => props.deleteTask(props.uid, props.taskKey, props.selectedTaskIndex)}>
-				DELETE
-			</button>
-			<button
-				className='task-buttons'
-				onClick={ () => props.openEdit(props.taskKey)}>
-				EDIT
-			</button>
-		</Col>
+			<Col sm={12}>
+				<p><span className='taskLabel'>TASK: </span>{props.task}</p>
+				<p><span className='taskLabel'>PROJECT: </span>{props.project}</p>
+				<p><span className='taskLabel'>CLIENT: </span>{props.client}</p>
+			</Col>
+			<Col className='task-button-container' sm={12}>
+				<button 
+					className='task-buttons'
+					onClick={ () => props.resumeTask(props.uid, props.taskKey)}>
+					RESUME 
+				</button>
+				<button 
+					className='task-buttons'
+					onClick={ () => props.deleteTask(props.uid, props.taskKey, props.selectedTaskIndex)}>
+					DELETE
+				</button>
+				<button
+					className='task-buttons'
+					onClick={ () => props.openEdit(props.taskKey)}>
+					EDIT
+				</button>
+			</Col>
 		</Row>
 	</Grid>
 );
