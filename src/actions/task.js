@@ -38,7 +38,7 @@ export function checkLoginStatus() {
 
 export function attemptLogin(provider) {
 	return dispatch => {
-		auth.signInWithPopup(provider)
+		auth.signInWithRedirect(provider)
 		.then((result) => {
 			const token = result.credential.accessToken;
 			const user = result.user;
