@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 
 // VARIABLES ------------------------------ /
@@ -38,6 +39,7 @@ $container-box-border: #2c245a;
 
 $font-stack-primary: 'Quicksand', sans-serif;
 $font-stack-labels: 'Roboto Condensed', sans-serif;
+$Roboto: 'Roboto', sans-serif;
 
 $button-gutter: 5px;
 
@@ -234,6 +236,14 @@ input[type="text"] {
 	margin-bottom: 15px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+
+.signInContainer {
+	padding: 15px;
+}
+
+.googleSignIn {
+	@include center;
 }
 /*
 .taskCard-right {

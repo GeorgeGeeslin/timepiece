@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { googleProvider } from '../firebase';
+import GoogleButton from 'react-google-button'
 
 export default class Login extends Component {
 	//static propTypes = {
@@ -14,8 +15,10 @@ export default class Login extends Component {
 	render() {
 		return (
 			<div>
-				<h3 onClick={ () => this.props.attemptLogin(googleProvider) }>Sign In With Google</h3>
-				<h3 onClick={ () => this.props.attemptSignOut()}>Sign Out</h3>
+			<h1>Timepiece</h1>
+				<div className='signInContainer'>
+					<GoogleButton className='googleSignIn' onClick={ () => this.props.attemptLogin(googleProvider) } />
+				</div>
 			</div>
 		)
 	}
