@@ -122,15 +122,7 @@ ul{
 	}
 	@include center;
 }
-/*
-.signOut {
-	width: 100%;
-	@include inputs {
-		border: 1px solid $color-borders;
-	}
-	@include center;
-}
-*/
+
 input:focus {
 	outline: none;
 }
@@ -243,7 +235,12 @@ input[type="text"] {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
-
+/*
+.taskCard-right {
+	float: right;
+	clear: both;
+}
+*/
 // ERRORS ------------------------------ /
 
 input[type="text"].inputError {
