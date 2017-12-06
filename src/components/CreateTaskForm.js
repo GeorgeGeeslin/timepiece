@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 
 export default class CreatTaskForm extends Component {
-	 static propTypes = {
+	/* static propTypes = {
 	 	addTask: PropTypes.func.isRequired,
-	 }
+	 }*/
 
 	state = {
 		task: '',
@@ -13,6 +13,10 @@ export default class CreatTaskForm extends Component {
 	};
 
 	onTaskNameChange = (e) => {
+		const taskField = document.getElementById("taskField");
+		if (taskField.className === 'inputError') {
+			taskField.classList.remove('inputError')
+		}
 		const task = e.target.value;
 		this.setState({task: task});
 	};
@@ -29,42 +33,53 @@ export default class CreatTaskForm extends Component {
 
 	addTask = (e) => {
 		if (e) e.preventDefault();
-		this.props.addTask(
-			this.state.task,
-			this.state.project,
-			this.state.client,
-			this.state.timecreated
-		);
-		this.setState({
-			task: '',
-			project: '',
-			client: ''
-		});
+		if (this.state.task.length === 0) {
+			const taskField = document.getElementById("taskField");
+			taskField.classList.add('inputError')
+				this.setState({
+				task: '',
+				project: '',
+				client: ''
+			});
+		} else {
+			this.props.addTask(
+				this.state.task,
+				this.state.project,
+				this.state.client,
+				this.props.uid
+			);
+			this.setState({
+				task: '',
+				project: '',
+				client: ''
+			});
+		}
 	};
 
 	render() {
+
 		return(
-			<div className="creatTaskForm">
+			<div className='creatTaskForm'>
 				<form onSubmit={this.addTask}>
-					<input
+					<input id='taskField'
 						type='text'
 						value={this.state.task}
 						onChange={this.onTaskNameChange}
-						placeholder='Task'
-					/>
+						placeholder='Task (required)' />
 					<input
 						type='text'
 						value={this.state.project}
 						onChange={this.onProjectNameChange}
-						placeholder='Project'
-					/>		
+						placeholder='Project'	/>	
 					<input
 						type='text'
 						value={this.state.client}
 						onChange={this.onClientNameChange}
-						placeholder='Client'
-					/>								
-					<input type='submit' value='Add Task' />
+						placeholder='Client' />		
+					<input
+						className='control-buttons' 
+						type='submit' 
+						value='ADD TASK' />				
 				</form>
 			</div>
 		)

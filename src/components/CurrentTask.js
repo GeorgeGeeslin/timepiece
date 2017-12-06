@@ -1,20 +1,34 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { Grid, Col, Row } from 'react-bootstrap';
 
-//onClick={() => props.selectTask(props.timeKey)}>
 const CurrentTask = props => (
-	<div className='currentTask'>
-		
-		<div>
-			<h3>{props.task}</h3>
-			<h3>{props.project}</h3>
-		</div>
-		<div>
-			<button onClick={ () => props.selectTask(props.timeKey)}>Select Task</button>
-			<button onClick={ () => props.deleteTask(props.timeKey)}>Delete Task</button>
-		</div>
-		<hr/>
-	</div>
+	<Grid className='tasks'>
+		<Row>
+			<Col sm={12}>
+				<p><span className='taskLabel'>TASK: </span>{props.task}</p>
+				<p><span className='taskLabel'>PROJECT: </span>{props.project}</p>
+				<p><span className='taskLabel'>CLIENT: </span>{props.client}</p>
+			</Col>
+			<Col className='task-button-container' sm={12}>
+				<button
+					className='task-buttons' 
+					onClick={() => props.selectTask(props.taskKey)}>
+					SELECT
+				</button>
+				<button
+					className='task-buttons'
+					onClick={ () => props.deleteTask(props.uid, props.taskKey, props.selectedTaskIndex)}>
+					DELETE
+				</button>
+				<button
+					className='task-buttons'
+					onClick={ () => props.openEdit(props.taskKey)}>
+					EDIT
+				</button>
+			</Col>
+		</Row>
+	</Grid>
 );
 
 

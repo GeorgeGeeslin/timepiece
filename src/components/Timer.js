@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { Button } from 'react-bootstrap';
 
 //TODO put this function in one place to share across modules.
 const formatTime = (sec) =>
-	Math.floor(sec / 3600) % 60 + 
+	Math.floor(sec / 3600) + 
 		':' + 
 		('0' + Math.floor(sec / 60) % 60).slice(-2) + 
 		':' + 
 		('0' + sec % 60).slice(-2)
+
 
 class Timer extends Component {
 	constructor(props) {
@@ -18,18 +20,35 @@ class Timer extends Component {
 			startIsDisabled: false,
 			pauseIsDisabled: true,
 			finishIsDisabled: true,
-			cancelIsDisabled: true
+			cancelIsDisabled: true,
+			startTime: null,
+			stopTime: null
 		};
 		this.incrementer = null;
 	}
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) {
+		if (prevProps.selectedTaskIndex !== this.props.selectedTaskIndex && this.props.selectedTask === undefined) {
 			this.setState({
-				secondsElapsed: this.props.secondsElapsed
+				secondsElapsed: 0,
+				startIsDisabled: true
+			})
+			clearInterval(this.incrementer)
+		} else if ( this.props.selectedTask.time === 0 &&
+			(prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
+			this.setState({
+				secondsElapsed: this.props.secondsElapsed,
+				startIsDisabled: false,
+			})
+			clearInterval(this.incrementer)
+		} else if ( this.props.selectedTask.time > 0 &&
+			(prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
+			this.setState({
+				secondsElapsed: this.props.secondsElapsed,
+				startIsDisabled: false,
+				finishIsDisabled: false
 			})
 		}
-		console.log(this)
 	}
 
 	handleStartClick() {
@@ -38,6 +57,7 @@ class Timer extends Component {
 			pauseIsDisabled: false,
 			finishIsDisabled: false,
 			cancelIsDisabled: false,
+			startTime: new Date().getTime(),
 			secondsElapsed: this.props.secondsElapsed
 		})
 		this.incrementer = setInterval( () =>
@@ -47,30 +67,43 @@ class Timer extends Component {
 		, 1000)
 	}
 
-	handleStopClick() {
+	handlePauseClick() {
 		clearInterval(this.incrementer);
 		this.setState({
 			lastClearedIncrementer: this.incrementer,
 			pauseIsDisabled: true,
-			startIsDisabled: false
+			startIsDisabled: false,
+			stopTime: new Date().getTime(),
+			secondsElapsed: this.state.secondsElapsed
+		}, function() {
+			this.validatePauseTask();
 		});
+	}
+
+	validatePauseTask() {
+		if (this.state.startTime !== null && this.state.stopTime !== null) {
+			this.props.pauseTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime, this.props.selectedTaskIndex, this.props.uid, this.props.selectedTask.taskKey);
+			this.setState({startTime: null, stopTime: null})
+		}
 	}
 
 	handleFinishClick() {
 		clearInterval(this.incrementer);
 		this.setState({
-			secondsElapsed: 0,
 			startIsDisabled: false,
 			pauseIsDisabled: true,
 			finishIsDisabled: true,
-			cancelIsDisabled: true
-		})
-		if (typeof(Storage) !== "undefined") {
-			//localStorage.secondsElapsed = this.state.secondsElapsed.toString();
-			//console.log('finshed')
-			this.props.finishTask(this.state.secondsElapsed);
-		} else {
-			alert("Sorry, the browser you're using doesn't support HTML5 storage.")
+			cancelIsDisabled: true,
+			stopTime: new Date().getTime()
+		}, function() {
+			this.validateFinishTask();
+		});
+	}
+
+	validateFinishTask() {
+		if (this.state.stopTime !== null) {
+			this.props.finishTask(this.state.secondsElapsed, this.state.startTime, this.state.stopTime, this.props.uid, this.props.selectedTask.taskKey);
+			this.setState({secondsElapsed: 0, startTime: null, stopTime: null})
 		}
 	}
 
@@ -87,21 +120,41 @@ class Timer extends Component {
 
 	render() {
 		return (
-			<div className="stopwatch">
-				<h1 className="stopwatch-timer">{formatTime(this.state.secondsElapsed)}</h1>
- 					<button onClick={this.handleStartClick.bind(this)} disabled={this.props.selectedTaskIndex === -1 || this.state.startIsDisabled}>Start</button>
-					<button onClick={this.handleStopClick.bind(this)} disabled={this.state.pauseIsDisabled}>Pause</button>
-					<button onClick={this.handleFinishClick.bind(this)} disabled={this.state.finishIsDisabled}>Finish</button>
-					<button onClick={this.handleCancelClick.bind(this)} disabled={this.state.cancelIsDisabled}>Cancel</button>		
+			<div className="timer">
+				<h1>{formatTime(this.state.secondsElapsed)}</h1>
+ 					<button
+ 						className='control-buttons' 
+ 						onClick={this.handleStartClick.bind(this)}
+ 						disabled={this.props.selectedTaskIndex === -1 || this.state.startIsDisabled}>
+ 						START
+ 					</button>
+					<button 
+						className='control-buttons'
+						onClick={this.handlePauseClick.bind(this)} 
+						disabled={this.state.pauseIsDisabled}>
+						PAUSE
+					</button>
+					<button
+						className='control-buttons' 
+						onClick={this.handleFinishClick.bind(this)} 
+						disabled={this.state.finishIsDisabled}>
+						FINISH
+					</button>
+					<button
+						className='control-buttons' 
+						onClick={this.handleCancelClick.bind(this)} 
+						disabled={this.state.cancelIsDisabled}>
+						CANCEL
+					</button>		
 			</div>
 		)
 	}
 }
 
-Timer.propTypes = {
+/*Timer.propTypes = {
 	finishTask: PropTypes.func.isRequired,
 	secondsElapsed: PropTypes.number.isRequired,
 	selectedTaskIndex: PropTypes.number.isRequired
-}
+}*/
 
 module.exports = Timer;

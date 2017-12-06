@@ -1,0 +1,375 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+
+// VARIABLES ------------------------------ /
+// screen sizes
+//$phone: '(max-width: 480px)';
+$tablet-portrait: '(min-width: 767px)';
+$tablet-landscape: '(min-width: 768px) and (max-width: 979px)';
+$small-desktop: '(min-width: 1024px) and (max-width:  11999px)';
+$large-desktop: '(min-width: 12000px)';
+$non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
+$retina: '(min--moz-device-pixel-ratio: 1.5), 
+                    (-o-min-device-pixel-ratio: 3/2), 
+                    (-webkit-min-device-pixel-ratio: 1.5), 
+                    (min-device-pixel-ratio: 1.5), 
+                    (min-resolution: 144dpi), 
+                    (min-resolution: 1.5dppx)';
+
+//$color-primary: #2cf1ff; //teal
+$color-secondary: #ffa755; //orange 
+$color-borders: #9d138c; 
+$color-accent: #623353;
+$color-shade: #74546a; 
+$color-masthead: #1e2f51;
+
+$highlight-text: #dead80;
+$highlight-border: #96a2ec;
+
+$color-text: #eadef2;
+$color-bg: #130918; //very dark blue
+$color-bg-light: #fbf3e6; //#
+
+$color-error: #f04e7d;
+
+$container-box-bg: #120d2f;
+$container-box-border: #2c245a;
+
+$font-stack-primary: 'Quicksand', sans-serif;
+$font-stack-labels: 'Roboto Condensed', sans-serif;
+$Roboto: 'Roboto', sans-serif;
+
+$button-gutter: 5px;
+
+$max-width: 1000px;
+
+$animation-time: 0.4s;
+
+// MIXINS ------------------------------ 
+
+@mixin respond-to($media) {
+    @media only screen and #{$media} {
+        @content;
+    }
+}
+
+@mixin center {
+	width: 100%;
+	max-width: $max-width;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@mixin inputs { 
+	margin-right: $button-gutter;
+	margin-bottom: $button-gutter;
+	color: $color-text;
+	background-color: transparent;
+	//width: 90%;
+	@content;
+	&:disabled {
+		border: 1px solid $color-accent;
+		color: $color-shade;
+	}
+}
+
+@mixin container {
+	border: 1px solid $container-box-border;
+	background-color: $container-box-bg;
+	padding-left: 2%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+@mixin label {
+	font: $font-stack-labels;
+	font-size: .8em;
+}
+
+// BASE ------------------------------ /
+body{
+	font-family: $font-stack-primary;
+	background-color: $color-bg;
+	color: $color-text;
+	height: 100%;
+}
+
+h1,
+h2,
+h3 {
+	@include center;
+	font-family: $font-stack-labels;
+	text-align: center;
+	margin-top: 5px;
+}
+
+ul{
+	list-style: none;
+	padding-left: 0;
+}
+
+.leftCol {
+	@include respond-to($tablet-portrait) {
+		min-height: 100vh;
+		border-right: 1px solid $highlight-border;
+	}
+}
+
+.control-buttons {
+	width: 100%;
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+}
+
+input:focus {
+	outline: none;
+}
+
+input[type="submit"] {
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+}
+
+.task-button-container {
+	text-align: center;
+}
+
+.task-buttons {
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	&:focus {
+		outline: 0;
+	}
+}
+
+input[type="text"] {
+	width: 100%;
+	line-height: 2em;
+	border: 0px;
+	@include inputs {
+		border-bottom: 1px solid $color-borders;
+		&::placeholder {
+			color: $color-accent;
+		}
+		&:focus {
+			&::placeholder {
+				color: $highlight-text;
+			}
+			border-bottom: 1px solid $color-accent;
+		}  
+	}
+	@include center;
+}
+
+.masthead {
+	width: 100%;
+	height: 40px;
+	background-color: $color-masthead;
+}
+
+.taskLabel {
+	@include label;
+}
+
+.inputLabel {
+	@include label;
+	display: block;
+}
+
+.displayName {
+	float: right;
+	line-height: 40px;
+}
+
+.userAvatar {
+	float: right;
+	width: 60px;
+	height: 40px;
+	background-color: $color-masthead;
+	border: none;
+	&:focus {
+		outline: 0;
+	}
+	&:hover {
+		cursor: pointer;
+	}
+	img {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+	}
+}
+
+.userProfileDropDown {
+	color: $color-bg;
+	z-index: 1;
+	position: absolute;
+	float: right;
+	top:40px;
+	background-color: #fafafa;
+	text-align: center;
+	@include respond-to($tablet-portrait) {
+		left: 66%;
+	}
+	@include respond-to($small-desktop) {
+		left: 74%;
+	}
+	&:focus {
+		outline: 0;
+	}
+}
+
+.signOut {
+	width: 100%;
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+	color: $color-bg;
+	margin-bottom: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.signInContainer {
+	padding: 15px;
+}
+
+.googleSignIn {
+	@include center;
+}
+/*
+.taskCard-right {
+	float: right;
+	clear: both;
+}
+*/
+// ERRORS ------------------------------ /
+
+input[type="text"].inputError {
+	background-color: $color-error;
+}
+
+.validationError {
+	position: relative;
+	padding: 10px;
+	margin-top: 100px;
+	color: $color-bg-light;
+	background-color: #ff0344;
+	border: 1px solid $highlight-border;;
+	width: 100%;
+	margin: auto;
+}
+
+
+// MODALS ------------------------------ /
+.modal-open {
+	background-color: #A9A9A9;
+	#root {
+		background-color: $color-bg;
+		opacity: 0.7;
+		 -webkit-animation: rootFade $animation-time;
+  	animation: rootFade $animation-time;
+  	.tasks {
+			opacity: 0.2;
+			-webkit-animation: elementFade $animation-time;
+  		animation: elementFade $animation-time;
+		}
+	}
+}
+
+@-webkit-keyframes rootFade {
+    from {opacity: 1}
+    to {opacity: 0.7}
+}@keyframes fade {
+    from {opacity: 1}
+    to {opacity: 0.7}
+}
+
+@-webkit-keyframes elementFade {
+    from {opacity: 1}
+    to {opacity: 0.2}
+}@keyframes fade {
+    from {opacity: 1}
+    to {opacity: 0.2}
+}
+
+//transform unset fixes react-bootstrap bug. default transform animation was broken
+.modal-dialog {
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
+	transform: unset !important;
+	-webkit-transform: unset !important;
+}
+
+//div hidden behind modal. could be used for fade or to cover main content
+.edit-modal {
+  -webkit-animation: fade $animation-time;
+  animation: fade $animation-time;
+  opacity: 1;
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	.tasks {
+		opacity: 1;
+	}
+	//background-color: $color-accent;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: 0}
+    to {opacity: 1}
+}@keyframes fade {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+.modal-content {
+	//top: 0;
+	position: fixed;
+	//width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	overflow-y: auto;
+	background-color: $color-bg;
+}
+
+// REACT COMPONENTS ------------------------------ /
+.activeTask {
+	@include container;
+}
+
+.tasks {
+	@include container;
+	p {
+		margin-bottom: 0;
+	}
+}
+
+// EDIT ------------------------------ /
+.modal-header {
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-bottom: 1px solid $highlight-border;
+}
+
+.modal-footer {
+	padding-bottom: 25px;
+	padding-top: 25px;
+	border-top: 1px solid $highlight-border;
+}
+
+.time-input {
+	margin-bottom: 10px;
+	border: 1px solid $highlight-border;
+	background-color: $color-bg-light;
+	width: 100%;
+}

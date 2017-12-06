@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server --open --host 0.0.0.0",
     "build": "NODE_EVN='production' webpack -p"
   },
   "babel": {
@@ -16,11 +16,15 @@
   "author": "George Geeslin",
   "license": "ISC",
   "dependencies": {
+    "firebase": "^4.6.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",
+    "react-google-button": "^0.4.0",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

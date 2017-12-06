@@ -1,0 +1,295 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:700");
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+body {
+  font-family: "Quicksand", sans-serif;
+  background-color: #130918;
+  color: #eadef2;
+  height: 100%; }
+
+h1,
+h2,
+h3 {
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Roboto Condensed", sans-serif;
+  text-align: center;
+  margin-top: 5px; }
+
+ul {
+  list-style: none;
+  padding-left: 0; }
+
+@media only screen and (min-width: 767px) {
+  .leftCol {
+    min-height: 100vh;
+    border-right: 1px solid #96a2ec; } }
+
+.control-buttons {
+  width: 100%;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #eadef2;
+  background-color: transparent;
+  border: 1px solid #9d138c;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto; }
+  .control-buttons:disabled {
+    border: 1px solid #623353;
+    color: #74546a; }
+
+input:focus {
+  outline: none; }
+
+input[type="submit"] {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #eadef2;
+  background-color: transparent;
+  border: 1px solid #9d138c;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto; }
+  input[type="submit"]:disabled {
+    border: 1px solid #623353;
+    color: #74546a; }
+
+.task-button-container {
+  text-align: center; }
+
+.task-buttons {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #eadef2;
+  background-color: transparent;
+  border: 1px solid #9d138c; }
+  .task-buttons:disabled {
+    border: 1px solid #623353;
+    color: #74546a; }
+  .task-buttons:focus {
+    outline: 0; }
+
+input[type="text"] {
+  width: 100%;
+  line-height: 2em;
+  border: 0px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #eadef2;
+  background-color: transparent;
+  border-bottom: 1px solid #9d138c;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto; }
+  input[type="text"]::placeholder {
+    color: #623353; }
+  input[type="text"]:focus {
+    border-bottom: 1px solid #623353; }
+    input[type="text"]:focus::placeholder {
+      color: #dead80; }
+  input[type="text"]:disabled {
+    border: 1px solid #623353;
+    color: #74546a; }
+
+.masthead {
+  width: 100%;
+  height: 40px;
+  background-color: #1e2f51; }
+
+.taskLabel {
+  font: "Roboto Condensed", sans-serif;
+  font-size: .8em; }
+
+.inputLabel {
+  font: "Roboto Condensed", sans-serif;
+  font-size: .8em;
+  display: block; }
+
+.displayName {
+  float: right;
+  line-height: 40px; }
+
+.userAvatar {
+  float: right;
+  width: 60px;
+  height: 40px;
+  background-color: #1e2f51;
+  border: none; }
+  .userAvatar:focus {
+    outline: 0; }
+  .userAvatar:hover {
+    cursor: pointer; }
+  .userAvatar img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%; }
+
+.userProfileDropDown {
+  color: #130918;
+  z-index: 1;
+  position: absolute;
+  float: right;
+  top: 40px;
+  background-color: #fafafa;
+  text-align: center; }
+  @media only screen and (min-width: 767px) {
+    .userProfileDropDown {
+      left: 66%; } }
+  @media only screen and (min-width: 1024px) and (max-width: 11999px) {
+    .userProfileDropDown {
+      left: 74%; } }
+  .userProfileDropDown:focus {
+    outline: 0; }
+
+.signOut {
+  width: 100%;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #eadef2;
+  background-color: transparent;
+  border: 1px solid #9d138c;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #130918;
+  margin-bottom: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+  .signOut:disabled {
+    border: 1px solid #623353;
+    color: #74546a; }
+
+.signInContainer {
+  padding: 15px; }
+
+.googleSignIn {
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto; }
+
+/*
+.taskCard-right {
+	float: right;
+	clear: both;
+}
+*/
+input[type="text"].inputError {
+  background-color: #f04e7d; }
+
+.validationError {
+  position: relative;
+  padding: 10px;
+  margin-top: 100px;
+  color: #fbf3e6;
+  background-color: #ff0344;
+  border: 1px solid #96a2ec;
+  width: 100%;
+  margin: auto; }
+
+.modal-open {
+  background-color: #A9A9A9; }
+  .modal-open #root {
+    background-color: #130918;
+    opacity: 0.7;
+    -webkit-animation: rootFade 0.4s;
+    animation: rootFade 0.4s; }
+    .modal-open #root .tasks {
+      opacity: 0.2;
+      -webkit-animation: elementFade 0.4s;
+      animation: elementFade 0.4s; }
+
+@-webkit-keyframes rootFade {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0.7; } }
+@keyframes fade {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0.7; } }
+@-webkit-keyframes elementFade {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0.2; } }
+@keyframes fade {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0.2; } }
+.modal-dialog {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: unset !important;
+  -webkit-transform: unset !important; }
+
+.edit-modal {
+  -webkit-animation: fade 0.4s;
+  animation: fade 0.4s;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  margin: auto; }
+  .edit-modal .tasks {
+    opacity: 1; }
+
+@-webkit-keyframes fade {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes fade {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+.modal-content {
+  position: fixed;
+  height: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+  background-color: #130918; }
+
+.activeTask {
+  border: 1px solid #2c245a;
+  background-color: #120d2f;
+  padding-left: 2%;
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+.tasks {
+  border: 1px solid #2c245a;
+  background-color: #120d2f;
+  padding-left: 2%;
+  margin-top: 20px;
+  margin-bottom: 20px; }
+  .tasks p {
+    margin-bottom: 0; }
+
+.modal-header {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid #96a2ec; }
+
+.modal-footer {
+  padding-bottom: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #96a2ec; }
+
+.time-input {
+  margin-bottom: 10px;
+  border: 1px solid #96a2ec;
+  background-color: #fbf3e6;
+  width: 100%; }
+
+/*# sourceMappingURL=style.css.map */
