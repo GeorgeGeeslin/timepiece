@@ -20,14 +20,14 @@ export default class Summary extends Component {
 
  	currentTasks(tasks) {
  		let tasksArr = this.props.tasks.filter(function(task){
- 			return task.timefinished === null
+ 			return (task.timefinished === null || !task.hasOwnProperty('timefinished'))
  		})
  		return tasksArr;
  	}
 
  	finishedTasks(tasks) {
  		let tasksArr = this.props.tasks.filter(function(task){
- 			return task.timefinished !== null
+ 			return (task.timefinished !== null && task.hasOwnProperty('timefinished'))
  		})
  		return tasksArr;
  	}
