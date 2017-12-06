@@ -109,18 +109,19 @@ export const seccessfullSignOut = () => {
 }
 
 export function addTask(task, project, client, uid) {
-	let time = new Date().getTime();
+	let timecreated = new Date().getTime();
 	return dispatch => {
 		const taskRef = database.ref(uid+'/tasks');
 		taskRef.push({
 			task: task,
 			project: project,
 			client: client,
-			timecreated: time
+			timecreated: timecreated,
+			time: 0
 		})
 		.then((snapshot) => {
 			const taskKey = snapshot.key
-			dispatch(addTaskLocal(task, project, client, time, taskKey));
+			dispatch(addTaskLocal(task, project, client, timecreated, taskKey));
 		}); /*TODO add Catch */
 	}
 }
