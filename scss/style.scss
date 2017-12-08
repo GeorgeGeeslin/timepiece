@@ -237,12 +237,14 @@ input[type="text"] {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
-/*
-.taskCard-right {
-	float: right;
-	clear: both;
+
+.signInContainer {
+	padding: 15px;
 }
-*/
+
+.googleSignIn {
+	@include center;
+}
 // ERRORS ------------------------------ /
 
 input[type="text"].inputError {

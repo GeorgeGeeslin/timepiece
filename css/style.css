@@ -166,12 +166,15 @@ input[type="text"] {
     border: 1px solid #623353;
     color: #74546a; }
 
-/*
-.taskCard-right {
-	float: right;
-	clear: both;
-}
-*/
+.signInContainer {
+  padding: 15px; }
+
+.googleSignIn {
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto; }
+
 input[type="text"].inputError {
   background-color: #f04e7d; }
 
