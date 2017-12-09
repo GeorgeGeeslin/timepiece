@@ -175,12 +175,6 @@ input[type="text"] {
   margin-left: auto;
   margin-right: auto; }
 
-/*
-.taskCard-right {
-	float: right;
-	clear: both;
-}
-*/
 input[type="text"].inputError {
   background-color: #f04e7d; }
 

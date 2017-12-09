@@ -34,14 +34,14 @@ class Timer extends Component {
 				startIsDisabled: true
 			})
 			clearInterval(this.incrementer)
-		} else if ( this.props.selectedTask.time === 0 &&
+		} else if ( this.props.selectedTaskIndex !== -1 && this.props.selectedTask.time === 0 &&
 			(prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
 			this.setState({
 				secondsElapsed: this.props.secondsElapsed,
 				startIsDisabled: false,
 			})
 			clearInterval(this.incrementer)
-		} else if ( this.props.selectedTask.time > 0 &&
+		} else if ( this.props.selectedTaskIndex !== -1 && this.props.selectedTask.time > 0 &&
 			(prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
 			this.setState({
 				secondsElapsed: this.props.secondsElapsed,
