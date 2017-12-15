@@ -10,9 +10,22 @@ import EditTask from '../components/EditTask';
 import Summary from '../components/Summary'
 
 export default class Timepiece extends Component {
-//		static propTypes = {
-//		tasks: PropTypes.array.isRequired
-//	};
+		static propTypes = {
+		addTask: PropTypes.func.isRequired,
+		closeEdit: PropTypes.func.isRequired,
+		deleteTask: PropTypes.func.isRequired,
+		finishTask: PropTypes.func.isRequired,
+		openEdit: PropTypes.func.isRequired,
+		pauseTask: PropTypes.func.isRequired,
+		resumeTask: PropTypes.func.isRequired,
+		selectTask: PropTypes.func.isRequired,
+		updateTask: PropTypes.func.isRequired,
+		tasks: PropTypes.array.isRequired,
+		user: PropTypes.object.isRequired,
+		showEditScreen: PropTypes.bool.isRequired,
+		lastManualUpdate: PropTypes.string,
+		selectedTaskIndex: PropTypes.string
+	};
 
 	render() {
 
