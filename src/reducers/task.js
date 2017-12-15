@@ -69,7 +69,7 @@ export default function Task(state=initialState, action) {
 			return {
 				...state,
 				finishTaskList,
-				selectedTaskIndex: -1,
+				selectedTaskIndex: null,
 			}
 
 		case TaskActionTypes.DELETE_TASK:
@@ -81,7 +81,7 @@ export default function Task(state=initialState, action) {
 				return {
 					...state,
 					tasks: deleteTask,
-					selectedTaskIndex: -1
+					selectedTaskIndex: null
 				}
 			} else {
 				return {
@@ -113,7 +113,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.CLOSE_EDIT:
 			return {
 				...state,
-				editTaskIndex: -1,
+				editTaskIndex: null,
 				showEditScreen: false
 			}
 
