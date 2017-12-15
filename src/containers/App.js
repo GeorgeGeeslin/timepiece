@@ -37,7 +37,6 @@ class App extends Component {
 			{ user === null && 
 				<Login 
 					attemptLogin = {attemptLogin}
-					attemptSignOut = {attemptSignOut}
 					checkLoginStatus = {checkLoginStatus}	/>
 			}
 			{ user !== null && 

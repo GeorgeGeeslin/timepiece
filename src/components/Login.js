@@ -4,10 +4,11 @@ import { googleProvider } from '../firebase';
 import GoogleButton from 'react-google-button'
 
 export default class Login extends Component {
-	//static propTypes = {
+	static propTypes = {
+		attemptLogin: PropTypes.func.isRequired,
+		checkLoginStatus: PropTypes.func.isRequired
+	};
 
-		//};
-		//
 	componentDidMount() {
 		this.props.checkLoginStatus()
 	}
