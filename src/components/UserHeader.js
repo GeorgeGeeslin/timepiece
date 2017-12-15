@@ -3,9 +3,10 @@ import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 
 export default class UserHeader extends Component {
-	/*static propTypes = {
-	
-	}*/
+	static propTypes = {
+		attemptSignOut: PropTypes.func.isRequired,
+		user: PropTypes.object.isRequired
+	}
 
 	state = {
 		profileDropDown: false,
