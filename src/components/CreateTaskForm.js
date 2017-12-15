@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 export default class CreatTaskForm extends Component {
 	 static propTypes = {
 	 	addTask: PropTypes.func.isRequired,
-	 	uid: PropTypes.object.isRequired
+	 	uid: PropTypes.string.isRequired
 	 }
 
 	state = {

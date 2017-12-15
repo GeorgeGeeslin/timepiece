@@ -24,16 +24,8 @@ const ActiveTask = ({ selectedTask }) => {
 	}
 };
 
-/*ActiveTask.propTypes = {
-	selectedTask: PropTypes.shape({
-		client: PropTypes.string.isRequired,
-		project: PropTypes.string.isRequired,
-		task: PropTypes.string.isRequired,
-		time: PropTypes.number.isRequired,
-		timeKey: PropTypes.number.isRequired,
-		timecreated: PropTypes.number.isRequired,
-		timefinished: PropTypes.number
-	})
-}*/
+ActiveTask.propTypes = {
+	selectedTask: PropTypes.object
+}
 
 export default ActiveTask;
