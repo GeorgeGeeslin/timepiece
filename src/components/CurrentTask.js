@@ -31,16 +31,16 @@ const CurrentTask = props => (
 	</Grid>
 );
 
-
-/*   PROPTPYES ARE LIKELY TO CHANGE AS THIS COMPONENT IS DEVELOPED FURTHER
 CurrentTask.propTypes = {
 	selectTask: PropTypes.func.isRequired,
+	deleteTask: PropTypes.func.isRequired,
+	openEdit: PropTypes.func.isRequired,
 	client: PropTypes.string.isRequired,
 	project: PropTypes.string.isRequired,
 	task: PropTypes.string.isRequired,
 	index: PropTypes.number.isRequired,
-	timeKey: PropTypes.number.isRequired
+	taskKey: PropTypes.string.isRequired,
+	uid: PropTypes.string.isRequired
 };
-*/
 
 export default CurrentTask;

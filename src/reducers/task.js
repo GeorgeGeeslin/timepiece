@@ -1,43 +1,5 @@
 import * as TaskActionTypes from '../actiontypes/task';
 
-/*
-const initialState = {
-	tasks: [
-		{
-			client:"",
-			project:"",
-			task: "test 1",
-			taskKey: "-Kzpxl3JKeLAU-_A-lwX",
-			time: 0,
-			timecreated: 1511660130628,
-			timefinished: null,
-			timeintervals: []
-		},
-		{
-			client: "",
-			project: "",
-			task: "test 2",
-			taskKey: "-KzpxlxsNxXgBDcBpfXs",
-			time: 0,
-			timecreated: 1511660134313,
-			timefinished: null,
-			timeintervals: []
-		}
-	],
-	selectedTaskIndex: -1,
-	editTaskIndex: -1,
-	showEditScreen: false,
-	lastManualUpdate: null,
-	user: {
-		displayName: "George Geeslin",
-		photoURL: "https://lh5.googleusercontent.com/-lU84yBpvetk/AAAAAAAAAAI/AAAAAAAACaQ/06os67VOsqY/photo.jpg",
-		email: "george.geeslin@gmail.com",
-		uid: "E2K4Tb5ffuU4y2or9mSn7nMaNAF3"
-	},
-}
-*/
-
-
 const initialState = {
 	tasks: [],
 	selectedTaskIndex: null,
