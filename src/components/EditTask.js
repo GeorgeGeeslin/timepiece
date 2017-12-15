@@ -3,10 +3,14 @@ import { PropTypes } from 'prop-types';
 import { Modal, Grid, Col, Row } from 'react-bootstrap';
 
 export default class EditTask extends Component {
-	//define propTypes
-	/*static propTypes = {
-	
-	}*/
+	static propTypes = {
+		closeEdit: PropTypes.func.isRequired,
+		updateTask: PropTypes.func.isRequired,
+		editTask: PropTypes.object.isRequired,
+		editTaskIndex: PropTypes.string.isRequired,
+		showEditScreen: PropTypes.bool.isRequired,
+		uid: PropTypes.string.isRequired
+	}
 
 	state = {
 		task: this.props.editTask.task,
