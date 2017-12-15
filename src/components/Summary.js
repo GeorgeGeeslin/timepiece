@@ -17,6 +17,9 @@ const monthStart = new Date(currDay.getFullYear(), currDay.getMonth(), 1).getTim
 const monthEnd = new Date(currDay.getFullYear(), currDay.getMonth() + 1, 0, 23, 59, 59).getTime();
 
 export default class Summary extends Component {
+	static propTypes = {
+		tasks: PropTypes.array.isRequired
+	};
 
  	currentTasks(tasks) {
  		let tasksArr = this.props.tasks.filter(function(task){
