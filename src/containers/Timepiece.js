@@ -25,7 +25,7 @@ export default class Timepiece extends Component {
 		const uid = user.uid;
 
 		let selectedTask;
-		if (selectedTaskIndex !== -1) {
+		if (selectedTaskIndex !== null) {
 			selectedTask = tasks.filter(function(task){
 				return task.taskKey === selectedTaskIndex;
 			})[0];
@@ -75,7 +75,7 @@ export default class Timepiece extends Component {
 		));
 
 		let editTask;
-		if (editTaskIndex !== -1) {
+		if (editTaskIndex !== null) {
 			editTask = tasks.filter(function(task){
 				return task.taskKey === editTaskIndex;
 			})[0];

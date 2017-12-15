@@ -1,57 +1,4 @@
 import * as TaskActionTypes from '../actiontypes/task';
-//import firebase from '../firebase';
-
-
-/*const initialState = {
-	tasks: [{
-		task: 'Create CSS for landing page',
-		project: 'Acme Landing Page',
-		client: 'Acme',
-		time: 6100,
-		timecreated: new Date().getTime(),
-		timefinished: null,
-		taskKey: 1,
-		timeintervals: [
-			{
-				startTime: 1483990440000,
-				stopTime: new Date().getTime() - 15000,
-			},
-			{
-				startTime: new Date().getTime() - 10000,
-				stopTime: new Date().getTime() - 8000
-			}
-		]
-	},
-	{
-		task: 'Create HTML for landing page',
-		project: 'Acme Landing Page',
-		client: 'Acme',
-		time: 8200,
-		timecreated: new Date().getTime(),
-		timefinished: null,
-		taskKey: 2,
-		timeintervals: []
-	},
-	{
-		task: 'Mow yard',
-		project: 'misc',
-		client: 'me',
-		time: 2500,
-		timecreated: new Date().getTime(),
-		timefinished: new Date().getTime(),
-		taskKey: 3,
-		timeintervals: [
-			{
-				startTime: new Date().getTime() - 5000,
-				stopTime: new Date().getTime() - 3000
-			}
-		]
-	}],
-	selectedTaskIndex: -1,
-	showEditScreen: false,
-	editTaskIndex: -1,
-	lastManualUpdate: null
-} */
 
 /*
 const initialState = {
@@ -93,7 +40,7 @@ const initialState = {
 
 const initialState = {
 	tasks: [],
-	selectedTaskIndex: -1,
+	selectedTaskIndex: null,
 	showEditScreen: false,
 	lastManualUpdate: null,
 	user: null
