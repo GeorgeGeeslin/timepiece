@@ -10,23 +10,9 @@ export default class Login extends Component {
 		pendingLogin: PropTypes.bool.isRequired,
 	};
 
-
-	/*componentDidMount() {
-		console.log('did mount')
-	//	this.setState({pendingLogin: true})
-	//	this.props.checkLoginStatus()
-	}*/
-
 	componentWillMount(){
-		console.log('will mount')
-		//this.setState({pendingLogin: true})
 		this.props.checkLoginStatus()
 	}
-
-/*	componentDidUpdate() {
-		//console.log(this.props.pendingLogin)
-		console.log("componentDidUpdate")
-	}*/
 
 	login(provider) {
 		this.setState({pendingLogin: true})
@@ -44,8 +30,7 @@ export default class Login extends Component {
 						</div>
 					}
 					{this.props.pendingLogin === true &&
-						<div>
-							<h2>LOADING</h2>
+						<div className='loader'>
 						</div>
 					}
 				</div>
