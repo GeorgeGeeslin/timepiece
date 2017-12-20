@@ -5,7 +5,8 @@ const initialState = {
 	selectedTaskIndex: null,
 	showEditScreen: false,
 	lastManualUpdate: null,
-	user: null
+	user: null,
+	pendingLogin: false
 }
 
 const currDate = new Date();
@@ -13,11 +14,26 @@ const currTimeStamp = currDate.getTime();
 
 export default function Task(state=initialState, action) {
 	switch(action.type){
+		case TaskActionTypes.PENDING_LOGIN: {
+			return {
+				...state,
+				pendingLogin: true
+			}
+		}
+
+		case TaskActionTypes.CLEAR_LOGIN: {
+			return {
+				...state,
+				pendingLogin: false
+			}
+		}
+
 		case TaskActionTypes.SUCCESSFUL_LOGIN: {
 			return {
 				...state,
 				user: action.user,
-				tasks: action.tasks
+				tasks: action.tasks,
+				pendingLogin: false
 			}
 		}
 
