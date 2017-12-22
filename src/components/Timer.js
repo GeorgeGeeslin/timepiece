@@ -110,7 +110,7 @@ class Timer extends Component {
 	handleCancelClick() {
 		clearInterval(this.incrementer);
 		this.setState({
-			secondsElapsed: 0,
+			secondsElapsed: this.props.secondsElapsed,
 			startIsDisabled: false,
 			pauseIsDisabled: true,
 			finishIsDisabled: true,
