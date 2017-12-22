@@ -104,30 +104,34 @@ export default class Timepiece extends Component {
 			<Grid>
 				<Row className="show-grid">
 					<Col className={'leftCol'} sm={12} md={6}>
-						<ActiveTask 
-							selectedTask={selectedTask} />
-						<Timer
-							selectedTaskIndex={selectedTaskIndex} 
-							secondsElapsed={secondsElapsed} 
-							finishTask={this.props.finishTask} 
-							pauseTask={this.props.pauseTask}
-							selectedTask={selectedTask}
-							lastManualUpdate={lastManualUpdate}
-							uid={uid}
-							/>
-						<CreateTaskForm addTask={this.props.addTask} 
-							uid={uid}/>
-						{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
-						<div className='taskWrapper'>
-							{ currentTasks }
+						<div className={'mainContent'}>
+							<ActiveTask 
+								selectedTask={selectedTask} />
+							<Timer
+								selectedTaskIndex={selectedTaskIndex} 
+								secondsElapsed={secondsElapsed} 
+								finishTask={this.props.finishTask} 
+								pauseTask={this.props.pauseTask}
+								selectedTask={selectedTask}
+								lastManualUpdate={lastManualUpdate}
+								uid={uid}
+								/>
+							<CreateTaskForm addTask={this.props.addTask} 
+								uid={uid}/>
+							{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
+							<div className='taskWrapper'>
+								{ currentTasks }
+							</div>
 						</div>
 					</Col>
 					<Col className={'rightCol'} sm={12} md={6}>
-						{ finishedTasks.length > 0 && <h2>Finished Tasks</h2> }
-						<div className='taskWrapper'>
-							{ finishedTasks }
+						<div className={'mainContent'}>
+							{ finishedTasks.length > 0 && <h2>Finished Tasks</h2> }
+							<div className='taskWrapper'>
+								{ finishedTasks }
+							</div>
+							<Summary tasks={tasks}/>
 						</div>
-						<Summary tasks={tasks}/>
 					</Col>
 				</Row>
 				{this.props.showEditScreen === true && <EditTask

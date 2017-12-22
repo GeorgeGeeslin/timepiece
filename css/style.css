@@ -22,10 +22,24 @@ ul {
   list-style: none;
   padding-left: 0; }
 
+.container {
+  max-width: 100%; }
+
 @media only screen and (min-width: 767px) {
   .leftCol {
     min-height: 100vh;
     border-right: 1px solid #96a2ec; } }
+
+@media only screen and (min-width: 1024px) and (max-width: 1499px) {
+  .mainContent {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%; } }
+@media only screen and (min-width: 1500px) {
+  .mainContent {
+    width: 60%;
+    margin-right: 20%;
+    margin-left: 20%; } }
 
 .control-buttons {
   width: 100%;
@@ -141,7 +155,7 @@ input[type="text"] {
   @media only screen and (min-width: 767px) {
     .userProfileDropDown {
       left: 66%; } }
-  @media only screen and (min-width: 1024px) and (max-width: 11999px) {
+  @media only screen and (min-width: 1024px) and (max-width: 1499px) {
     .userProfileDropDown {
       left: 74%; } }
   .userProfileDropDown:focus {
