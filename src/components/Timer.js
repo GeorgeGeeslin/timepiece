@@ -17,7 +17,7 @@ class Timer extends Component {
 		this.state = {
 			secondsElapsed: 0,
 			lastClearedIncrementer: null,
-			startIsDisabled: false,
+			startIsDisabled: true,
 			pauseIsDisabled: true,
 			finishIsDisabled: true,
 			cancelIsDisabled: true,
