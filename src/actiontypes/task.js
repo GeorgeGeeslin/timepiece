@@ -1,9 +1,10 @@
 export const ATTEMPT_LOGIN = 'task/ATTEMPT_LOGIN';
 export const SUCCESSFUL_LOGIN = 'task/'
 export const CHECK_LOGIN_STATUS = 'task/CHECK_LOGIN_STATUS';
+export const PENDING_LOGIN = 'task/PENDING_LOGIN';
+export const CLEAR_LOGIN = 'task/CLEAR_LOGIN';
 export const ATTEMPT_SIGNOUT = 'tasks/ATTEMPT_SIGNOUT';
 export const SUCCESSFUL_SIGNOUT = 'tasks/SUCCESSFUL_SIGNOUT';
-//export const FAILED_SIGNOUT
 export const LOGOUT = 'task/LOGOUT';
 export const ADD_TASK = 'task/ADD_TASK';
 export const SELECT_TASK = 'task/SELECT_TASK';

@@ -37,7 +37,8 @@ class App extends Component {
 			{ user === null && 
 				<Login 
 					attemptLogin = {attemptLogin}
-					checkLoginStatus = {checkLoginStatus}	/>
+					checkLoginStatus = {checkLoginStatus}
+					pendingLogin = {this.props.pendingLogin}	/>
 			}
 			{ user !== null && 
 				<UserHeader user={this.props.user}
@@ -74,6 +75,7 @@ const mapStateToProps = state => (
 		editTaskIndex: state.editTaskIndex,
 		lastManualUpdate: state.lastManualUpdate,
 		user: state.user,
+		pendingLogin: state.pendingLogin
 	}
 );
 

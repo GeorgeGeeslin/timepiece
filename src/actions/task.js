@@ -3,6 +3,7 @@ import {database, auth} from '../firebase';
 
 export function checkLoginStatus() {
 	return dispatch => {
+		dispatch(pendingLogin());
 		auth.onAuthStateChanged(function(user) {
 			if (user) {
 				var tasks = [];
@@ -31,47 +32,49 @@ export function checkLoginStatus() {
 					}
 					dispatch(successfulLogin(user, tasks));
 				})
-			}		
+			} else {
+				dispatch(clearLogin());
+			}	
 		});
 	}
 }
 
 export function attemptLogin(provider) {
 	return dispatch => {
+		dispatch(pendingLogin())
 		auth.signInWithRedirect(provider)
 		.then((result) => {
 			const token = result.credential.accessToken;
 			const user = result.user;
-				const uid = user.uid
-				database.ref(uid+'/tasks').once('value')
-				.then((snapshot) => {
-					if (snapshot.val() === null ) {
-						var tasks = [];
-					} else {
-						const val = snapshot.val();		
-						const taskKeys = Object.keys(val);
-						var tasks = [];	
-						for (let i = 0; i < taskKeys.length; i++) {
-							tasks.push(val[taskKeys[i]]);
-							tasks[i].taskKey = taskKeys[i];
-							if (tasks[i].hasOwnProperty('timeintervals')) {
-								let intervalKeys = Object.keys(tasks[i]['timeintervals'])
-								let timeintervals = [];
-								for (let j = 0; j < intervalKeys.length; j++) {
-									timeintervals.push(val[taskKeys[i]]['timeintervals'][intervalKeys[j]]);
-									timeintervals[j].intervalKey = intervalKeys[j];
-								}
-								tasks[i].timeintervals = timeintervals;
-							} else {
-								tasks[i].timeintervals = [];
+			const uid = user.uid;
+			database.ref(uid+'/tasks').once('value')
+			.then((snapshot) => {
+				if (snapshot.val() === null ) {
+					var tasks = [];
+				} else {
+					const val = snapshot.val();		
+					const taskKeys = Object.keys(val);
+					var tasks = [];	
+					for (let i = 0; i < taskKeys.length; i++) {
+						tasks.push(val[taskKeys[i]]);
+						tasks[i].taskKey = taskKeys[i];
+						if (tasks[i].hasOwnProperty('timeintervals')) {
+							let intervalKeys = Object.keys(tasks[i]['timeintervals'])
+							let timeintervals = [];
+							for (let j = 0; j < intervalKeys.length; j++) {
+								timeintervals.push(val[taskKeys[i]]['timeintervals'][intervalKeys[j]]);
+								timeintervals[j].intervalKey = intervalKeys[j];
 							}
+							tasks[i].timeintervals = timeintervals;
+						} else {
+							tasks[i].timeintervals = [];
 						}
 					}
-					dispatch(successfulLogin(user, tasks));
-				})
-				.catch((error) => {
-					console.error(error)
-				})
+				}
+			})
+			.catch((error) => {
+				console.error(error)
+			})
 		})
 		.catch((error) => {
 			const errorCode = error.code;
@@ -80,6 +83,18 @@ export function attemptLogin(provider) {
 			const credential = error.credential;
 			console.error(errorMessage);
 		});
+	}
+}
+
+export const pendingLogin = () => {
+	return {
+		type: TaskActionTypes.PENDING_LOGIN
+	}
+}
+
+export const clearLogin = () => {
+	return {
+		type: TaskActionTypes.CLEAR_LOGIN
 	}
 }
 
