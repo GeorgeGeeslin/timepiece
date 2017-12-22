@@ -31,14 +31,17 @@ const FinishedTask = props => (
 	</Grid>
 );
 
-/*   PROPTPYES ARE LIKELY TO CHANGE AS THIS COMPONENT IS DEVELOPED FURTHER
 FinishedTask.propTypes = {
-	selectTask: PropTypes.func.isRequired,
+	deleteTask: PropTypes.func.isRequired,
+	openEdit: PropTypes.func.isRequired,
+	resumeTask: PropTypes.func.isRequired,
 	client: PropTypes.string.isRequired,
 	project: PropTypes.string.isRequired,
 	task: PropTypes.string.isRequired,
 	index: PropTypes.number.isRequired,
-	timeKey: PropTypes.number.isRequired
+	taskKey: PropTypes.string.isRequired,
+	uid: PropTypes.string.isRequired,
+	selectedTaskIndex: PropTypes.string
 };
-*/
+
 export default FinishedTask;

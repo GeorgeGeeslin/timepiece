@@ -10,9 +10,22 @@ import EditTask from '../components/EditTask';
 import Summary from '../components/Summary'
 
 export default class Timepiece extends Component {
-//		static propTypes = {
-//		tasks: PropTypes.array.isRequired
-//	};
+		static propTypes = {
+		addTask: PropTypes.func.isRequired,
+		closeEdit: PropTypes.func.isRequired,
+		deleteTask: PropTypes.func.isRequired,
+		finishTask: PropTypes.func.isRequired,
+		openEdit: PropTypes.func.isRequired,
+		pauseTask: PropTypes.func.isRequired,
+		resumeTask: PropTypes.func.isRequired,
+		selectTask: PropTypes.func.isRequired,
+		updateTask: PropTypes.func.isRequired,
+		tasks: PropTypes.array.isRequired,
+		user: PropTypes.object.isRequired,
+		showEditScreen: PropTypes.bool.isRequired,
+		lastManualUpdate: PropTypes.string,
+		selectedTaskIndex: PropTypes.string
+	};
 
 	render() {
 
@@ -25,7 +38,7 @@ export default class Timepiece extends Component {
 		const uid = user.uid;
 
 		let selectedTask;
-		if (selectedTaskIndex !== -1) {
+		if (selectedTaskIndex !== null) {
 			selectedTask = tasks.filter(function(task){
 				return task.taskKey === selectedTaskIndex;
 			})[0];
@@ -51,7 +64,6 @@ export default class Timepiece extends Component {
 				selectTask={this.props.selectTask}
 				deleteTask={this.props.deleteTask}
 				openEdit={this.props.openEdit}
-				selectedTaskIndex={selectedTaskIndex}
 				uid={uid}
 			/>
 		));
@@ -75,7 +87,7 @@ export default class Timepiece extends Component {
 		));
 
 		let editTask;
-		if (editTaskIndex !== -1) {
+		if (editTaskIndex !== null) {
 			editTask = tasks.filter(function(task){
 				return task.taskKey === editTaskIndex;
 			})[0];
@@ -92,30 +104,34 @@ export default class Timepiece extends Component {
 			<Grid>
 				<Row className="show-grid">
 					<Col className={'leftCol'} sm={12} md={6}>
-						<ActiveTask 
-							selectedTask={selectedTask} />
-						<Timer
-							selectedTaskIndex={selectedTaskIndex} 
-							secondsElapsed={secondsElapsed} 
-							finishTask={this.props.finishTask} 
-							pauseTask={this.props.pauseTask}
-							selectedTask={selectedTask}
-							lastManualUpdate={lastManualUpdate}
-							uid={uid}
-							/>
-						<CreateTaskForm addTask={this.props.addTask} 
-							uid={uid}/>
-						{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
-						<div className='taskWrapper'>
-							{ currentTasks }
+						<div className={'mainContent'}>
+							<ActiveTask 
+								selectedTask={selectedTask} />
+							<Timer
+								selectedTaskIndex={selectedTaskIndex} 
+								secondsElapsed={secondsElapsed} 
+								finishTask={this.props.finishTask} 
+								pauseTask={this.props.pauseTask}
+								selectedTask={selectedTask}
+								lastManualUpdate={lastManualUpdate}
+								uid={uid}
+								/>
+							<CreateTaskForm addTask={this.props.addTask} 
+								uid={uid}/>
+							{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
+							<div className='taskWrapper'>
+								{ currentTasks }
+							</div>
 						</div>
 					</Col>
 					<Col className={'rightCol'} sm={12} md={6}>
-						{ finishedTasks.length > 0 && <h2>Finished Tasks</h2> }
-						<div className='taskWrapper'>
-							{ finishedTasks }
+						<div className={'mainContent'}>
+							{ finishedTasks.length > 0 && <h2>Finished Tasks</h2> }
+							<div className='taskWrapper'>
+								{ finishedTasks }
+							</div>
+							<Summary tasks={tasks}/>
 						</div>
-						<Summary tasks={tasks}/>
 					</Col>
 				</Row>
 				{this.props.showEditScreen === true && <EditTask

@@ -1,102 +1,12 @@
 import * as TaskActionTypes from '../actiontypes/task';
-//import firebase from '../firebase';
-
-
-/*const initialState = {
-	tasks: [{
-		task: 'Create CSS for landing page',
-		project: 'Acme Landing Page',
-		client: 'Acme',
-		time: 6100,
-		timecreated: new Date().getTime(),
-		timefinished: null,
-		taskKey: 1,
-		timeintervals: [
-			{
-				startTime: 1483990440000,
-				stopTime: new Date().getTime() - 15000,
-			},
-			{
-				startTime: new Date().getTime() - 10000,
-				stopTime: new Date().getTime() - 8000
-			}
-		]
-	},
-	{
-		task: 'Create HTML for landing page',
-		project: 'Acme Landing Page',
-		client: 'Acme',
-		time: 8200,
-		timecreated: new Date().getTime(),
-		timefinished: null,
-		taskKey: 2,
-		timeintervals: []
-	},
-	{
-		task: 'Mow yard',
-		project: 'misc',
-		client: 'me',
-		time: 2500,
-		timecreated: new Date().getTime(),
-		timefinished: new Date().getTime(),
-		taskKey: 3,
-		timeintervals: [
-			{
-				startTime: new Date().getTime() - 5000,
-				stopTime: new Date().getTime() - 3000
-			}
-		]
-	}],
-	selectedTaskIndex: -1,
-	showEditScreen: false,
-	editTaskIndex: -1,
-	lastManualUpdate: null
-} */
-
-/*
-const initialState = {
-	tasks: [
-		{
-			client:"",
-			project:"",
-			task: "test 1",
-			taskKey: "-Kzpxl3JKeLAU-_A-lwX",
-			time: 0,
-			timecreated: 1511660130628,
-			timefinished: null,
-			timeintervals: []
-		},
-		{
-			client: "",
-			project: "",
-			task: "test 2",
-			taskKey: "-KzpxlxsNxXgBDcBpfXs",
-			time: 0,
-			timecreated: 1511660134313,
-			timefinished: null,
-			timeintervals: []
-		}
-	],
-	selectedTaskIndex: -1,
-	editTaskIndex: -1,
-	showEditScreen: false,
-	lastManualUpdate: null,
-	user: {
-		displayName: "George Geeslin",
-		photoURL: "https://lh5.googleusercontent.com/-lU84yBpvetk/AAAAAAAAAAI/AAAAAAAACaQ/06os67VOsqY/photo.jpg",
-		email: "george.geeslin@gmail.com",
-		uid: "E2K4Tb5ffuU4y2or9mSn7nMaNAF3"
-	},
-}
-*/
-
 
 const initialState = {
 	tasks: [],
-	selectedTaskIndex: -1,
+	selectedTaskIndex: null,
 	showEditScreen: false,
 	lastManualUpdate: null,
-	user: null
+	user: null,
+	pendingLogin: false
 }
 
 const currDate = new Date();
@@ -104,11 +14,26 @@ const currTimeStamp = currDate.getTime();
 
 export default function Task(state=initialState, action) {
 	switch(action.type){
+		case TaskActionTypes.PENDING_LOGIN: {
+			return {
+				...state,
+				pendingLogin: true
+			}
+		}
+
+		case TaskActionTypes.CLEAR_LOGIN: {
+			return {
+				...state,
+				pendingLogin: false
+			}
+		}
+
 		case TaskActionTypes.SUCCESSFUL_LOGIN: {
 			return {
 				...state,
 				user: action.user,
-				tasks: action.tasks
+				tasks: action.tasks,
+				pendingLogin: false
 			}
 		}
 
@@ -160,7 +85,7 @@ export default function Task(state=initialState, action) {
 			return {
 				...state,
 				finishTaskList,
-				selectedTaskIndex: -1,
+				selectedTaskIndex: null,
 			}
 
 		case TaskActionTypes.DELETE_TASK:
@@ -172,7 +97,7 @@ export default function Task(state=initialState, action) {
 				return {
 					...state,
 					tasks: deleteTask,
-					selectedTaskIndex: -1
+					selectedTaskIndex: null
 				}
 			} else {
 				return {
@@ -204,7 +129,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.CLOSE_EDIT:
 			return {
 				...state,
-				editTaskIndex: -1,
+				editTaskIndex: null,
 				showEditScreen: false
 			}
 

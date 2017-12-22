@@ -17,7 +17,7 @@ class Timer extends Component {
 		this.state = {
 			secondsElapsed: 0,
 			lastClearedIncrementer: null,
-			startIsDisabled: false,
+			startIsDisabled: true,
 			pauseIsDisabled: true,
 			finishIsDisabled: true,
 			cancelIsDisabled: true,
@@ -34,14 +34,14 @@ class Timer extends Component {
 				startIsDisabled: true
 			})
 			clearInterval(this.incrementer)
-		} else if ( this.props.selectedTaskIndex !== -1 && this.props.selectedTask.time === 0 &&
+		} else if ( this.props.selectedTaskIndex !== null && this.props.selectedTask.time === 0 &&
 			(prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
 			this.setState({
 				secondsElapsed: this.props.secondsElapsed,
 				startIsDisabled: false,
 			})
 			clearInterval(this.incrementer)
-		} else if ( this.props.selectedTaskIndex !== -1 && this.props.selectedTask.time > 0 &&
+		} else if ( this.props.selectedTaskIndex !== null && this.props.selectedTask.time > 0 &&
 			(prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
 			this.setState({
 				secondsElapsed: this.props.secondsElapsed,
@@ -110,7 +110,7 @@ class Timer extends Component {
 	handleCancelClick() {
 		clearInterval(this.incrementer);
 		this.setState({
-			secondsElapsed: 0,
+			secondsElapsed: this.props.secondsElapsed,
 			startIsDisabled: false,
 			pauseIsDisabled: true,
 			finishIsDisabled: true,

@@ -9,7 +9,12 @@ import Login from '../components/Login';
 
 class App extends Component {
 	static propTypes = {
-		tasks: PropTypes.array.isRequired
+		tasks: PropTypes.array.isRequired,
+		showEditScreen: PropTypes.bool.isRequired,
+		dispatch: PropTypes.func.isRequired,
+		user: PropTypes.object,
+		selectedTaskIndex: PropTypes.string,
+		lastManualUpdate: PropTypes.string
 	};
 	
 	render() {
@@ -32,8 +37,8 @@ class App extends Component {
 			{ user === null && 
 				<Login 
 					attemptLogin = {attemptLogin}
-					attemptSignOut = {attemptSignOut}
-					checkLoginStatus = {checkLoginStatus}	/>
+					checkLoginStatus = {checkLoginStatus}
+					pendingLogin = {this.props.pendingLogin}	/>
 			}
 			{ user !== null && 
 				<UserHeader user={this.props.user}
@@ -70,6 +75,7 @@ const mapStateToProps = state => (
 		editTaskIndex: state.editTaskIndex,
 		lastManualUpdate: state.lastManualUpdate,
 		user: state.user,
+		pendingLogin: state.pendingLogin
 	}
 );
 
