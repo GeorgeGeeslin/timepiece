@@ -293,12 +293,12 @@ input[type="text"].inputError {
   width: 11em;
   height: 11em;
   border-radius: 50%;
-  background: #ffffff;
-  background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: #96a2ec;
+  background: -moz-linear-gradient(left, #96a2ec 10%, rgba(150, 162, 236, 0) 42%);
+  background: -webkit-linear-gradient(left, #96a2ec 10%, rgba(150, 162, 236, 0) 42%);
+  background: -o-linear-gradient(left, #96a2ec 10%, rgba(150, 162, 236, 0) 42%);
+  background: -ms-linear-gradient(left, #96a2ec 10%, rgba(150, 162, 236, 0) 42%);
+  background: linear-gradient(left, #96a2ec 10%, rgba(150, 162, 236, 0) 42%);
   position: relative;
   -webkit-animation: load3 1.4s infinite linear;
   animation: load3 1.4s infinite linear;
@@ -309,7 +309,7 @@ input[type="text"].inputError {
 .loader:before {
   width: 50%;
   height: 50%;
-  background: #ffffff;
+  background: #96a2ec;
   border-radius: 100% 0 0 0;
   position: absolute;
   top: 0;
