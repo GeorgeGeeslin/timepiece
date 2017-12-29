@@ -6,7 +6,6 @@ export function checkLoginStatus() {
 		dispatch(pendingLogin());
 		auth.getRedirectResult().then((result) => {
 			auth.onAuthStateChanged((user) => {
-				console.log(user)
 				if (user) {
 					dispatch(getUserData(user));
 				} else {
