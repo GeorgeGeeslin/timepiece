@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { googleProvider } from '../firebase';
+import { googleProvider, facebookProvider } from '../firebase';
 import GoogleButton from 'react-google-button'
 
 export default class Login extends Component {
@@ -16,7 +16,7 @@ export default class Login extends Component {
 
 	login(provider) {
 		this.setState({pendingLogin: true})
-		this.props.attemptLogin(googleProvider)
+		this.props.attemptLogin(provider)
 	}
 	
 	render() {
@@ -27,6 +27,12 @@ export default class Login extends Component {
 					{this.props.pendingLogin === false && 
 						<div>
 							<GoogleButton className='googleSignIn' onClick={ () => this.login(googleProvider) } />
+						</div>
+					}
+					{this.props.pendingLogin === false &&
+						<div className='signInSeparator'>
+							<div className={['facebookSignIn', 'loginBtn'].join(' ')} onClick={ () => this.login(facebookProvider)}>Sign in with Facebook
+							</div>
 						</div>
 					}
 					{this.props.pendingLogin === true &&

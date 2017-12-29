@@ -254,13 +254,71 @@ input[type="text"] {
 	padding-bottom: 5px;
 }
 
+
+// Login ----------------------- /
 .signInContainer {
 	padding: 15px;
 }
 
 .googleSignIn {
 	@include center;
+	&:active {
+  	box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+  }
 }
+
+.signInSeparator {
+	margin-top: 15px;
+}
+
+.loginBtn {
+	cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0.2em;
+  padding: 0 15px 0 46px;
+  border: none;
+  width: 240px;
+  text-align: left;
+  line-height: 50px;
+  white-space: nowrap;
+  font-size: 16px;
+  &:active {
+  	box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+  }
+}
+
+.facebookSignIn {
+	//@include center;
+	margin: 0 auto;
+	color: #FFF;
+  background-color: #4C69BA;
+  background-image: linear-gradient(#4C69BA, #3B55A0);
+   &:hover {
+  	background-color: #5b7bd5;
+  	background-image: linear-gradient(#5b7bd5, #4864b1);
+  }
+  &:before {
+  display: inline-block;
+  float: left;
+  //border-right: #364e92 1px solid;
+  text-align: center;
+  font-size: 40px;
+  font-family: Facebook Letter Faces, Arial;
+  font-weight: bold;
+  content: url('/src/images/fb_logo50.png');
+  //content: "f";
+  margin-left: -45px;
+  margin-right: 17px;
+  //background-color: white;
+  //color: #4C69BA;
+  width: 48px;
+  //height: 40px;
+	}
+}
+
+
+
 // ERRORS ------------------------------ /
 
 input[type="text"].inputError {
