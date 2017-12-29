@@ -27,7 +27,12 @@ export default class Login extends Component {
 					{this.props.pendingLogin === false && 
 						<div>
 							<GoogleButton className='googleSignIn' onClick={ () => this.login(googleProvider) } />
-							<h3 onClick={ () => this.login(facebookProvider)}>Login with facebook</h3>
+						</div>
+					}
+					{this.props.pendingLogin === false &&
+						<div className='signInSeparator'>
+							<div className={['facebookSignIn', 'loginBtn'].join(' ')} onClick={ () => this.login(facebookProvider)}>Sign in with Facebook
+							</div>
 						</div>
 					}
 					{this.props.pendingLogin === true &&
