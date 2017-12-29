@@ -1,88 +1,80 @@
 import * as TaskActionTypes from '../actiontypes/task';
-import {database, auth} from '../firebase';
+import {database, auth, googleProvider} from '../firebase';
 
 export function checkLoginStatus() {
 	return dispatch => {
 		dispatch(pendingLogin());
-		auth.onAuthStateChanged(function(user) {
-			if (user) {
-				var tasks = [];
-				const uid = user.uid;
-				database.ref(uid+'/tasks').once('value')
-				.then((snapshot) => {
-					if (snapshot.val() === null) {
-					} else {
-						const val = snapshot.val();
-						const taskKeys = Object.keys(val);
-						for (let i = 0; i < taskKeys.length; i++) {
-							tasks.push(val[taskKeys[i]]);
-							tasks[i].taskKey = taskKeys[i];
-							if (tasks[i].hasOwnProperty('timeintervals')) {
-								let intervalKeys = Object.keys(tasks[i]['timeintervals'])
-								let timeintervals = [];
-								for (let j = 0; j < intervalKeys.length; j++) {
-									timeintervals.push(val[taskKeys[i]]['timeintervals'][intervalKeys[j]]);
-									timeintervals[j].intervalKey = intervalKeys[j];
-								}
-								tasks[i].timeintervals = timeintervals;
-							} else {
-								tasks[i].timeintervals = [];
-							}
-						}			
-					}
-					dispatch(successfulLogin(user, tasks));
-				})
-			} else {
+		auth.getRedirectResult().then((result) => {
+			auth.onAuthStateChanged((user) => {
+				console.log(user)
+				if (user) {
+					dispatch(getUserData(user));
+				} else {
+					dispatch(clearLogin());
+				}
+			})
+		}).catch((error) => {
+			//If a user uses a gmail address with the facebook provider, later logs in with the same email address
+			//on using gmail provider, subsequent attempts on the facebook provider will fail due to firebase considering
+			//the google provider to be the authoritative provider for gmail addresses. 
+			//The code in this catch block will reattempt login using the existing google provider info.
+			auth.fetchProvidersForEmail(error.email).then((result) => {
+				const authProvider = result[0];
+				if (authProvider === 'google.com') {
+					googleProvider.setCustomParameters({login_hint: error.email});
+					auth.signInWithRedirect(googleProvider).then((result) => {
+						// successfull login here will cause a page load due to redirect and 
+						//this function will be called again, triggering getRedirectResult() 
+					}).catch((error) => {
+						console.log(error)
+						dispatch(clearLogin());
+					})
+				}
+			}).catch((error) => {
+				console.log(error)
 				dispatch(clearLogin());
-			}	
-		});
+			})
+		})
+	}
+}
+
+function getUserData(user) {
+	return dispatch => {
+		var tasks = [];
+		const uid = user.uid;
+		database.ref(uid+'/tasks').once('value')
+		.then((snapshot) => {
+			if (snapshot.val() === null) {
+			} else {
+				const val = snapshot.val();
+				const taskKeys = Object.keys(val);
+				for (let i = 0; i < taskKeys.length; i++) {
+					tasks.push(val[taskKeys[i]]);
+					tasks[i].taskKey = taskKeys[i];
+					if (tasks[i].hasOwnProperty('timeintervals')) {
+						let intervalKeys = Object.keys(tasks[i]['timeintervals'])
+						let timeintervals = [];
+						for (let j = 0; j < intervalKeys.length; j++) {
+							timeintervals.push(val[taskKeys[i]]['timeintervals'][intervalKeys[j]]);
+							timeintervals[j].intervalKey = intervalKeys[j];
+						}
+						tasks[i].timeintervals = timeintervals;
+					} else {
+						tasks[i].timeintervals = [];
+					}
+				}			
+			}
+			dispatch(successfulLogin(user, tasks));
+		})
 	}
 }
 
 export function attemptLogin(provider) {
 	return dispatch => {
 		dispatch(pendingLogin())
+		//results of signInWithRedirect are returned by getRedirectResult()
+		//which is called by checkLoginStatus() (called from within Login.js) when the page reloads after redirect.
 		auth.signInWithRedirect(provider)
-		.then((result) => {
-			const token = result.credential.accessToken;
-			const user = result.user;
-			const uid = user.uid;
-			database.ref(uid+'/tasks').once('value')
-			.then((snapshot) => {
-				if (snapshot.val() === null ) {
-					var tasks = [];
-				} else {
-					const val = snapshot.val();		
-					const taskKeys = Object.keys(val);
-					var tasks = [];	
-					for (let i = 0; i < taskKeys.length; i++) {
-						tasks.push(val[taskKeys[i]]);
-						tasks[i].taskKey = taskKeys[i];
-						if (tasks[i].hasOwnProperty('timeintervals')) {
-							let intervalKeys = Object.keys(tasks[i]['timeintervals'])
-							let timeintervals = [];
-							for (let j = 0; j < intervalKeys.length; j++) {
-								timeintervals.push(val[taskKeys[i]]['timeintervals'][intervalKeys[j]]);
-								timeintervals[j].intervalKey = intervalKeys[j];
-							}
-							tasks[i].timeintervals = timeintervals;
-						} else {
-							tasks[i].timeintervals = [];
-						}
-					}
-				}
-			})
-			.catch((error) => {
-				console.error(error)
-			})
-		})
-		.catch((error) => {
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			const email = error.email;
-			const credential = error.credential;
-			console.error(errorMessage);
-		});
 	}
 }
 
