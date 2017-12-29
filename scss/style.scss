@@ -288,32 +288,7 @@ input[type="text"] {
   }
 }
 
-/*
 .facebookSignIn {
-	margin: 0 auto;
-	color: #FFF;
-  background-color: #4C69BA;
-  background-image: linear-gradient(#4C69BA, #3B55A0);
-   &:hover {
-  	background-color: #5b7bd5;
-  	background-image: linear-gradient(#5b7bd5, #4864b1);
-  }
-  &:before {
-  display: inline-block;
-  float: left;
-  text-align: center;
-  font-size: 40px;
-  font-weight: bold;
-  content: url("src/images/fb_logo50.png");
-  margin-left: -45px;
-  margin-right: 17px;
-  width: 48px;
-	}
-}
-*/
-
-.facebookSignIn {
-	//@include center;
 	margin: 0 auto;
 	color: #FFF;
   background-color: #4C69BA;
@@ -324,23 +299,6 @@ input[type="text"] {
   background-color: #5b7bd5;
   background-image: linear-gradient(#5b7bd5, #4864b1);
 }
-
-/*
-.facebookSignIn::before {
-  display: inline-block;
-  float: left;
-  text-align: center;
-  font-size: 40px;
-  font-family: Facebook Letter Faces, Arial;
-  font-weight: bold;
-  content: url('/src/images/fb_logo50.png');
-  margin-left: -45px;
-  margin-right: 17px;
-  width: 48px;
-}
-*/
-
-
 
 // ERRORS ------------------------------ /
 
