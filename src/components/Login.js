@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { googleProvider, facebookProvider } from '../firebase';
 import GoogleButton from 'react-google-button'
+const fbLogo = require("../images/fb_logo50.png");
+
+
 
 export default class Login extends Component {
 	static propTypes = {
@@ -18,8 +21,19 @@ export default class Login extends Component {
 		this.setState({pendingLogin: true})
 		this.props.attemptLogin(provider)
 	}
-	
+
 	render() {
+
+		const fbLogoStyle = {
+			display: 'inline-block',
+		  float: 'left',
+		  textAlign: 'center',
+		  content: 'url('+fbLogo+')',
+		  marginLeft: '-45px',
+		  marginRight: '17px',
+		  width: '48px'
+		}
+
 		return (
 			<div>
 				<h1>Timepiece</h1>
@@ -31,7 +45,9 @@ export default class Login extends Component {
 					}
 					{this.props.pendingLogin === false &&
 						<div className='signInSeparator'>
-							<div className={['facebookSignIn', 'loginBtn'].join(' ')} onClick={ () => this.login(facebookProvider)}>Sign in with Facebook
+							<div className={['loginBtn', 'facebookSignIn'].join(' ')} onClick={ () => this.login(facebookProvider)}>
+								<img src={fbLogo} style={fbLogoStyle}/>
+								Sign in with Facebook
 							</div>
 						</div>
 					}
@@ -43,4 +59,4 @@ export default class Login extends Component {
 			</div>
 		)
 	}
-}
+}''

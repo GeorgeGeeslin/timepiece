@@ -13,7 +13,7 @@ var config = {
 		rules: [
 			{test: /\.(js)$/, use: 'babel-loader'},
 			{test: /\.css$/, use: ['style-loader', 'css-loader']},
-			{test: /\.(jpe?g|png|gif|svg)$/i, use: [{'url-loader?limit=1000', 'img-loader'}]}
+			{test: /\.(png|jpg|gif)$/, use: ['file-loader']}
 		]
 	},
 	devServer: {
