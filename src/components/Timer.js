@@ -73,6 +73,7 @@ class Timer extends Component {
 			lastClearedIncrementer: this.incrementer,
 			pauseIsDisabled: true,
 			startIsDisabled: false,
+			cancelIsDisabled: true,
 			stopTime: new Date().getTime(),
 			secondsElapsed: this.state.secondsElapsed
 		}, function() {
