@@ -64,7 +64,6 @@ $animation-time: 0.4s;
 	margin-bottom: $button-gutter;
 	color: $color-text;
 	background-color: transparent;
-	//width: 90%;
 	@content;
 	&:disabled {
 		border: 1px solid $color-accent;
@@ -137,6 +136,15 @@ ul{
 		border: 1px solid $color-borders;
 	}
 	@include center;
+	&:hover:enabled {
+		background-color: $color-bg;
+	  background-image: -webkit-linear-gradient(#361844, $color-bg);
+	  background-image: -o-linear-gradient(#361844, $color-bg);
+	  background-image: linear-gradient(#361844, $color-bg);	
+	}
+	&:active {
+		border: 1px solid #d35bad;
+	}
 }
 
 input:focus {
@@ -160,6 +168,15 @@ input[type="submit"] {
 	}
 	&:focus {
 		outline: 0;
+	}
+	&:hover:enabled {
+		background-color: $container-box-bg;
+	  background-image: -webkit-linear-gradient(#361844, $container-box-bg);
+	  background-image: -o-linear-gradient(#361844, $container-box-bg);
+	  background-image: linear-gradient(#361844, $container-box-bg);	
+	}
+	&:active {
+		border: 1px solid #d35bad;
 	}
 }
 
@@ -252,6 +269,9 @@ input[type="text"] {
 	margin-bottom: 15px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	&:active {
+		border: 1px solid #d35bad;
+	}
 }
 
 
@@ -297,7 +317,9 @@ input[type="text"] {
 
 .facebookSignIn:hover {
   background-color: #5b7bd5;
-  background-image: linear-gradient(#5b7bd5, #4864b1);
+ background-image: -webkit-linear-gradient(#5b7bd5, #4864b1);
+ background-image: -o-linear-gradient(#5b7bd5, #4864b1);
+ background-image: linear-gradient(#5b7bd5, #4864b1);
 }
 
 // ERRORS ------------------------------ /
