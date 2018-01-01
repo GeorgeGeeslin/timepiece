@@ -133,14 +133,14 @@ ul{
 
 .timeLabelContainer {
 	width: 100%;
-	@include respond-to($tablet-landscape) {
+	@include respond-to($tablet-portrait) {
 		padding-left: 0px;
 		padding-right: 0px;
 	}
 }
 
 .timeLabel {
-	@include respond-to($tablet-landscape) {
+	@include respond-to($tablet-portrait) {
 		float: right;
 	}
 }

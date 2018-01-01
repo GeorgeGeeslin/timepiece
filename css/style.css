@@ -43,12 +43,12 @@ ul {
 
 .timeLabelContainer {
   width: 100%; }
-  @media only screen and (min-width: 768px) and (max-width: 979px) {
+  @media only screen and (min-width: 767px) {
     .timeLabelContainer {
       padding-left: 0px;
       padding-right: 0px; } }
 
-@media only screen and (min-width: 768px) and (max-width: 979px) {
+@media only screen and (min-width: 767px) {
   .timeLabel {
     float: right; } }
 
