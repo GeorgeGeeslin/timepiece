@@ -34,14 +34,14 @@ class Timer extends Component {
 				startIsDisabled: true
 			})
 			clearInterval(this.incrementer)
-		} else if ( this.props.selectedTaskIndex !== null && this.props.selectedTask.time === 0 &&
+		} else if ( this.props.selectedTaskIndex !== undefined && this.props.selectedTaskIndex !== null && this.props.selectedTask.time === 0 &&
 			(prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
 			this.setState({
 				secondsElapsed: this.props.secondsElapsed,
 				startIsDisabled: false,
 			})
 			clearInterval(this.incrementer)
-		} else if ( this.props.selectedTaskIndex !== null && this.props.selectedTask.time > 0 &&
+		} else if ( this.props.selectedTaskIndex !== undefined && this.props.selectedTaskIndex !== null && this.props.selectedTask.time > 0 &&
 			(prevProps.selectedTaskIndex !== this.props.selectedTaskIndex) || (prevProps.lastManualUpdate !== this.props.lastManualUpdate) ){
 			this.setState({
 				secondsElapsed: this.props.secondsElapsed,
@@ -73,6 +73,7 @@ class Timer extends Component {
 			lastClearedIncrementer: this.incrementer,
 			pauseIsDisabled: true,
 			startIsDisabled: false,
+			cancelIsDisabled: true,
 			stopTime: new Date().getTime(),
 			secondsElapsed: this.state.secondsElapsed
 		}, function() {
@@ -151,10 +152,13 @@ class Timer extends Component {
 	}
 }
 
-/*Timer.propTypes = {
+Timer.propTypes = {
 	finishTask: PropTypes.func.isRequired,
+	pauseTask: PropTypes.func.isRequired,
 	secondsElapsed: PropTypes.number.isRequired,
-	selectedTaskIndex: PropTypes.number.isRequired
-}*/
+	uid: PropTypes.string.isRequired,
+	selectedTaskIndex: PropTypes.string,
+	lastManualUpdate: PropTypes.number
+}
 
 module.exports = Timer;

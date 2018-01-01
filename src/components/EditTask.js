@@ -47,7 +47,6 @@ export default class EditTask extends Component {
 		for (var i = 0; i < this.state.timeintervals.length; i++) {
 			total += (this.state.timeintervals[i].stopTime - this.state.timeintervals[i].startTime);
 		}
-
 		return total;
 	};
 
@@ -193,7 +192,15 @@ export default class EditTask extends Component {
 	render() {	
 		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index} className='tasks'>
-				<p>Time Interval: {index + 1}<span style={{float: 'right', paddingRight: '10px'}} onClick={ () => this.onRemoveTime(index) }>Delete</span></p> 
+				<div>Time Interval: {index + 1}
+					<div className='icon-trash' style={{float: 'right', paddingRight: '10px'}} onClick={ () => this.onRemoveTime(index) }>
+						<div className="trash-lid" style={{backgroundColor: "red"}}></div>
+    				<div className="trash-container" style={{backgroundColor: "red"}}></div>
+						<div className="trash-line-1"></div>
+    				<div className="trash-line-2"></div>
+   					<div className="trash-line-3"></div>
+					</div>
+				</div> 
 					{  this.state.invalidTimeIndexs.includes(index) && <div className='validationError'>Time Interval Error: The End time cannot be earlier than the Start time.</div> }
 					{ this.state.overlappingTimes.includes(index) && <div className='validationError'>Time Interval Error: This time interval overlaps another time interval.</div>}
 				<Grid>
