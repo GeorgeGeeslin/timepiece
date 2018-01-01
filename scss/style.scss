@@ -131,6 +131,20 @@ ul{
 	}
 }
 
+.timeLabelContainer {
+	width: 100%;
+	@include respond-to($tablet-landscape) {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+}
+
+.timeLabel {
+	@include respond-to($tablet-landscape) {
+		float: right;
+	}
+}
+
 .control-buttons {
 	width: 100%;
 	@include inputs {

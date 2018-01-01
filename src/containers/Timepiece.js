@@ -37,6 +37,13 @@ export default class Timepiece extends Component {
 		const user = this.props.user;
 		const uid = user.uid;
 
+		const formatTime = (sec) =>
+			Math.floor(sec / 3600) + 
+			':' + 
+			('0' + Math.floor(sec / 60) % 60).slice(-2) + 
+			':' + 
+			('0' + sec % 60).slice(-2)
+
 		let selectedTask;
 		if (selectedTaskIndex !== null) {
 			selectedTask = tasks.filter(function(task){
@@ -64,6 +71,9 @@ export default class Timepiece extends Component {
 				selectTask={this.props.selectTask}
 				deleteTask={this.props.deleteTask}
 				openEdit={this.props.openEdit}
+				formatTime={formatTime}
+				secondsElapsed={tasks.time}
+				selectedTaskIndex={selectedTaskIndex}
 				uid={uid}
 			/>
 		));
@@ -81,6 +91,8 @@ export default class Timepiece extends Component {
 				resumeTask={this.props.resumeTask}
 				deleteTask={this.props.deleteTask}
 				openEdit={this.props.openEdit}
+				formatTime={formatTime}
+				secondsElapsed={tasks.time}
 				selectedTaskIndex={selectedTaskIndex}
 				uid={uid}
 			/>
