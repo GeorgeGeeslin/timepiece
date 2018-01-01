@@ -158,7 +158,7 @@ Timer.propTypes = {
 	secondsElapsed: PropTypes.number.isRequired,
 	uid: PropTypes.string.isRequired,
 	selectedTaskIndex: PropTypes.string,
-	lastManualUpdate: PropTypes.number
+	lastManualUpdate: PropTypes.string
 }
 
 module.exports = Timer;
