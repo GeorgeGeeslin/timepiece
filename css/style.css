@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 body {
   font-family: "Quicksand", sans-serif;
-  background-color: #130918;
+  background-color: #111d3a;
   color: #eadef2;
   height: 100%; }
 
@@ -67,10 +67,10 @@ ul {
     border: 1px solid #623353;
     color: #74546a; }
   .control-buttons:hover:enabled {
-    background-color: #130918;
-    background-image: -webkit-linear-gradient(#361844, #130918);
-    background-image: -o-linear-gradient(#361844, #130918);
-    background-image: linear-gradient(#361844, #130918); }
+    background-color: #111d3a;
+    background-image: -webkit-linear-gradient(#361844, #111d3a);
+    background-image: -o-linear-gradient(#361844, #111d3a);
+    background-image: linear-gradient(#361844, #111d3a); }
   .control-buttons:active {
     border: 1px solid #d35bad; }
 
@@ -106,10 +106,10 @@ input[type="submit"] {
   .task-buttons:focus {
     outline: 0; }
   .task-buttons:hover:enabled {
-    background-color: #120d2f;
-    background-image: -webkit-linear-gradient(#361844, #120d2f);
-    background-image: -o-linear-gradient(#361844, #120d2f);
-    background-image: linear-gradient(#361844, #120d2f); }
+    background-color: #132e4f;
+    background-image: -webkit-linear-gradient(#361844, #132e4f);
+    background-image: -o-linear-gradient(#361844, #132e4f);
+    background-image: linear-gradient(#361844, #132e4f); }
   .task-buttons:active {
     border: 1px solid #d35bad; }
 
@@ -170,7 +170,7 @@ input[type="text"] {
     border-radius: 50%; }
 
 .userProfileDropDown {
-  color: #130918;
+  color: #111d3a;
   z-index: 1;
   position: absolute;
   float: right;
@@ -197,7 +197,7 @@ input[type="text"] {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  color: #130918;
+  color: #111d3a;
   margin-bottom: 15px;
   padding-top: 5px;
   padding-bottom: 5px; }
@@ -264,7 +264,7 @@ input[type="text"].inputError {
 .modal-open {
   background-color: #A9A9A9; }
   .modal-open #root {
-    background-color: #130918;
+    background-color: #111d3a;
     opacity: 0.7;
     -webkit-animation: rootFade 0.4s;
     animation: rootFade 0.4s; }
@@ -325,18 +325,18 @@ input[type="text"].inputError {
   height: 100%;
   margin: 0 auto;
   overflow-y: auto;
-  background-color: #130918; }
+  background-color: #111d3a; }
 
 .activeTask {
-  border: 1px solid #2c245a;
-  background-color: #120d2f;
+  border: 1px solid #96a2ec;
+  background-color: #132e4f;
   padding-left: 2%;
   margin-top: 20px;
   margin-bottom: 20px; }
 
 .tasks {
-  border: 1px solid #2c245a;
-  background-color: #120d2f;
+  border: 1px solid #96a2ec;
+  background-color: #132e4f;
   padding-left: 2%;
   margin-top: 20px;
   margin-bottom: 20px; }
@@ -483,7 +483,7 @@ input[type="text"].inputError {
   content: ''; }
 
 .loader:after {
-  background: #130918;
+  background: #111d3a;
   width: 75%;
   height: 75%;
   border-radius: 50%;

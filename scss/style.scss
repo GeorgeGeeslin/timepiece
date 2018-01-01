@@ -17,7 +17,7 @@ $retina: '(min--moz-device-pixel-ratio: 1.5),
                     (min-resolution: 144dpi), 
                     (min-resolution: 1.5dppx)';
 
-$color-secondary: #ffa755; //orange 
+//$color-secondary: #ffa755; //orange 
 $color-borders: #9d138c; 
 $color-accent: #623353;
 $color-shade: #74546a; 
@@ -28,13 +28,15 @@ $highlight-text: #dead80;
 $highlight-border: #96a2ec;
 
 $color-text: #eadef2;
-$color-bg: #130918; //very dark blue
+$color-bg: #111d3a;
+//$color-bg: #130918; //original near-black blue
 $color-bg-light: #fbf3e6; 
 
 $color-error: #f04e7d;
 
-$container-box-bg: #120d2f;
-$container-box-border: #2c245a;
+//$container-box-bg: #120d2f; //original dark-blue
+$container-box-bg: #132e4f;
+$container-box-border: #96a2ec;
 
 $font-stack-primary: 'Quicksand', sans-serif;
 $font-stack-labels: 'Roboto Condensed', sans-serif;
