@@ -155,7 +155,6 @@ export default class Timepiece extends Component {
 				editTask={editTask}/>}		
 			</Grid>
 		)	
-
 	}
 }
 

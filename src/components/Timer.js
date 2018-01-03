@@ -58,13 +58,17 @@ class Timer extends Component {
 			finishIsDisabled: false,
 			cancelIsDisabled: false,
 			startTime: new Date().getTime(),
-			secondsElapsed: this.props.secondsElapsed
+			secondsElapsed: this.props.secondsElapsed,
 		})
-		this.incrementer = setInterval( () =>
+		const startTimestamp = Math.floor(new Date().getTime() / 1000) - this.state.secondsElapsed;
+		const updateTime = () => {
+		const elapsedTimestamp = Math.floor(new Date().getTime() / 1000)
 			this.setState({
-				secondsElapsed: this.state.secondsElapsed + 1
+				secondsElapsed: elapsedTimestamp - startTimestamp
 			})
-		, 1000)
+		}
+		this.incrementer = setInterval( () =>
+			updateTime(), 1000)
 	}
 
 	handlePauseClick() {
@@ -158,7 +162,8 @@ Timer.propTypes = {
 	secondsElapsed: PropTypes.number.isRequired,
 	uid: PropTypes.string.isRequired,
 	selectedTaskIndex: PropTypes.string,
-	lastManualUpdate: PropTypes.string
+	lastManualUpdate: PropTypes.string,
+	selectedTask: PropTypes.object
 }
 
 module.exports = Timer;
