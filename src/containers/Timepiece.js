@@ -46,7 +46,7 @@ export default class Timepiece extends Component {
 
 		let selectedTask;
 		if (selectedTaskIndex !== null) {
-			selectedTask = tasks.filter(function(task){
+			selectedTask = tasks.filter((task) => {
 				return task.taskKey === selectedTaskIndex;
 			})[0];
 		}
@@ -58,7 +58,9 @@ export default class Timepiece extends Component {
 			secondsElapsed = selectedTask.time;
 		}
 		
-		const currentTasks = tasks.filter(function(task){
+		const currentTasks = tasks.sort((a, b) => {
+			return b.timecreated - a.timecreated;
+		}).filter((task) => {
 			return (task.timefinished === null || task.hasOwnProperty('timefinished') === false)
 		}).map((tasks, index) => (
 			<CurrentTask 
@@ -78,7 +80,9 @@ export default class Timepiece extends Component {
 			/>
 		));
 
-		const finishedTasks = tasks.filter(function(task) {
+		const finishedTasks = tasks.sort((a, b) => {
+			return b.timefinished - a.timefinished;
+		}).filter((task) => {
 			return (task.timefinished !== null && task.hasOwnProperty('timefinished') === true)
 		}).map((tasks, index) => (
 			<FinishedTask
@@ -100,7 +104,7 @@ export default class Timepiece extends Component {
 
 		let editTask;
 		if (editTaskIndex !== null) {
-			editTask = tasks.filter(function(task){
+			editTask = tasks.filter((task) => {
 				return task.taskKey === editTaskIndex;
 			})[0];
 		} else {
