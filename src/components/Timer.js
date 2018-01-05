@@ -62,7 +62,7 @@ class Timer extends Component {
 		})
 		const startTimestamp = Math.floor(new Date().getTime() / 1000) - this.state.secondsElapsed;
 		const updateTime = () => {
-		const elapsedTimestamp = Math.floor(new Date().getTime() / 1000)
+			const elapsedTimestamp = Math.floor(new Date().getTime() / 1000)
 			this.setState({
 				secondsElapsed: elapsedTimestamp - startTimestamp
 			})
