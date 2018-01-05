@@ -42,6 +42,7 @@ export default class UserHeader extends Component {
 		return (
 			<div>
 			<div className='masthead'>
+				<span className={['timepieceLogo', 'mastheadLogo'].join(' ')}>Timepiece</span>
 				{ this.state.userIconDisabled === true &&
 					<button className='userAvatar'>
 						<img src={this.props.user.photoURL} alt='User Icon' />

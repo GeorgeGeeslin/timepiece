@@ -36,7 +36,7 @@ export default class Login extends Component {
 
 		return (
 			<div>
-				<h1>Timepiece</h1>
+				<h1 className='timepieceLogo' style={{marginTop: '25px'}}>Timepiece</h1>
 				<div className='signInContainer'>
 					{this.props.pendingLogin === false && 
 						<div>
