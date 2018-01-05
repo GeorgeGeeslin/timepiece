@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TaskActionCreators from '../actions/task';
-import UserHeader from '../components/UserHeader';
+
 import Timepiece from './Timepiece';
 import Login from '../components/Login';
 
@@ -40,12 +40,9 @@ class App extends Component {
 					checkLoginStatus = {checkLoginStatus}
 					pendingLogin = {this.props.pendingLogin}	/>
 			}
-			{ user !== null && 
-				<UserHeader user={this.props.user}
-					attemptSignOut={attemptSignOut} />
-			}
 			{ user !== null &&
 				<Timepiece
+					attemptSignOut={attemptSignOut}
 					tasks = {this.props.tasks}
 					selectedTaskIndex = {this.props.selectedTaskIndex}
 					showEditScreen = {this.props.showEditScreen}

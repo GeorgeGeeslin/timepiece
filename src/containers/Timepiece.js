@@ -8,6 +8,7 @@ import CurrentTask from '../components/CurrentTask';
 import FinishedTask from '../components/FinishedTask';
 import EditTask from '../components/EditTask';
 import Summary from '../components/Summary'
+import UserHeader from '../components/UserHeader';
 
 export default class Timepiece extends Component {
 		static propTypes = {
@@ -118,6 +119,8 @@ export default class Timepiece extends Component {
 
 		return (
 			<Grid>
+				<UserHeader user={this.props.user}
+					attemptSignOut={this.props.attemptSignOut} />
 				<Row className="show-grid">
 					<Col className={'leftCol'} sm={12} md={6}>
 						<div className={'mainContent'}>

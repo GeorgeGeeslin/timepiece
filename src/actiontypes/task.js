@@ -13,5 +13,7 @@ export const DELETE_TASK = 'task/DELETE_TASK';
 export const PAUSE_TASK = 'task/PAUSE_TASK';
 export const OPEN_EDIT = 'task/OPEN_EDIT';
 export const CLOSE_EDIT = 'task/CLOSE_EDIT';
+export const OPEN_CHARTS = 'task/OPEN_CHARTS';
+export const CLOSE_CHARTS = 'task/CLOSE_CHARTS';
 export const UPDATE_TASK = 'task/UPDATE_TASK';
 export const RESUME_TASK = 'task/RESUME_TASK';

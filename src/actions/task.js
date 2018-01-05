@@ -242,6 +242,18 @@ export const closeEdit = () => {
 	}
 }
 
+export const openCharts = () => {
+	return {
+		type: TaskActionTypes.OPEN_CHARTS
+	}
+}
+
+export const closeCharts = () => {
+	return {
+		type: TaskActionTypes.CLOSE_CHARTS
+	}
+}
+
 export function updateTask(uid, task, project, client, time, timecreated, timefinished, timeintervals, editTaskIndex) {
 	return dispatch => {
 		const taskRef = database.ref(uid+'/tasks/'+editTaskIndex);
