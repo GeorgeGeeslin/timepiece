@@ -151,12 +151,13 @@ export default class Timepiece extends Component {
 					</Col>
 				</Row>
 				{this.props.showEditScreen === true && <EditTask
-				closeEdit={this.props.closeEdit} 
-				updateTask={this.props.updateTask}
-				showEditScreen={this.props.showEditScreen}
-				editTaskIndex={this.props.editTaskIndex}
-				uid={uid}
-				editTask={editTask}/>}		
+					closeEdit={this.props.closeEdit} 
+					updateTask={this.props.updateTask}
+					showEditScreen={this.props.showEditScreen}
+					editTaskIndex={this.props.editTaskIndex}
+					uid={uid}
+					editTask={editTask}/>
+				}		
 			</Grid>
 		)	
 	}
