@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Parisienne|Quicksand|Roboto|Roboto+Condensed:700');
 
 // VARIABLES ------------------------------ /
 // screen sizes
@@ -238,6 +236,19 @@ input[type="text"] {
 
 
 // User Header ----------------------- /
+.timepieceLogo {
+	font-family: 'Parisienne', cursive;
+	color: $font-stack-primary;
+}
+
+.mastheadLogo {
+	position: relative;
+	left: 15px;
+	top: 5px;
+	line-height: 30px;
+	font-size: 30px;
+}
+
 .userAvatar {
 	float: right;
 	width: 60px;
