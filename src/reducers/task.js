@@ -4,6 +4,7 @@ const initialState = {
 	tasks: [],
 	selectedTaskIndex: null,
 	showEditScreen: false,
+	showChartScreen: false,
 	lastManualUpdate: null,
 	user: null,
 	pendingLogin: false
@@ -132,6 +133,19 @@ export default function Task(state=initialState, action) {
 				editTaskIndex: null,
 				showEditScreen: false
 			}
+
+		case TaskActionTypes.OPEN_CHARTS:
+		console.log("open chart screen")
+			return {
+				...state,
+				showChartScreen: true
+			}
+
+		case TaskActionTypes.CLOSE_CHARTS:
+			return {
+				...state,
+				showChartScreen: true
+				}
 
 		case TaskActionTypes.UPDATE_TASK:
 			const updateTaskList = Object.assign({}, state);

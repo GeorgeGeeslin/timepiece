@@ -11,6 +11,7 @@ class App extends Component {
 	static propTypes = {
 		tasks: PropTypes.array.isRequired,
 		showEditScreen: PropTypes.bool.isRequired,
+		showChartScreen: PropTypes.bool.isRequired,
 		dispatch: PropTypes.func.isRequired,
 		user: PropTypes.object,
 		selectedTaskIndex: PropTypes.string,
@@ -18,7 +19,7 @@ class App extends Component {
 	};
 	
 	render() {
-		const { dispatch, tasks, selectedTaskIndex, showEditScreen, editTaskIndex, lastManualUpdate, user} = this.props;
+		const { dispatch, tasks, selectedTaskIndex, showEditScreen, showChartScreen, editTaskIndex, lastManualUpdate, user} = this.props;
 		const attemptLogin = bindActionCreators(TaskActionCreators.attemptLogin, dispatch);
 		const attemptSignOut = bindActionCreators(TaskActionCreators.attemptSignOut, dispatch);
 		const checkLoginStatus = bindActionCreators(TaskActionCreators.checkLoginStatus, dispatch);
@@ -29,6 +30,8 @@ class App extends Component {
 		const pauseTask = bindActionCreators(TaskActionCreators.pauseTask, dispatch);
 		const openEdit = bindActionCreators(TaskActionCreators.openEdit, dispatch);
 		const closeEdit = bindActionCreators(TaskActionCreators.closeEdit, dispatch);
+		const openCharts = bindActionCreators(TaskActionCreators.openCharts, dispatch);
+		const closeCharts = bindActionCreators(TaskActionCreators.closeCharts, dispatch);
 		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
 		const resumeTask = bindActionCreators(TaskActionCreators.resumeTask, dispatch);
 
@@ -46,6 +49,7 @@ class App extends Component {
 					tasks = {this.props.tasks}
 					selectedTaskIndex = {this.props.selectedTaskIndex}
 					showEditScreen = {this.props.showEditScreen}
+					showChartScreen = {this.props.showChartScreen}
 					editTaskIndex = {this.props.editTaskIndex}
 					lastManualUpdate = {this.props.lastManualUpdate}
 					user = {this.props.user}
@@ -56,6 +60,8 @@ class App extends Component {
 					pauseTask = {pauseTask}
 					openEdit = {openEdit}
 					closeEdit = {closeEdit}
+					openCharts = {openCharts}
+					closeCharts = {closeCharts}
 					updateTask = {updateTask}
 					resumeTask = {resumeTask} />
 		 }
@@ -69,6 +75,7 @@ const mapStateToProps = state => (
 		tasks: state.tasks,
 		selectedTaskIndex: state.selectedTaskIndex,
 		showEditScreen: state.showEditScreen,
+		showChartScreen: state.showChartScreen,
 		editTaskIndex: state.editTaskIndex,
 		lastManualUpdate: state.lastManualUpdate,
 		user: state.user,

@@ -5,6 +5,7 @@ import { Grid, Col, Row } from 'react-bootstrap';
 export default class UserHeader extends Component {
 	static propTypes = {
 		attemptSignOut: PropTypes.func.isRequired,
+		openCharts: PropTypes.func.isRequired,
 		user: PropTypes.object.isRequired
 	}
 
@@ -30,7 +31,6 @@ export default class UserHeader extends Component {
 
 	closeDropDown = (dropDown) => {
 		if (dropDown === true) {
-			console.log("test")
 			this.setState({
 				profileDropDown: false,
 				userIconDisabled: false
@@ -42,6 +42,7 @@ export default class UserHeader extends Component {
 		return (
 			<div>
 			<div className='masthead'>
+				<button onClick={ () => this.props.openCharts()}>Charts</button>
 				<span className={['timepieceLogo', 'mastheadLogo'].join(' ')}>Timepiece</span>
 				{ this.state.userIconDisabled === true &&
 					<button className='userAvatar'>
@@ -63,6 +64,7 @@ export default class UserHeader extends Component {
 								onBlur={ () => this.closeDropDown(this.state.profileDropDown)}>
 							<p>{this.props.user.email}</p>
 							<p className='signOut' onClick={ () => this.props.attemptSignOut()}>Sign Out</p>
+							<button onClick={ () => this.props.openCharts()}>Charts</button>
 							</Col>
 						</Row>
 					</Grid>
