@@ -9,18 +9,19 @@ import FinishedTask from '../components/FinishedTask';
 import EditTask from '../components/EditTask';
 import Summary from '../components/Summary'
 import UserHeader from '../components/UserHeader';
-import ChartSelect from '../components/ChartSelect';
+//import ChartSelect from '../components/ChartSelect';
 
 export default class Timepiece extends Component {
-		static propTypes = {
+	static propTypes = {
 		addTask: PropTypes.func.isRequired,
-		closeEdit: PropTypes.func.isRequired,
 		deleteTask: PropTypes.func.isRequired,
 		finishTask: PropTypes.func.isRequired,
 		openEdit: PropTypes.func.isRequired,
 		closeEdit: PropTypes.func.isRequired,
 		openCharts: PropTypes.func.isRequired,
 		closeCharts: PropTypes.func.isRequired,
+		openUserMenu: PropTypes.func.isRequired,
+		closeUserMenu: PropTypes.func.isRequired,
 		pauseTask: PropTypes.func.isRequired,
 		resumeTask: PropTypes.func.isRequired,
 		selectTask: PropTypes.func.isRequired,
@@ -29,6 +30,7 @@ export default class Timepiece extends Component {
 		user: PropTypes.object.isRequired,
 		showEditScreen: PropTypes.bool.isRequired,
 		showChartScreen: PropTypes.bool.isRequired,
+		showUserMenu: PropTypes.bool.isRequired,
 		lastManualUpdate: PropTypes.string,
 		selectedTaskIndex: PropTypes.string
 	};
@@ -126,8 +128,11 @@ export default class Timepiece extends Component {
 			<div>
 				<UserHeader user={this.props.user}
 						attemptSignOut={this.props.attemptSignOut}
-						openCharts={this.props.openCharts} />
-				<Grid>
+						openCharts={this.props.openCharts} 
+						openUserMenu={this.props.openUserMenu}
+						closeUserMenu={this.props.closeUserMenu}
+						showUserMenu={this.props.showUserMenu}/>
+				<Grid onClick= { () => this.props.closeUserMenu()}>
 					<Row className="show-grid">
 						<Col className={'leftCol'} sm={12} md={6}>
 							<div className={'mainContent'}>
@@ -141,7 +146,7 @@ export default class Timepiece extends Component {
 									selectedTask={selectedTask}
 									lastManualUpdate={lastManualUpdate}
 									uid={uid}
-									/>
+								/>
 								<CreateTaskForm addTask={this.props.addTask} 
 									uid={uid}/>
 								{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
@@ -167,9 +172,6 @@ export default class Timepiece extends Component {
 						editTaskIndex={this.props.editTaskIndex}
 						uid={uid}
 						editTask={editTask}/>
-					}
-					{this.props.showChartScreen === true && <ChartSelect
-						showChartScreen={this.props.showChartScreen} />
 					}
 				</Grid>
 			</div>

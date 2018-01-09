@@ -254,6 +254,18 @@ export const closeCharts = () => {
 	}
 }
 
+export const openUserMenu = () => {
+	return {
+		type: TaskActionTypes.OPEN_USER_MENU
+	}
+}
+
+export const closeUserMenu = () => {
+	return {
+		type: TaskActionTypes.CLOSE_USER_MENU
+	}
+}
+
 export function updateTask(uid, task, project, client, time, timecreated, timefinished, timeintervals, editTaskIndex) {
 	return dispatch => {
 		const taskRef = database.ref(uid+'/tasks/'+editTaskIndex);
