@@ -9,7 +9,7 @@ import FinishedTask from '../components/FinishedTask';
 import EditTask from '../components/EditTask';
 import Summary from '../components/Summary'
 import UserHeader from '../components/UserHeader';
-import ChartSelect from '../components/ChartSelect';
+//import ChartSelect from '../components/ChartSelect';
 
 export default class Timepiece extends Component {
 	static propTypes = {
@@ -172,9 +172,6 @@ export default class Timepiece extends Component {
 						editTaskIndex={this.props.editTaskIndex}
 						uid={uid}
 						editTask={editTask}/>
-					}
-					{this.props.showChartScreen === true && <ChartSelect
-						showChartScreen={this.props.showChartScreen} />
 					}
 				</Grid>
 			</div>

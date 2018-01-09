@@ -4,8 +4,8 @@ import { PropTypes } from 'prop-types';
 const UserMenu = props => (
 	<div className='userMenu'>
 		<p>{props.userEmail}</p>
-		<button className='signOut' onClick={ () => attemptSignOut() }>Sign Out</button>
-		<button onClick={ () => openCharts() }>Charts</button>
+		<button className='userMenuButton' onClick={ () => props.openCharts() }>Charts</button>
+		<button className='userMenuButton' onClick={ () => props.attemptSignOut() }>Sign Out</button>
 	</div>
 );
 

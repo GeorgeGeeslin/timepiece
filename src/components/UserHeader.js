@@ -31,7 +31,7 @@ export default class UserHeader extends Component {
 					<span className='displayName'>{this.props.user.displayName}</span>
 				</div>
 				{ this.props.showUserMenu === true && 
-					<UserMenu 
+					<UserMenu className='userMenu'
 						userEmail={this.props.user.email}
 						attemptSignOut={this.props.attemptSignOut}
 						openCharts={this.props.openCharts}

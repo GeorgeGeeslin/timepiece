@@ -20,7 +20,10 @@ $color-borders: #9d138c;
 $color-accent: #623353;
 $color-shade: #74546a; 
 $color-masthead: #1e2f51;
-$red: #E91E63;
+$user-menu-bg: #e8e8e8;
+$user-menu-bttn-hv: #fcf7e5;
+$user-menu-bttn: #d8d8d8;
+
 
 $highlight-text: #dead80;
 $highlight-border: #96a2ec;
@@ -236,6 +239,7 @@ input[type="text"] {
 
 
 // User Header ----------------------- /
+
 .timepieceLogo {
 	font-family: 'Parisienne', cursive;
 	color: $font-stack-primary;
@@ -267,6 +271,55 @@ input[type="text"] {
 		border-radius: 50%;
 	}
 }
+
+// User Menu ----------------------- /
+
+.userMenu {
+	position: absolute;
+	width: 100%;
+	padding: 3%;
+	color: $color-bg;
+	background-color: $user-menu-bg;
+	z-index: 2;
+	button {
+		color: $color-bg;
+		background-color: $user-menu-bttn;
+	}
+	@include respond-to($tablet-portrait) {
+		right: 0px;
+		width: 50%;
+	}
+	@include respond-to($small-desktop) {
+		width: 30%;
+		padding: 15px;
+	}
+	@include respond-to($large-desktop) {
+		width: 20%;
+		padding: 15px;
+	}
+}
+
+.userMenuButton {
+	color: $color-bg;
+	width: 100%;
+	@include inputs {
+		border: 1px solid $color-borders;
+	}
+	@include center;
+	&:hover:enabled {
+		background-color: $user-menu-bttn-hv;
+	  background-image: -webkit-linear-gradient($user-menu-bttn-hv, $user-menu-bttn);
+	  background-image: -o-linear-gradient($user-menu-bttn-hv, $user-menu-bttn);
+	  background-image: linear-gradient($user-menu-bttn-hv, $user-menu-bttn);	
+	}
+	&:active {
+		border: 1px solid #d35bad;
+	}
+	&:focus {
+		outline: 0;
+	}
+}
+
 
 .userProfileDropDown {
 	color: $color-bg;
