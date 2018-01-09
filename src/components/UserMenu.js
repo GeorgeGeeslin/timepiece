@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 
-const UserMenu = props => (
-	<div className='userMenu'>
-		<p>{props.userEmail}</p>
-		<button className='userMenuButton' onClick={ () => props.openCharts() }>Charts</button>
-		<button className='userMenuButton' onClick={ () => props.attemptSignOut() }>Sign Out</button>
-	</div>
-);
+export default class UserMenu extends Component {
+	static propTypes = {
+		attemptSignOut: PropTypes.func.isRequired,
+		openCharts: PropTypes.func.isRequired,
+		closeCharts: PropTypes.func.isRequired,
+		userEmail: PropTypes.string.isRequired,
+		showChartScreen: PropTypes.bool.isRequired
 
-UserMenu.propTypes = {
-	attemptSignOut: PropTypes.func.isRequired,
-	openCharts: PropTypes.func.isRequired,
-	userEmail: PropTypes.string.isRequired
+	}
+
+	toggleCharts = () => {
+		if (this.props.showChartScreen === false) {
+			this.props.openCharts();
+		} else {
+			this.props.closeCharts();
+		}
+	}
+
+	render () {
+		return (
+			<div className='userMenu'>
+				<p>{this.props.userEmail}</p>
+				<button className='userMenuButton' onClick={ () => this.toggleCharts() }>Charts</button>
+				<button className='userMenuButton' onClick={ () => this.props.attemptSignOut() }>Sign Out</button>
+			</div>
+		)
+	}
 };
 
 
-export default UserMenu;
+

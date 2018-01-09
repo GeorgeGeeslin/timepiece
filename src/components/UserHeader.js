@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import UserMenu from './UserMenu.js';
+import UserMenu from './UserMenu';
 
 export default class UserHeader extends Component {
 	static propTypes = {
 		attemptSignOut: PropTypes.func.isRequired,
 		openCharts: PropTypes.func.isRequired,
+		closeCharts: PropTypes.func.isRequired,
 		openUserMenu: PropTypes.func.isRequired,
 		closeUserMenu: PropTypes.func.isRequired,
 		showUserMenu:PropTypes.bool.isRequired,
+		showChartScreen: PropTypes.bool.isRequired,
 		user: PropTypes.object.isRequired
 	}
 
@@ -35,6 +37,8 @@ export default class UserHeader extends Component {
 						userEmail={this.props.user.email}
 						attemptSignOut={this.props.attemptSignOut}
 						openCharts={this.props.openCharts}
+						closeCharts={this.props.closeCharts}
+						showChartScreen={this.props.showChartScreen}
 					/>
 				}
 			</div>

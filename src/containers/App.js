@@ -3,9 +3,10 @@ import { PropTypes } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TaskActionCreators from '../actions/task';
-
 import Timepiece from './Timepiece';
 import Login from '../components/Login';
+import UserHeader from '../components/UserHeader';
+import ChartContainer from './ChartContainer';
 
 class App extends Component {
 	static propTypes = {
@@ -47,29 +48,40 @@ class App extends Component {
 					pendingLogin = {this.props.pendingLogin}	/>
 			}
 			{ user !== null &&
-				<Timepiece
-					attemptSignOut={attemptSignOut}
-					tasks = {this.props.tasks}
-					selectedTaskIndex = {this.props.selectedTaskIndex}
-					showEditScreen = {this.props.showEditScreen}
-					showChartScreen = {this.props.showChartScreen}
-					showUserMenu = {this.props.showUserMenu}
-					editTaskIndex = {this.props.editTaskIndex}
-					lastManualUpdate = {this.props.lastManualUpdate}
-					user = {this.props.user}
-					addTask = {addTask}
-					selectTask = {selectTask}
-					finishTask = {finishTask}
-					deleteTask = {deleteTask}
-					pauseTask = {pauseTask}
-					openEdit = {openEdit}
-					closeEdit = {closeEdit}
-					openCharts = {openCharts}
-					closeCharts = {closeCharts}
-					openUserMenu = {openUserMenu}
-					closeUserMenu = {closeUserMenu}
-					updateTask = {updateTask}
-					resumeTask = {resumeTask} />
+				<div>
+					<UserHeader user={this.props.user}
+						attemptSignOut={attemptSignOut}
+						openCharts={openCharts} 
+						openUserMenu={openUserMenu}
+						closeUserMenu={closeUserMenu}
+						showUserMenu={this.props.showUserMenu}
+						showChartScreen={this.props.showChartScreen}
+						closeCharts={closeCharts}
+					/>
+					{ showChartScreen == false &&
+						<Timepiece
+							tasks = {this.props.tasks}
+							selectedTaskIndex = {this.props.selectedTaskIndex}
+							showEditScreen = {this.props.showEditScreen}
+							editTaskIndex = {this.props.editTaskIndex}
+							lastManualUpdate = {this.props.lastManualUpdate}
+							user = {this.props.user}
+							addTask = {addTask}
+							selectTask = {selectTask}
+							finishTask = {finishTask}
+							deleteTask = {deleteTask}
+							pauseTask = {pauseTask}
+							openEdit = {openEdit}
+							closeEdit = {closeEdit}
+							closeUserMenu = {closeUserMenu}
+							updateTask = {updateTask}
+							resumeTask = {resumeTask} 
+						/>
+					}
+					{ showChartScreen === true &&
+						<ChartContainer />
+					}
+				</div>
 		 }
 		 </div>
 		)

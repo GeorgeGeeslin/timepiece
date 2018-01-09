@@ -144,7 +144,7 @@ export default function Task(state=initialState, action) {
 		case TaskActionTypes.CLOSE_CHARTS:
 			return {
 				...state,
-				showChartScreen: true
+				showChartScreen: false
 				}
 
 		case TaskActionTypes.OPEN_USER_MENU:
