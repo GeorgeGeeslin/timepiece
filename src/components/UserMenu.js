@@ -6,6 +6,7 @@ export default class UserMenu extends Component {
 		attemptSignOut: PropTypes.func.isRequired,
 		openCharts: PropTypes.func.isRequired,
 		closeCharts: PropTypes.func.isRequired,
+		closeUserMenu: PropTypes.func.isRequired,
 		userEmail: PropTypes.string.isRequired,
 		showChartScreen: PropTypes.bool.isRequired
 
@@ -14,8 +15,10 @@ export default class UserMenu extends Component {
 	toggleCharts = () => {
 		if (this.props.showChartScreen === false) {
 			this.props.openCharts();
+			this.props.closeUserMenu();
 		} else {
 			this.props.closeCharts();
+			this.props.closeUserMenu();
 		}
 	}
 

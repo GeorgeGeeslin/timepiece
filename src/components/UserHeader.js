@@ -38,6 +38,7 @@ export default class UserHeader extends Component {
 						attemptSignOut={this.props.attemptSignOut}
 						openCharts={this.props.openCharts}
 						closeCharts={this.props.closeCharts}
+						closeUserMenu={this.props.closeUserMenu}
 						showChartScreen={this.props.showChartScreen}
 					/>
 				}
