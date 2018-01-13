@@ -79,7 +79,7 @@ class App extends Component {
 						/>
 					}
 					{ showChartScreen === true &&
-						<ChartContainer />
+						<ChartContainer tasks ={this.props.tasks}/>
 					}
 				</div>
 		 }
