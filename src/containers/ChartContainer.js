@@ -3,26 +3,6 @@ import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
 
-const getHours = (sec) =>
-  Math.round(sec/3600 * 100) / 100;
-
-const backgroundColor = [
-  'rgba(255, 99, 132, 0.2)',
-  'rgba(54, 162, 235, 0.2)',
-  'rgba(255, 206, 86, 0.2)',
-  'rgba(75, 192, 192, 0.2)',
-  'rgba(153, 102, 255, 0.2)',
-  'rgba(255, 159, 64, 0.2)'
-];
-
-const borderColor = [
-  'rgba(255,99,132,1)',
-  'rgba(54, 162, 235, 1)',
-  'rgba(255, 206, 86, 1)',
-  'rgba(75, 192, 192, 1)',
-  'rgba(153, 102, 255, 1)',
-  'rgba(255, 159, 64, 1)'
-];
 /*
 const tasks = [
 	{
@@ -45,6 +25,72 @@ const tasks = [
 	}
 ]
 */
+
+const getHours = (sec) =>
+  Math.round(sec/3600 * 100) / 100;
+
+const backgroundColor = [
+  'rgba(255, 99, 132, 0.2)',
+  'rgba(54, 162, 235, 0.2)',
+  'rgba(255, 206, 86, 0.2)',
+  'rgba(75, 192, 192, 0.2)',
+  'rgba(153, 102, 255, 0.2)',
+  'rgba(255, 159, 64, 0.2)'
+];
+
+const borderColor = [
+  'rgba(255,99,132,1)',
+  'rgba(54, 162, 235, 1)',
+  'rgba(255, 206, 86, 1)',
+  'rgba(75, 192, 192, 1)',
+  'rgba(153, 102, 255, 1)',
+  'rgba(255, 159, 64, 1)'
+];
+
+function formatLabel(str, maxwidth){
+    var sections = [];
+    var words = str.split(" ");
+    var temp = "";
+
+    words.forEach(function(item, index){
+        if(temp.length > 0)
+        {
+            var concat = temp + ' ' + item;
+
+            if(concat.length > maxwidth){
+                sections.push(temp);
+                temp = "";
+            }
+            else{
+                if(index == (words.length-1))
+                {
+                    sections.push(concat);
+                    return;
+                }
+                else{
+                    temp = concat;
+                    return;
+                }
+            }
+        }
+
+        if(index == (words.length-1))
+        {
+            sections.push(item);
+            return;
+        }
+
+        if(item.length < maxwidth) {
+            temp = item;
+        }
+        else {
+            sections.push(item);
+        }
+
+    });
+
+    return sections;
+}
 
 function buildColorArray(size) {
 	let arr = [];
@@ -78,7 +124,7 @@ function buildBorderArray(size) {
 
 function barChartData(tasks) {
 	const labels = tasks.map((tasks) => (
-		tasks.task
+		formatLabel(tasks.task, 25)
 	));
 	const data = tasks.map((tasks) => (
 		getHours(tasks.time)
