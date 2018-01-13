@@ -45,6 +45,37 @@ const tasks = [
 	}
 ]
 */
+
+function buildColorArray(size) {
+	let arr = [];
+	if (size <= 6) {
+		return arr = backgroundColor.slice(0, size);
+	} else {
+		for (var i = 0; i < Math.floor(size/6); i++) {
+			Array.prototype.push.apply(arr, backgroundColor)
+		}
+		if (size % 6 !== 0) {
+			Array.prototype.push.apply(arr, backgroundColor.slice(0, size % 6))
+		}
+		return arr;
+	}
+}
+
+function buildBorderArray(size) {
+	let arr = [];
+	if (size <= 6) {
+		return arr = borderColor.slice(0, size);
+	} else {
+		for (var i = 0; i < Math.floor(size/6); i++) {
+			Array.prototype.push.apply(arr, borderColor)
+		}
+		if (size % 6 !== 0) {
+			Array.prototype.push.apply(arr, borderColor.slice(0, size % 6))
+		}
+		return arr;
+	}
+}
+
 function barChartData(tasks) {
 	const labels = tasks.map((tasks) => (
 		tasks.task
@@ -52,8 +83,8 @@ function barChartData(tasks) {
 	const data = tasks.map((tasks) => (
 		getHours(tasks.time)
 	));
-	const color = backgroundColor.slice(0, tasks.length)
-	const border = borderColor.slice(0, tasks.length)
+	const color = buildColorArray(tasks.length)	
+	const border = buildBorderArray(tasks.length)
 
 	const chartData = {
 		labels: labels,
@@ -65,7 +96,6 @@ function barChartData(tasks) {
 			borderWidth: 1
 		}]
 	}
-
 	return chartData;
 }
 
