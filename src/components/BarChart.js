@@ -15,7 +15,10 @@ export default class BarChart extends Component {
 					width={100}
 					height={400}
 					options={{
-						maintainAspectRatio: false
+						maintainAspectRatio: false,
+						legend: {
+							position: "bottom"
+						}
 					}}
 				/>
 			</div>
