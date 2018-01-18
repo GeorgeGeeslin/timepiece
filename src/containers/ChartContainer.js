@@ -22,6 +22,18 @@ const tasks = [
 		project: "Slacking off",
 		task: "Coffee break",
 		time: 893
+	},
+		{
+		client: "Leslie Hillberry",
+		project: "Vendor deduction register",
+		task: "Add vendor Id to report",
+		time: 3028
+	},
+	{
+		client: "Me",
+		project: "Slacking off",
+		task: "Coffee break",
+		time: 893
 	}
 ]
 */
@@ -122,39 +134,76 @@ function buildBorderArray(size) {
 	}
 }
 
-function barChartData(tasks) {
-	const labels = tasks.map((tasks) => (
-		formatLabel(tasks.task, 25)
-	));
-	const data = tasks.map((tasks) => (
-		getHours(tasks.time)
-	));
-	const color = buildColorArray(tasks.length)	
-	const border = buildBorderArray(tasks.length)
-
-	const chartData = {
-		labels: labels,
-		datasets: [{
-			label: "Hours",
-			data: data,
-			backgroundColor: color,
-			borderColor: border,
-			borderWidth: 1
-		}]
-	}
-	return chartData;
-}
-
 export default class ChartContainer extends Component {
 	static propTypes = {
 		tasks: PropTypes.array.isRequired
 	}
 
+	state = {
+		display: 'task',
+		durration: 'all',
+		start: null,
+		end: null,
+		dataArray: this.props.tasks
+	}
+
+	barChartData = (dataArray) => {
+		const display = this.state.display;
+		const labels = dataArray.map((item) => (
+			item[display]
+		));
+		const data = dataArray.map((item) => (
+			getHours(item.time)
+		));
+		const color = buildColorArray(labels.length)	
+		const border = buildBorderArray(labels.length)
+
+		const chartData = {
+			labels: labels,
+			datasets: [{
+				label: "Hours",
+				data: data,
+				backgroundColor: color,
+				borderColor: border,
+				borderWidth: 1
+			}]
+		}
+		return chartData;
+	}
+
+	barChartHeight(length) {
+		if (length <= 5 ) {
+			return	50 * length;
+		} else if (length > 5 && length <= 10) {
+			return	40 * length;
+		} else {
+			return 30 * length;
+		}
+	}
+
+	getChartData = (display, durration, start, end) => {
+		
+	}
+ 
+
 	render () {
-		const data = barChartData(this.props.tasks)
+		const height = this.barChartHeight(this.state.dataArray.length)
+
+		const data = this.barChartData(this.state.dataArray)
 		return (
 			<div>
-				<BarChart data={data}/>
+				<h1>Charts and Graphs</h1>
+				<form id='chartSettings' onSubmit={this.getChartData}>
+					<input 
+						className='tasks-buttons'
+						type='submit'
+						value='Apply'
+						form='chartSettings'
+					/>
+				</form>
+				<BarChart data={data}
+					height={height}
+				/>
 			</div>
 		)
 	}

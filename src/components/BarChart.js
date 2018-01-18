@@ -13,11 +13,23 @@ export default class BarChart extends Component {
 				<HorizontalBar
 					data={this.props.data}
 					width={100}
-					height={400}
+					height={this.props.height}
 					options={{
 						maintainAspectRatio: false,
 						legend: {
 							position: "bottom"
+						},
+						scales: {
+							xAxes: [{
+								ticks: {
+									beginAtZero: true
+								}
+							}],
+							yAxes: [{
+								ticks: {
+									mirror: true
+								}
+							}]
 						}
 					}}
 				/>
