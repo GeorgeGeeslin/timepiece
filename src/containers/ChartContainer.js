@@ -181,9 +181,22 @@ export default class ChartContainer extends Component {
 		}
 	}
 
-	getChartData = (display, durration, start, end) => {
-		
-	}
+	/*getChartData = (display, duration, start, end) => {
+		const now = new Date();
+		const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+		if (duration === 'week') {
+			const periodStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000)).getTime();
+			const periodEnd = new Date(((6 - currDay.getDay()) * 86400000) + 86400000 + currDay.getTime()).getTime();
+		} else if (duration === 'month') {
+			const periodStart = new Date(currDay.getFullYear(), currDay.getMonth(), 1).getTime();
+			const periodEnd = new Date(currDay.getFullYear(), currDay.getMonth() + 1, 0, 23, 59, 59).getTime();
+		} else {
+			const periodStart = start;
+			const periodEnd = end;
+		}
+
+	}*/
  
 
 	render () {
@@ -191,20 +204,112 @@ export default class ChartContainer extends Component {
 
 		const data = this.barChartData(this.state.dataArray)
 		return (
-			<div>
+			<Grid>
 				<h1>Charts and Graphs</h1>
 				<form id='chartSettings' onSubmit={this.getChartData}>
-					<input 
-						className='tasks-buttons'
-						type='submit'
-						value='Apply'
-						form='chartSettings'
-					/>
+					<Row className="radioContainer">
+						<Col className="radioGroup" xs={6}>
+							<p>Display:</p>
+							<div className="radio-button">
+								<input 
+									type="radio"
+									value="tasks"
+									htmlFor="displayChoice1"
+									name="display"
+								/>
+								<label htmlFor="displayChoice1">Tasks</label>
+							</div>
+							<div className="radio-button">
+								<input
+									type="radio"
+									value="Projects"
+									htmlFor="displayChoice2"
+									name="display"
+								/>
+								<label htmlFor="displayChoice2">Projects</label>
+							</div>
+							<div className="radio-button">
+								<input 
+									type="radio"
+									value="clients"
+									htmlFor="displayChoice3"
+									name="display"
+								/>	
+								<label htmlFor="displayChoice3">Clients</label>
+							</div>
+						</Col>
+
+						<Col className="radioGroup" xs={6}>
+							<p>Date Range:</p>
+							<div className="radio-button">
+								<input 
+									type="radio"
+									value="all"
+									htmlFor="rangeChoice1"
+									name="dateRange"
+								/>
+							  <label htmlFor="rangeChoice1">All Time</label>
+						  </div>
+						  <div className="radio-button">
+								<input 
+									type="radio"
+									value="week"
+									htmlFor="rangeChoice2"
+									name="dateRange"
+								/>
+								<label htmlFor="rangeChoice2">This Week</label>
+							</div>
+							<div className="radio-button">
+								<input 
+									type="radio"
+									value="month"
+									htmlFor="rangeChoice3"
+									name="dateRange"
+								/>
+								<label htmlFor="rangeChoice3">This Month</label>
+							</div>	
+							<div className="radio-button">
+								<input 
+									type="radio"
+									value="Custom"
+									htmlFor="rangeChoice4"
+									name="dateRange"
+								/>
+								<label htmlFor="rangeChoice1">Custom</label>
+							</div>
+						</Col>
+						<Col xs={12} sm={4}>	
+							<p>Custom Date Range:</p>
+							<input 
+								id="start"
+								className="time-input"
+								type="date"
+								value={""}
+							/>
+							<input 
+								id="end"
+								className="time-input"
+								type="date"
+								value={""}
+							/>
+
+							<input 
+								className='control-buttons'
+								type='submit'
+								value='Apply'
+								form='chartSettings'
+							/>
+						</Col>
+					</Row>
 				</form>
-				<BarChart data={data}
-					height={height}
-				/>
-			</div>
+				<Row>
+					<Col sm={12}>
+						<BarChart data={data}
+							height={height}
+						/>
+					</Col>
+				</Row>
+			</Grid>
 		)
 	}
 }

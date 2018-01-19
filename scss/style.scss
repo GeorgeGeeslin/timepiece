@@ -694,3 +694,22 @@ input[type="text"].inputError {
   }
 }
 
+//Charts ------------------------------ /
+.radio-button {
+	display: block;
+	label {
+		padding-left: 10px;
+	}
+}
+
+.radioContainer {
+	padding-right: 30px;
+	padding-left: 30px;
+}
+
+.radioGroup {
+	width: 50%;
+	@include respond-to($tablet-portrait) {
+		width: 30%;
+	}
+}
