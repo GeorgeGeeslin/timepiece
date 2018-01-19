@@ -140,10 +140,12 @@ export default class ChartContainer extends Component {
 	}
 
 	state = {
-		display: 'task',
-		durration: 'all',
-		start: null,
-		end: null,
+		display: "tasks",
+		range: "all",
+		//display: 'task',
+		//durration: 'all',
+		//start: null,
+		//end: null,
 		dataArray: this.props.tasks
 	}
 
@@ -207,75 +209,73 @@ export default class ChartContainer extends Component {
 			<Grid>
 				<h1>Charts and Graphs</h1>
 				<form id='chartSettings' onSubmit={this.getChartData}>
-					<Row className="radioContainer">
+					<Row className="chartSettings">
 						<Col className="radioGroup" xs={6}>
 							<p>Display:</p>
 							<div className="radio-button">
 								<input 
 									type="radio"
 									value="tasks"
-									htmlFor="displayChoice1"
-									name="display"
+									htmlFor="tasks"
+									checked={this.state.display === "tasks"}
 								/>
-								<label htmlFor="displayChoice1">Tasks</label>
+								<label htmlFor="tasks">Tasks</label>
 							</div>
 							<div className="radio-button">
 								<input
 									type="radio"
 									value="Projects"
-									htmlFor="displayChoice2"
-									name="display"
+									htmlFor="projects"
+									checked={this.state.display === "projects"}
 								/>
-								<label htmlFor="displayChoice2">Projects</label>
+								<label htmlFor="projects">Projects</label>
 							</div>
 							<div className="radio-button">
 								<input 
 									type="radio"
 									value="clients"
-									htmlFor="displayChoice3"
-									name="display"
+									htmlFor="clients"
+									checked={this.state.display === "clients"}
 								/>	
-								<label htmlFor="displayChoice3">Clients</label>
+								<label htmlFor="clients">Clients</label>
 							</div>
 						</Col>
-
 						<Col className="radioGroup" xs={6}>
 							<p>Date Range:</p>
 							<div className="radio-button">
 								<input 
 									type="radio"
 									value="all"
-									htmlFor="rangeChoice1"
-									name="dateRange"
+									htmlFor="all"
+									checked={this.state.range === "all"}
 								/>
-							  <label htmlFor="rangeChoice1">All Time</label>
+							  <label htmlFor="all">All Time</label>
 						  </div>
 						  <div className="radio-button">
 								<input 
 									type="radio"
 									value="week"
-									htmlFor="rangeChoice2"
-									name="dateRange"
+									htmlFor="week"
+									checked={this.state.range === "week"}
 								/>
-								<label htmlFor="rangeChoice2">This Week</label>
+								<label htmlFor="week">This Week</label>
 							</div>
 							<div className="radio-button">
 								<input 
 									type="radio"
 									value="month"
-									htmlFor="rangeChoice3"
-									name="dateRange"
+									htmlFor="month"
+									checked={this.state.range === "month"}
 								/>
-								<label htmlFor="rangeChoice3">This Month</label>
+								<label htmlFor="month">This Month</label>
 							</div>	
 							<div className="radio-button">
 								<input 
 									type="radio"
 									value="Custom"
-									htmlFor="rangeChoice4"
-									name="dateRange"
+									htmlFor="custom"
 								/>
-								<label htmlFor="rangeChoice1">Custom</label>
+								<label htmlFor="custom">Custom</label>
 							</div>
 						</Col>
 						<Col xs={12} sm={4}>	
@@ -292,7 +292,6 @@ export default class ChartContainer extends Component {
 								type="date"
 								value={""}
 							/>
-
 							<input 
 								className='control-buttons'
 								type='submit'

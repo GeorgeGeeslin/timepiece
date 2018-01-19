@@ -217,12 +217,6 @@ input[type="text"] {
 	@include center;
 }
 
-.masthead {
-	width: 100%;
-	height: 40px;
-	background-color: $color-masthead;
-}
-
 .taskLabel {
 	@include label;
 }
@@ -239,6 +233,12 @@ input[type="text"] {
 
 
 // User Header ----------------------- /
+
+.masthead {
+	width: 100%;
+	height: 40px;
+	background-color: $color-masthead;
+}
 
 .timepieceLogo {
 	font-family: 'Parisienne', cursive;
@@ -702,12 +702,18 @@ input[type="text"].inputError {
 	}
 }
 
-.radioContainer {
-	padding-right: 30px;
-	padding-left: 30px;
+.chartSettings {
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-bottom: 30px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border: 1px solid $color-masthead;
 }
 
 .radioGroup {
+	padding-right: 15px;
+	padding-left: 15px;
 	width: 50%;
 	@include respond-to($tablet-portrait) {
 		width: 30%;
