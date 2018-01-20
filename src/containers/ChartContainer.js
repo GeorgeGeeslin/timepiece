@@ -140,7 +140,7 @@ export default class ChartContainer extends Component {
 	}
 
 	state = {
-		display: "tasks",
+		display: "task",
 		range: "all",
 		//display: 'task',
 		//durration: 'all',
@@ -199,6 +199,14 @@ export default class ChartContainer extends Component {
 		}
 
 	}*/
+
+	selectDisplay = (e) => {
+		this.setState({display: e.target.value});
+	}
+	
+	selectRange = (e) => {
+		this.setState({range: e.target.value});
+	}
  
 
 	render () {
@@ -215,27 +223,30 @@ export default class ChartContainer extends Component {
 							<div className="radio-button">
 								<input 
 									type="radio"
-									value="tasks"
+									value="task"
 									htmlFor="tasks"
-									checked={this.state.display === "tasks"}
+									checked={this.state.display === "task"}
+									onChange={this.selectDisplay}
 								/>
 								<label htmlFor="tasks">Tasks</label>
 							</div>
 							<div className="radio-button">
 								<input
 									type="radio"
-									value="Projects"
+									value="project"
 									htmlFor="projects"
-									checked={this.state.display === "projects"}
+									checked={this.state.display === "project"}
+									onChange={this.selectDisplay}
 								/>
 								<label htmlFor="projects">Projects</label>
 							</div>
 							<div className="radio-button">
 								<input 
 									type="radio"
-									value="clients"
+									value="client"
 									htmlFor="clients"
-									checked={this.state.display === "clients"}
+									checked={this.state.display === "client"}
+									onChange={this.selectDisplay}
 								/>	
 								<label htmlFor="clients">Clients</label>
 							</div>
@@ -248,6 +259,7 @@ export default class ChartContainer extends Component {
 									value="all"
 									htmlFor="all"
 									checked={this.state.range === "all"}
+									onChange={this.selectRange}
 								/>
 							  <label htmlFor="all">All Time</label>
 						  </div>
@@ -257,6 +269,7 @@ export default class ChartContainer extends Component {
 									value="week"
 									htmlFor="week"
 									checked={this.state.range === "week"}
+									onChange={this.selectRange}
 								/>
 								<label htmlFor="week">This Week</label>
 							</div>
@@ -266,14 +279,17 @@ export default class ChartContainer extends Component {
 									value="month"
 									htmlFor="month"
 									checked={this.state.range === "month"}
+									onChange={this.selectRange}
 								/>
 								<label htmlFor="month">This Month</label>
 							</div>	
 							<div className="radio-button">
 								<input 
 									type="radio"
-									value="Custom"
+									value="custom"
 									htmlFor="custom"
+									checked={this.state.range === "custom"}
+									onChange={this.selectRange}
 								/>
 								<label htmlFor="custom">Custom</label>
 							</div>
