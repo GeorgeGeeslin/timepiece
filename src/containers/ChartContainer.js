@@ -38,7 +38,14 @@ const tasks = [
 ]
 */
 
-const getHours = (sec) =>
+const now = new Date();
+const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+const weekStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000)).getTime();
+const weekEnd = new Date(((6 - (currDay.getDay() + 1)) * 86400000) + 86400000 + currDay.getTime()).getTime();
+const monthStart = new Date(currDay.getFullYear(), currDay.getMonth(), 1).getTime();
+const monthEnd = new Date(currDay.getFullYear(), currDay.getMonth() + 1, 0, 23, 59, 59).getTime();
+
+const getHours = (sec) => 
   Math.round(sec/3600 * 100) / 100;
 
 const backgroundColor = [
@@ -142,10 +149,8 @@ export default class ChartContainer extends Component {
 	state = {
 		display: "task",
 		range: "all",
-		//display: 'task',
-		//durration: 'all',
-		//start: null,
-		//end: null,
+		start: "",
+		end: "",
 		dataArray: this.props.tasks
 	}
 
@@ -183,36 +188,67 @@ export default class ChartContainer extends Component {
 		}
 	}
 
-	/*getChartData = (display, duration, start, end) => {
-		const now = new Date();
-		const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-		if (duration === 'week') {
-			const periodStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000)).getTime();
-			const periodEnd = new Date(((6 - currDay.getDay()) * 86400000) + 86400000 + currDay.getTime()).getTime();
-		} else if (duration === 'month') {
-			const periodStart = new Date(currDay.getFullYear(), currDay.getMonth(), 1).getTime();
-			const periodEnd = new Date(currDay.getFullYear(), currDay.getMonth() + 1, 0, 23, 59, 59).getTime();
-		} else {
-			const periodStart = start;
-			const periodEnd = end;
-		}
+	formatDateString = (timeStamp) => {
+		const date = new Date(timeStamp);
+		let month = ('0' + (date.getMonth() + 1)).slice(-2);
+		let day = ('0' + date.getDate()).slice(-2);
+		let year = date.getFullYear();
+		return year + '-' + month + '-' + day;
+	}
 
-	}*/
+	formatTimeStamp = (dateString) => {
+		console.log(this.state.start);
+	}
 
 	selectDisplay = (e) => {
 		this.setState({display: e.target.value});
 	}
 	
 	selectRange = (e) => {
-		this.setState({range: e.target.value});
+		if (e.target.value === "week") {
+			this.setState({
+				range: "week",
+				start: this.formatDateString(weekStart),
+				end: this.formatDateString(weekEnd)
+			})
+		} else if (e.target.value === "month") {
+			this.setState({
+				range: "month",
+				start: this.formatDateString(monthStart),
+				end: this.formatDateString(monthEnd)
+			})
+		} else if (e.target.value === "all") {
+			this.setState({
+				range: "all",
+				start: "",
+				end: ""
+			})
+		} else if (e.target.value === "custom") {
+			this.setState({
+				range: "custom"
+			})
+		}
 	}
- 
+
+	onChangeDateStart = (e) => {
+		this.setState({
+			range: "custom",
+			start: e.target.value
+		});
+	}
+
+	onChangeDateStop = (e) => {
+		this.setState({
+			range: "custom",
+			end: e.target.value
+		});
+	}
 
 	render () {
 		const height = this.barChartHeight(this.state.dataArray.length)
-
 		const data = this.barChartData(this.state.dataArray)
+		
 		return (
 			<Grid>
 				<h1>Charts and Graphs</h1>
@@ -300,13 +336,15 @@ export default class ChartContainer extends Component {
 								id="start"
 								className="time-input"
 								type="date"
-								value={""}
+								value={this.state.start}
+								onChange={this.onChangeDateStart}
 							/>
 							<input 
 								id="end"
 								className="time-input"
 								type="date"
-								value={""}
+								value={this.state.end}
+								onChange={this.onChangeDateStop}
 							/>
 							<input 
 								className='control-buttons'
