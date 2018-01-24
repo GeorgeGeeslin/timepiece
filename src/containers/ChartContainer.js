@@ -154,6 +154,77 @@ export default class ChartContainer extends Component {
 		dataArray: this.props.tasks
 	}
 
+	formatUnixTime(dateString) {
+		const year = dateString.slice(0,4);
+		const month = dateString.slice(5,7) - 1;
+		const day = dateString.slice(8,10);
+		return new Date(year,month,day).getTime();
+	};
+
+	getChartData = (e) => {
+		if (e) e.preventDefault();		
+		let taskLevelData = [];
+		//Translate start and end strings to timestamps. 
+		if (this.state.start === "") {
+			var startTs = 0;
+		} else {
+			var startTs = this.formatUnixTime(this.state.start);
+		}
+		if (this.state.end === "") {
+			var endTs = Infinity; 
+		} else {
+			var endTs = this.formatUnixTime(this.state.end) + 86399000;
+		}
+    
+		if (this.state.start !== "" && this.state.end !== "") {
+			//Filter tasks at time interval level:
+			//I only care about total time of intervals, not keeping individual intervals intact.
+			//But must handle intervals that bridge or overlap the start and end dates.
+			//An Array of objets is built containing Task, Project, Client, and Time.
+			
+			for (let i = 0; i < this.props.tasks.length; i++) {
+				let task = this.props.tasks[i];
+				let taskTotal = 0;
+				taskLevelData.push({
+					client: this.props.tasks[i].client,
+					project: this.props.tasks[i].project,
+					task: this.props.tasks[i].task,
+					time: taskTotal
+				})
+				if (task.timeintervals !== undefined && task.timeintervals.length > 0) {
+					for (let j = 0; j < task.timeintervals.length; j++) {
+						let timeinterval = task.timeintervals[j];
+						// Time interval starts before date range and ends after date range.
+						if (timeinterval.startTime <= startTs && timeinterval.stopTime >= endTs) {
+//							console.log("first")
+							taskTotal = taskTotal + (endTs - startTs);
+							taskLevelData[i].time = taskTotal;
+						// Time interval starts before date range and ends during date range.
+						} else if (timeinterval.startTime <= startTs && timeinterval.stopTime <= endTs && timeinterval.stopTime >= startTs) {
+//							console.log("second")
+							taskTotal = taskTotal + (timeinterval.stopTime - startTs);
+							taskLevelData[i].time = taskTotal;
+						// Time interval starts during date range and ends after date range.
+						} else if (timeinterval.startTime >= startTs && timeinterval.stopTime >= endTs && timeinterval.startTime <= endTs) {
+//							console.log("third")
+							taskTotal = taskTotal + (endTs - timeinterval.startTime);
+							taskLevelData[i].time = taskTotal;
+						// Time interval starts and stops within date range.
+						} else if (timeinterval.startTime >= startTs && timeinterval.stopTime <= endTs) {
+//							console.log("fourth")
+							taskTotal = taskTotal + (timeinterval.stopTime - timeinterval.startTime);
+							taskLevelData[i].time = taskTotal;
+						}
+					}
+				}
+			}
+		// If date range is for "all time" then the loop is not needed.
+		} else {
+			taskLevelData = this.props.tasks;
+		}
+		console.log(taskLevelData)
+	}
+
 	barChartData = (dataArray) => {
 		const display = this.state.display;
 		const labels = dataArray.map((item) => (
