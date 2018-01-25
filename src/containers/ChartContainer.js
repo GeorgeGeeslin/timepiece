@@ -250,10 +250,10 @@ export default class ChartContainer extends Component {
 					taskCount: taskCount
 				})
 			}
-			
-			return displayLevelData;
+
+			this.setState({dataArray: displayLevelData});
 		} else {
-			return taskLevelData;
+			this.setState({dataArray: taskLevelData});
 		}
 	}
 
