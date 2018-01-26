@@ -3,41 +3,6 @@ import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
 
-/*
-const tasks = [
-	{
-		client: "Me",
-		project: "Studying SQL",
-		task: "Reading 'Use the index, Luke'",
-		time: 2414
-	},
-	{
-		client: "Leslie Hillberry",
-		project: "Vendor deduction register",
-		task: "Add vendor Id to report",
-		time: 3028
-	},
-	{
-		client: "Me",
-		project: "Slacking off",
-		task: "Coffee break",
-		time: 893
-	},
-		{
-		client: "Leslie Hillberry",
-		project: "Vendor deduction register",
-		task: "Add vendor Id to report",
-		time: 3028
-	},
-	{
-		client: "Me",
-		project: "Slacking off",
-		task: "Coffee break",
-		time: 893
-	}
-]
-*/
-
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 const weekStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000)).getTime();
@@ -154,6 +119,21 @@ export default class ChartContainer extends Component {
 		dataArray: this.props.tasks
 	}
 
+/*
+	componentWillMount() {
+		this.setState({
+			height: this.barChartHeight(this.state.dataArray.length),
+			data: this.barChartData(this.state.dataArray)
+		});
+	};
+
+	componentDidUpdate(prevProps) {
+		console.log("update!")
+		if (prevProps.display !== this.state.display) {
+			this.getChartData()
+		}
+	}
+*/
 	formatUnixTime(dateString) {
 		const year = dateString.slice(0,4);
 		const month = dateString.slice(5,7) - 1;
@@ -229,9 +209,9 @@ export default class ChartContainer extends Component {
 			let displayLevelData = [];
 			const display = this.state.display
 
-			displayLabels = taskLevelData.map((task)=> {
-				if (displayLabels.includes(task.project) === false) {
-					return task.project;
+			taskLevelData.forEach((task) => {
+				if (displayLabels.includes(task[display]) === false) {
+					displayLabels.push(task[display]);
 				}
 			})
 
@@ -250,10 +230,13 @@ export default class ChartContainer extends Component {
 					taskCount: taskCount
 				})
 			}
-
-			this.setState({dataArray: displayLevelData});
+			this.setState({
+				dataArray: displayLevelData
+			});
 		} else {
-			this.setState({dataArray: taskLevelData});
+			this.setState({
+				dataArray: taskLevelData
+			});
 		}
 	}
 
@@ -291,7 +274,6 @@ export default class ChartContainer extends Component {
 		}
 	}
 
-
 	formatDateString = (timeStamp) => {
 		const date = new Date(timeStamp);
 		let month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -299,11 +281,11 @@ export default class ChartContainer extends Component {
 		let year = date.getFullYear();
 		return year + '-' + month + '-' + day;
 	}
-
+/*
 	formatTimeStamp = (dateString) => {
 		console.log(this.state.start);
 	}
-
+*/
 	selectDisplay = (e) => {
 		this.setState({display: e.target.value});
 	}
@@ -348,10 +330,7 @@ export default class ChartContainer extends Component {
 		});
 	}
 
-	render () {
-		const height = this.barChartHeight(this.state.dataArray.length)
-		const data = this.barChartData(this.state.dataArray)
-		
+	render () {	
 		return (
 			<Grid>
 				<h1>Charts and Graphs</h1>
@@ -460,8 +439,8 @@ export default class ChartContainer extends Component {
 				</form>
 				<Row>
 					<Col sm={12}>
-						<BarChart data={data}
-							height={height}
+						<BarChart data={this.barChartData(this.state.dataArray)}
+							height={this.barChartHeight(this.state.dataArray.length)}
 						/>
 					</Col>
 				</Row>
