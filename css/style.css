@@ -134,11 +134,6 @@ input[type="text"] {
     border: 1px solid #623353;
     color: #74546a; }
 
-.masthead {
-  width: 100%;
-  height: 40px;
-  background-color: #1e2f51; }
-
 .taskLabel {
   font: "Roboto Condensed", sans-serif;
   font-size: .8em; }
@@ -151,6 +146,11 @@ input[type="text"] {
 .displayName {
   float: right;
   line-height: 40px; }
+
+.masthead {
+  width: 100%;
+  height: 40px;
+  background-color: #1e2f51; }
 
 .timepieceLogo {
   font-family: 'Parisienne', cursive;
@@ -177,6 +177,54 @@ input[type="text"] {
     width: 35px;
     height: 35px;
     border-radius: 50%; }
+
+.userMenu {
+  position: absolute;
+  width: 100%;
+  padding: 3%;
+  color: #111d3a;
+  background-color: #e8e8e8;
+  z-index: 2; }
+  .userMenu button {
+    color: #111d3a;
+    background-color: #d8d8d8; }
+  @media only screen and (min-width: 767px) {
+    .userMenu {
+      right: 0px;
+      width: 50%; } }
+  @media only screen and (min-width: 1024px) and (max-width: 1499px) {
+    .userMenu {
+      width: 30%;
+      padding: 15px; } }
+  @media only screen and (min-width: 1500px) {
+    .userMenu {
+      width: 20%;
+      padding: 15px; } }
+
+.userMenuButton {
+  color: #111d3a;
+  width: 100%;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #eadef2;
+  background-color: transparent;
+  border: 1px solid #9d138c;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto; }
+  .userMenuButton:disabled {
+    border: 1px solid #623353;
+    color: #74546a; }
+  .userMenuButton:hover:enabled {
+    background-color: #fcf7e5;
+    background-image: -webkit-linear-gradient(#fcf7e5, #d8d8d8);
+    background-image: -o-linear-gradient(#fcf7e5, #d8d8d8);
+    background-image: linear-gradient(#fcf7e5, #d8d8d8); }
+  .userMenuButton:active {
+    border: 1px solid #d35bad; }
+  .userMenuButton:focus {
+    outline: 0; }
 
 .userProfileDropDown {
   color: #111d3a;
@@ -519,5 +567,28 @@ input[type="text"].inputError {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+.radio-button {
+  display: block; }
+  .radio-button label {
+    padding-left: 10px; }
+
+.chartSettings {
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-bottom: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 1px solid #1e2f51; }
+
+.radioGroup {
+  padding-right: 15px;
+  padding-left: 15px;
+  width: 50%; }
+  @media only screen and (min-width: 767px) {
+    .radioGroup {
+      width: 30%; } }
+
+.barChart {
+  height: 1000px; }
 
 /*# sourceMappingURL=style.css.map */

@@ -12,7 +12,7 @@ const formatTime = (sec) =>
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 const weekStart = new Date(currDay.getTime() - (currDay.getDay() * 86400000)).getTime();
-const weekEnd = new Date(((6 - currDay.getDay()) * 86400000) + 86400000 + currDay.getTime()).getTime();
+const weekEnd = new Date(((6 - (currDay.getDay())) * 86400000) + 86400000 + currDay.getTime()).getTime();
 const monthStart = new Date(currDay.getFullYear(), currDay.getMonth(), 1).getTime();
 const monthEnd = new Date(currDay.getFullYear(), currDay.getMonth() + 1, 0, 23, 59, 59).getTime();
 

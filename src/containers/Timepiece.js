@@ -10,12 +10,13 @@ import EditTask from '../components/EditTask';
 import Summary from '../components/Summary'
 
 export default class Timepiece extends Component {
-		static propTypes = {
+	static propTypes = {
 		addTask: PropTypes.func.isRequired,
-		closeEdit: PropTypes.func.isRequired,
 		deleteTask: PropTypes.func.isRequired,
 		finishTask: PropTypes.func.isRequired,
 		openEdit: PropTypes.func.isRequired,
+		closeEdit: PropTypes.func.isRequired,
+		closeUserMenu: PropTypes.func.isRequired,
 		pauseTask: PropTypes.func.isRequired,
 		resumeTask: PropTypes.func.isRequired,
 		selectTask: PropTypes.func.isRequired,
@@ -117,48 +118,52 @@ export default class Timepiece extends Component {
 		}
 
 		return (
-			<Grid>
-				<Row className="show-grid">
-					<Col className={'leftCol'} sm={12} md={6}>
-						<div className={'mainContent'}>
-							<ActiveTask 
-								selectedTask={selectedTask} />
-							<Timer
-								selectedTaskIndex={selectedTaskIndex} 
-								secondsElapsed={secondsElapsed} 
-								finishTask={this.props.finishTask} 
-								pauseTask={this.props.pauseTask}
-								selectedTask={selectedTask}
-								lastManualUpdate={lastManualUpdate}
-								uid={uid}
-								/>
-							<CreateTaskForm addTask={this.props.addTask} 
-								uid={uid}/>
-							{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
-							<div className='taskWrapper'>
-								{ currentTasks }
-							</div>
-						</div>
-					</Col>
-					<Col className={'rightCol'} sm={12} md={6}>
-						<div className={'mainContent'}>
-							{ finishedTasks.length > 0 && <h2>Finished Tasks</h2> }
-							<div className='taskWrapper'>
-								{ finishedTasks }
-							</div>
-							<Summary tasks={tasks}/>
-						</div>
-					</Col>
-				</Row>
-				{this.props.showEditScreen === true && <EditTask
-					closeEdit={this.props.closeEdit} 
-					updateTask={this.props.updateTask}
-					showEditScreen={this.props.showEditScreen}
-					editTaskIndex={this.props.editTaskIndex}
-					uid={uid}
-					editTask={editTask}/>
-				}		
-			</Grid>
+			<div>
+					<Grid onClick= { () => this.props.closeUserMenu()}>
+						<Row className="show-grid">
+							<Col className={'leftCol'} sm={12} md={6}>
+								<div className={'mainContent'}>
+									<ActiveTask 
+										selectedTask={selectedTask}
+									/>
+									<Timer
+										selectedTaskIndex={selectedTaskIndex} 
+										secondsElapsed={secondsElapsed} 
+										finishTask={this.props.finishTask} 
+										pauseTask={this.props.pauseTask}
+										selectedTask={selectedTask}
+										lastManualUpdate={lastManualUpdate}
+										uid={uid}
+									/>
+									<CreateTaskForm addTask={this.props.addTask} 
+										uid={uid}
+									/>
+									{ currentTasks.length > 0 && <h2>Current Tasks</h2> }
+									<div className='taskWrapper'>
+										{ currentTasks }
+									</div>
+								</div>
+							</Col>
+							<Col className={'rightCol'} sm={12} md={6}>
+								<div className={'mainContent'}>
+									{ finishedTasks.length > 0 && <h2>Finished Tasks</h2> }
+									<div className='taskWrapper'>
+										{ finishedTasks }
+									</div>
+									<Summary tasks={tasks}/>
+								</div>
+							</Col>
+						</Row>
+						{this.props.showEditScreen === true && <EditTask
+							closeEdit={this.props.closeEdit} 
+							updateTask={this.props.updateTask}
+							showEditScreen={this.props.showEditScreen}
+							editTaskIndex={this.props.editTaskIndex}
+							uid={uid}
+							editTask={editTask}/>
+						}
+					</Grid>
+			</div>
 		)	
 	}
 }

@@ -4,6 +4,8 @@ const initialState = {
 	tasks: [],
 	selectedTaskIndex: null,
 	showEditScreen: false,
+	showChartScreen: false,
+	showUserMenu: false,
 	lastManualUpdate: null,
 	user: null,
 	pendingLogin: false
@@ -131,6 +133,30 @@ export default function Task(state=initialState, action) {
 				...state,
 				editTaskIndex: null,
 				showEditScreen: false
+			}
+
+		case TaskActionTypes.OPEN_CHARTS:
+			return {
+				...state,
+				showChartScreen: true
+			}
+
+		case TaskActionTypes.CLOSE_CHARTS:
+			return {
+				...state,
+				showChartScreen: false
+				}
+
+		case TaskActionTypes.OPEN_USER_MENU:
+			return {
+				...state,
+				showUserMenu: true
+			}
+
+		case TaskActionTypes.CLOSE_USER_MENU:
+			return {
+				...state,
+				showUserMenu: false
 			}
 
 		case TaskActionTypes.UPDATE_TASK:
