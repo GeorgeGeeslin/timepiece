@@ -10,9 +10,6 @@ const weekEnd = new Date(((6 - (currDay.getDay() + 1)) * 86400000) + 86400000 + 
 const monthStart = new Date(currDay.getFullYear(), currDay.getMonth(), 1).getTime();
 const monthEnd = new Date(currDay.getFullYear(), currDay.getMonth() + 1, 0, 23, 59, 59).getTime();
 
-const getHours = (sec) => 
-  Math.round(sec/3600 * 100) / 100;
-
 const backgroundColor = [
   'rgba(255, 99, 132, 0.2)',
   'rgba(54, 162, 235, 0.2)',
@@ -31,81 +28,44 @@ const borderColor = [
   'rgba(255, 159, 64, 1)'
 ];
 
-function formatLabel(str, maxwidth){
-    var sections = [];
-    var words = str.split(" ");
-    var temp = "";
-
-    words.forEach(function(item, index){
-        if(temp.length > 0)
-        {
-            var concat = temp + ' ' + item;
-
-            if(concat.length > maxwidth){
-                sections.push(temp);
-                temp = "";
+/*
+function formatLabel(str, maxwidth) {
+  var sections = [];
+  var words = str.split(" ");
+  var temp = "";
+  words.forEach(function(item, index) {
+    if (temp.length > 0) {
+      var concat = temp + ' ' + item;
+        if (concat.length > maxwidth) {
+          sections.push(temp);
+          temp = "";
+        }
+        else{
+            if(index == (words.length-1))
+            {
+              sections.push(concat);
+              return;
             }
             else{
-                if(index == (words.length-1))
-                {
-                    sections.push(concat);
-                    return;
-                }
-                else{
-                    temp = concat;
-                    return;
-                }
+              temp = concat;
+              return;
             }
         }
-
-        if(index == (words.length-1))
-        {
-            sections.push(item);
-            return;
-        }
-
-        if(item.length < maxwidth) {
-            temp = item;
-        }
-        else {
-            sections.push(item);
-        }
-
-    });
-
-    return sections;
+      }
+      if(index == (words.length-1)) {
+          sections.push(item);
+          return;
+      }
+      if(item.length < maxwidth) {
+          temp = item;
+      }
+      else {
+          sections.push(item);
+      }
+  });
+  return sections;
 }
-
-function buildColorArray(size) {
-	let arr = [];
-	if (size <= 6) {
-		return arr = backgroundColor.slice(0, size);
-	} else {
-		for (var i = 0; i < Math.floor(size/6); i++) {
-			Array.prototype.push.apply(arr, backgroundColor)
-		}
-		if (size % 6 !== 0) {
-			Array.prototype.push.apply(arr, backgroundColor.slice(0, size % 6))
-		}
-		return arr;
-	}
-}
-
-function buildBorderArray(size) {
-	let arr = [];
-	if (size <= 6) {
-		return arr = borderColor.slice(0, size);
-	} else {
-		for (var i = 0; i < Math.floor(size/6); i++) {
-			Array.prototype.push.apply(arr, borderColor)
-		}
-		if (size % 6 !== 0) {
-			Array.prototype.push.apply(arr, borderColor.slice(0, size % 6))
-		}
-		return arr;
-	}
-}
-
+*/
 export default class ChartContainer extends Component {
 	static propTypes = {
 		tasks: PropTypes.array.isRequired
@@ -116,30 +76,49 @@ export default class ChartContainer extends Component {
 		range: "all",
 		start: "",
 		end: "",
-		dataArray: this.props.tasks
+		dataArray: this.props.tasks.filter((task) => (task.time > 0)),
+		displayHeading: "Task"
 	}
 
-/*
-	componentWillMount() {
-		this.setState({
-			height: this.barChartHeight(this.state.dataArray.length),
-			data: this.barChartData(this.state.dataArray)
-		});
-	};
+	 getHours = (sec) => 
+  		Math.round(sec/3600 * 100) / 100;
 
-	componentDidUpdate(prevProps) {
-		console.log("update!")
-		if (prevProps.display !== this.state.display) {
-			this.getChartData()
-		}
-	}
-*/
 	formatUnixTime(dateString) {
 		const year = dateString.slice(0,4);
 		const month = dateString.slice(5,7) - 1;
 		const day = dateString.slice(8,10);
 		return new Date(year,month,day).getTime();
 	};
+
+	buildColorArray(size) {
+		let arr = [];
+		if (size <= 6) {
+			return arr = backgroundColor.slice(0, size);
+		} else {
+			for (var i = 0; i < Math.floor(size/6); i++) {
+				Array.prototype.push.apply(arr, backgroundColor)
+			}
+			if (size % 6 !== 0) {
+				Array.prototype.push.apply(arr, backgroundColor.slice(0, size % 6))
+			}
+			return arr;
+		}
+	}
+
+	buildBorderArray(size) {
+		let arr = [];
+		if (size <= 6) {
+			return arr = borderColor.slice(0, size);
+		} else {
+			for (var i = 0; i < Math.floor(size/6); i++) {
+				Array.prototype.push.apply(arr, borderColor)
+			}
+			if (size % 6 !== 0) {
+				Array.prototype.push.apply(arr, borderColor.slice(0, size % 6))
+			}
+			return arr;
+		}
+	}
 
 	getChartData = (e) => {
 		if (e) e.preventDefault();		
@@ -195,8 +174,9 @@ export default class ChartContainer extends Component {
 					}
 				}
 			}
+			taskLevelData = taskLevelData.filter((task) => (task.time > 0));
 		} else {
-			taskLevelData = this.props.tasks;
+			taskLevelData = this.props.tasks.filter((task) => (task.time > 0));
 		}
 
 		//Check to see if display is something other than tasks.
@@ -204,8 +184,6 @@ export default class ChartContainer extends Component {
 		//and number of aggregate tasks.
 		if (this.state.display !== "task") {
 			let displayLabels = [];
-			//let displayTimes = [];
-			//let numberOfTasks = [];
 			let displayLevelData = [];
 			const display = this.state.display
 
@@ -225,52 +203,22 @@ export default class ChartContainer extends Component {
 					}
 				}
 				displayLevelData.push({
-					[display]: displayLabels[i],
+					display: displayLabels[i],
 					time: totalTime,
 					taskCount: taskCount
 				})
 			}
 			this.setState({
-				dataArray: displayLevelData
+				dataArray: displayLevelData,
+				displayHeading: this.state.display.charAt(0).toUpperCase() +  
+					this.state.display.substr(1)
 			});
 		} else {
 			this.setState({
-				dataArray: taskLevelData
+				dataArray: taskLevelData,
+				displayHeading: this.state.display.charAt(0).toUpperCase() +
+					this.state.display.substr(1)
 			});
-		}
-	}
-
-	barChartData = (dataArray) => {
-		const display = this.state.display;
-		const labels = dataArray.map((item) => (
-			item[display]
-		));
-		const data = dataArray.map((item) => (
-			getHours(item.time)
-		));
-		const color = buildColorArray(labels.length)	
-		const border = buildBorderArray(labels.length)
-
-		const chartData = {
-			labels: labels,
-			datasets: [{
-				label: "Hours",
-				data: data,
-				backgroundColor: color,
-				borderColor: border,
-				borderWidth: 1
-			}]
-		}
-		return chartData;
-	}
-
-	barChartHeight(length) {
-		if (length <= 5 ) {
-			return	50 * length;
-		} else if (length > 5 && length <= 10) {
-			return	40 * length;
-		} else {
-			return 30 * length;
 		}
 	}
 
@@ -281,11 +229,7 @@ export default class ChartContainer extends Component {
 		let year = date.getFullYear();
 		return year + '-' + month + '-' + day;
 	}
-/*
-	formatTimeStamp = (dateString) => {
-		console.log(this.state.start);
-	}
-*/
+
 	selectDisplay = (e) => {
 		this.setState({display: e.target.value});
 	}
@@ -439,8 +383,14 @@ export default class ChartContainer extends Component {
 				</form>
 				<Row>
 					<Col sm={12}>
-						<BarChart data={this.barChartData(this.state.dataArray)}
-							height={this.barChartHeight(this.state.dataArray.length)}
+
+						<BarChart 
+							display={this.state.display}
+							getHours={this.getHours}
+							dataArray={this.state.dataArray}
+							buildBorderArray={this.buildBorderArray}
+							buildColorArray={this.buildColorArray}
+							displayHeading={this.state.displayHeading}
 						/>
 					</Col>
 				</Row>

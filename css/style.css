@@ -588,4 +588,7 @@ input[type="text"].inputError {
     .radioGroup {
       width: 30%; } }
 
+.barChart {
+  height: 1000px; }
+
 /*# sourceMappingURL=style.css.map */
