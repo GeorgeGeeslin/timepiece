@@ -204,12 +204,21 @@ export default class ChartContainer extends Component {
 						taskCount++
 					}
 				}
-				displayLevelData.push({
-					display: displayLabels[i],
-					time: totalTime,
-					taskCount: taskCount
-				})
+				if (displayLabels[i].trim() === "") {
+					displayLevelData.push({
+						display: "[blank]",
+						time: totalTime,
+						taskCount: taskCount
+					})
+				} else {
+					displayLevelData.push({
+						display: displayLabels[i],
+						time: totalTime,
+						taskCount: taskCount
+					})
+				}
 			}
+			
 			this.setState({
 				dataArray: displayLevelData,
 				displayHeading: this.state.display.charAt(0).toUpperCase() +  
@@ -277,7 +286,6 @@ export default class ChartContainer extends Component {
 	}
 
 	render () {	
-		console.log(this.state.dataArray.length)
 		return (
 			<Grid onClick= { () => this.props.closeUserMenu()}>
 				<h1>Charts and Graphs</h1>
