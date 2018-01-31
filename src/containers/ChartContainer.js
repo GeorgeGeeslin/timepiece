@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
+import EmptyBarChart from '../components/EmptyBarChart';
 
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -275,6 +276,7 @@ export default class ChartContainer extends Component {
 	}
 
 	render () {	
+		console.log(this.state.dataArray.length)
 		return (
 			<Grid>
 				<h1>Charts and Graphs</h1>
@@ -383,15 +385,21 @@ export default class ChartContainer extends Component {
 				</form>
 				<Row>
 					<Col sm={12}>
-
-						<BarChart 
-							display={this.state.display}
-							getHours={this.getHours}
-							dataArray={this.state.dataArray}
-							buildBorderArray={this.buildBorderArray}
-							buildColorArray={this.buildColorArray}
-							displayHeading={this.state.displayHeading}
-						/>
+						{ this.state.dataArray.length > 0 && 
+							<BarChart 
+								display={this.state.display}
+								getHours={this.getHours}
+								dataArray={this.state.dataArray}
+								buildBorderArray={this.buildBorderArray}
+								buildColorArray={this.buildColorArray}
+								displayHeading={this.state.displayHeading}
+							/>
+						}
+						{ this.state.dataArray.length === 0 &&
+							<EmptyBarChart 
+								displayHeading={this.state.displayHeading}
+							/>
+						}
 					</Col>
 				</Row>
 			</Grid>
