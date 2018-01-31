@@ -69,7 +69,8 @@ function formatLabel(str, maxwidth) {
 */
 export default class ChartContainer extends Component {
 	static propTypes = {
-		tasks: PropTypes.array.isRequired
+		tasks: PropTypes.array.isRequired,
+		closeUserMenu: PropTypes.func.isRequired
 	}
 
 	state = {
@@ -278,7 +279,7 @@ export default class ChartContainer extends Component {
 	render () {	
 		console.log(this.state.dataArray.length)
 		return (
-			<Grid>
+			<Grid onClick= { () => this.props.closeUserMenu()}>
 				<h1>Charts and Graphs</h1>
 				<form id='chartSettings' onSubmit={this.getChartData}>
 					<Row className="chartSettings">
