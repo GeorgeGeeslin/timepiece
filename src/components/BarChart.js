@@ -12,6 +12,16 @@ export default class BarChart extends Component {
 		displayHeading: PropTypes.string.isRequired
 	}
 
+	state = {
+		height: this.barChartHeight(this.props.dataArray.length)
+	}
+
+	componentDidUpdate(prevProps) {
+		if (prevProps.dataArray.length !== this.props.dataArray.length) {
+			this.setState({height: this.barChartHeight(this.props.dataArray.length)})
+		}
+	}
+
 	barChartData = (dataArray) => {
 		if (dataArray.length > 0 ) {
 			let labels = [];
@@ -54,90 +64,46 @@ export default class BarChart extends Component {
 	}
 
 	barChartHeight(length) {
-		if (length === 0) {
-			return 250;
-		}	else if (length > 0 && length <= 5 ) {
-			return	100 * length;
-		} else if (length > 5 && length <= 10) {
-			return	50 * length;
-		} else {
-			return 30 * length;
-		}
+		return (30 * length) + 100;
 	}
 
-	render() {	
-
-//	console.log(document.getElementById("barChart").offsetWidth)	
+	render() {
 		return (
-			<div id="barChart">
-				{ this.props.dataArray.length > 0 && 
-					<HorizontalBar
-						className="barChart"
-						data={this.barChartData(this.props.dataArray)}
-						width={100}
-						height={this.barChartHeight(this.props.dataArray.length)}
-						options={{
-							title: {
-								display: true,
-								text: "Hours per " + this.props.displayHeading
-							},
-							maintainAspectRatio: false,
-							legend: {
-								position: "bottom"
-							},
-							scales: {
-								xAxes: [{
-									ticks: {
-										beginAtZero: true
-									}
-								}],
-								yAxes: [{
-									ticks: {
-										mirror: true,
-										padding: -10
-									}
-								}]
-							}
-						}}
-					/>
-				}
-				{ this.props.dataArray.length === 0 &&
-					<HorizontalBar
-						className="barChart"
-						data={{
-							labels: ["No data for the provided date range."],
-							datasets : [{
-								label: "Hours",
-								data: [0],
+			<div style={{height: this.state.height+"px"}}>
+				<HorizontalBar
+					data={this.barChartData(this.props.dataArray)}
+					height={this.state.height}
+					options={{
+						title: {
+							display: true,
+							text: "Hours per " + this.props.displayHeading
+						},
+						maintainAspectRatio: false,
+						legend: {
+							position: "bottom"
+						},
+						scales: {
+							xAxes: [{
+								ticks: {
+									beginAtZero: true
+								},
+								gridLines: {
+									color: "#1e2f51"
+								}
+							}],
+							yAxes: [{
+								barThickness: 20,
+								ticks: {
+									mirror: true,
+									padding: -10
+								},
+								gridLines: {
+									color: "#1e2f51"
+								}
 							}]
-						}}
-						width={100}
-						height={225}
-						options={{
-							title: {
-								display: true,
-								text: "Hours per " + this.props.displayHeading
-							},
-							maintainAspectRatio: false,
-							legend: {
-								position: "bottom"
-							},
-							scales: {
-								xAxes: [{
-									ticks: {
-										beginAtZero: true
-									}
-								}],
-								yAxes: [{
-									ticks: {
-										mirror: true,
-										padding: ((document.getElementById("barChart").offsetWidth / 2) -85) * -1
-									}
-								}]
-							}
-						}}
-					/>
-				}
+						}
+					}}
+				/>
 			</div>
 		)
 	}

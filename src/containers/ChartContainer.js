@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
+import EmptyBarChart from '../components/EmptyBarChart';
 
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -68,7 +69,8 @@ function formatLabel(str, maxwidth) {
 */
 export default class ChartContainer extends Component {
 	static propTypes = {
-		tasks: PropTypes.array.isRequired
+		tasks: PropTypes.array.isRequired,
+		closeUserMenu: PropTypes.func.isRequired
 	}
 
 	state = {
@@ -202,12 +204,21 @@ export default class ChartContainer extends Component {
 						taskCount++
 					}
 				}
-				displayLevelData.push({
-					display: displayLabels[i],
-					time: totalTime,
-					taskCount: taskCount
-				})
+				if (displayLabels[i].trim() === "") {
+					displayLevelData.push({
+						display: "[blank]",
+						time: totalTime,
+						taskCount: taskCount
+					})
+				} else {
+					displayLevelData.push({
+						display: displayLabels[i],
+						time: totalTime,
+						taskCount: taskCount
+					})
+				}
 			}
+			
 			this.setState({
 				dataArray: displayLevelData,
 				displayHeading: this.state.display.charAt(0).toUpperCase() +  
@@ -276,7 +287,7 @@ export default class ChartContainer extends Component {
 
 	render () {	
 		return (
-			<Grid>
+			<Grid onClick= { () => this.props.closeUserMenu()}>
 				<h1>Charts and Graphs</h1>
 				<form id='chartSettings' onSubmit={this.getChartData}>
 					<Row className="chartSettings">
@@ -383,15 +394,21 @@ export default class ChartContainer extends Component {
 				</form>
 				<Row>
 					<Col sm={12}>
-
-						<BarChart 
-							display={this.state.display}
-							getHours={this.getHours}
-							dataArray={this.state.dataArray}
-							buildBorderArray={this.buildBorderArray}
-							buildColorArray={this.buildColorArray}
-							displayHeading={this.state.displayHeading}
-						/>
+						{ this.state.dataArray.length > 0 && 
+							<BarChart 
+								display={this.state.display}
+								getHours={this.getHours}
+								dataArray={this.state.dataArray}
+								buildBorderArray={this.buildBorderArray}
+								buildColorArray={this.buildColorArray}
+								displayHeading={this.state.displayHeading}
+							/>
+						}
+						{ this.state.dataArray.length === 0 &&
+							<EmptyBarChart 
+								displayHeading={this.state.displayHeading}
+							/>
+						}
 					</Col>
 				</Row>
 			</Grid>
