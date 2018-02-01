@@ -45,7 +45,11 @@ class App extends Component {
 				<Login 
 					attemptLogin = {attemptLogin}
 					checkLoginStatus = {checkLoginStatus}
-					pendingLogin = {this.props.pendingLogin}	/>
+					pendingLogin = {this.props.pendingLogin}	
+					loginError = {this.props.loginError}
+					loginErrorCode = {this.props.loginErrorCode}
+					loginErrorMsg = {this.props.loginErrorMsg}
+					/>
 			}
 			{ user !== null &&
 				<div>
@@ -101,7 +105,10 @@ const mapStateToProps = state => (
 		pendingLogin: state.pendingLogin,
 		showEditScreen: state.showEditScreen,
 		showChartScreen: state.showChartScreen,
-		showUserMenu: state.showUserMenu
+		showUserMenu: state.showUserMenu,
+		loginError: state.loginError,
+		loginErrorCode: state.loginErrorCode,
+		loginErrorMsg: state.loginErrorMsg
 	}
 );
 

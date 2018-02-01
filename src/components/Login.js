@@ -55,6 +55,12 @@ export default class Login extends Component {
 						<div className='loader'>
 						</div>
 					}
+					{this.props.loginError === true && 
+						<div className="validationError" style={{marginTop: "15px"}}>
+							<p>{"Code: " + this.props.loginErrorCode}</p>
+							<p>{"Message: " + this.props.loginErrorMsg}</p>
+						</div>
+					}
 				</div>
 			</div>
 		)

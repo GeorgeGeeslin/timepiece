@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
 import EmptyBarChart from '../components/EmptyBarChart';
+import LineChart from '../components/LineChart';
 
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -409,6 +410,7 @@ export default class ChartContainer extends Component {
 								displayHeading={this.state.displayHeading}
 							/>
 						}
+						<LineChart />
 					</Col>
 				</Row>
 			</Grid>

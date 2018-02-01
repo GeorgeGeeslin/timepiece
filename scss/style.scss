@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Parisienne|Quicksand|Roboto|Roboto+Condensed:700');
+//@import url('https://fonts.googleapis.com/css?family=Parisienne|Quicksand|Roboto|Roboto+Condensed:700');
+
+//@import url('https://fonts.googleapis.com/css?family=Parisienne|Quicksand|Roboto|Roboto+Condensed:700');
 
 // VARIABLES ------------------------------ /
 // screen sizes
@@ -241,7 +243,7 @@ input[type="text"] {
 }
 
 .timepieceLogo {
-	font-family: 'Parisienne', cursive;
+	//font-family: 'Parisienne', cursive;
 	color: $font-stack-primary;
 }
 
@@ -420,7 +422,6 @@ input[type="text"].inputError {
 	width: 100%;
 	margin: auto;
 }
-
 
 // MODALS ------------------------------ /
 .modal-open {
