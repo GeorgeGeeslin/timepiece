@@ -25,12 +25,12 @@ export function checkLoginStatus() {
 						// successfull login here will cause a page load due to redirect and 
 						//this function will be called again, triggering getRedirectResult() 
 					}).catch((error) => {
-						console.log(error)
+						console.error(error)
 						dispatch(clearLogin());
 					})
 				}
 			}).catch((error) => {
-				console.log(error)
+				console.error(error)
 				dispatch(clearLogin());
 			})
 		})
@@ -64,6 +64,8 @@ function getUserData(user) {
 				}			
 			}
 			dispatch(successfulLogin(user, tasks));
+		}).catch((error) => {
+			console.error(error)
 		})
 	}
 }
@@ -73,7 +75,20 @@ export function attemptLogin(provider) {
 		dispatch(pendingLogin())
 		//results of signInWithRedirect are returned by getRedirectResult()
 		//which is called by checkLoginStatus() (called from within Login.js) when the page reloads after redirect.
-		auth.signInWithRedirect(provider)
+		auth.signInWithRedirect(provider).then((result) => {
+
+		}).catch((error) => {
+			console.error(error)
+			dispatch(loginError(error.code, error.message));
+		})
+	}
+}
+
+export const loginError = (code, message) => {
+	return {
+		type: TaskActionTypes.LOGIN_ERROR,
+		code,
+		message
 	}
 }
 

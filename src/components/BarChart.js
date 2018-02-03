@@ -23,44 +23,36 @@ export default class BarChart extends Component {
 	}
 
 	barChartData = (dataArray) => {
-		if (dataArray.length > 0 ) {
-			let labels = [];
-			if (dataArray[0].hasOwnProperty("display")) {
-				labels = dataArray.map((item) => (
-					item.display
-				));
-			} else {
-				labels = dataArray.map((item) => (
-					item.task
-				));
-			}
-			const data = dataArray.map((item) => (
-				this.props.getHours(item.time)
-			));
-			const color = this.props.buildColorArray(labels.length)	
-			const border = this.props.buildBorderArray(labels.length)
-
-			const chartData = {
-				labels: labels,
-				datasets: [{
-					label: "Hours",
-					data: data,
-					backgroundColor: color,
-					borderColor: border,
-					borderWidth: 1
-				}]
-			}
-			return chartData;
+		let labels = [];
+		if (dataArray[0].hasOwnProperty("display")) {
+			labels = dataArray.map((item) => {
+				let taskDisplay = item.display;
+				let taskCount = item.taskCount;
+				let taskLabel = taskDisplay + ": " + taskCount + " task(s)"; 
+				return taskLabel;
+			});
 		} else {
-			return {
-				labels: ["No time recorded in the provided date range."],
-				datasets : [{
-					label: "Hours",
-					data: [100],
-					borderWidth: 1,
-				}]
-			}
+			labels = dataArray.map((item) => (
+				item.task
+			));
 		}
+		const data = dataArray.map((item) => (
+			this.props.getHours(item.time)
+		));
+		const color = this.props.buildColorArray(labels.length)	
+		const border = this.props.buildBorderArray(labels.length)
+
+		const chartData = {
+			labels: labels,
+			datasets: [{
+				label: "Hours",
+				data: data,
+				backgroundColor: color,
+				borderColor: border,
+				borderWidth: 1
+			}]
+		}
+		return chartData;
 	}
 
 	barChartHeight(length) {

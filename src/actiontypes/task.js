@@ -1,4 +1,5 @@
 export const ATTEMPT_LOGIN = 'task/ATTEMPT_LOGIN';
+export const LOGIN_ERROR ='task/LOGIN_ERROR';
 export const SUCCESSFUL_LOGIN = 'task/'
 export const CHECK_LOGIN_STATUS = 'task/CHECK_LOGIN_STATUS';
 export const PENDING_LOGIN = 'task/PENDING_LOGIN';

@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Grid, Col, Row } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
 import EmptyBarChart from '../components/EmptyBarChart';
+import LineChart from '../components/LineChart';
 
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -79,7 +80,8 @@ export default class ChartContainer extends Component {
 		start: "",
 		end: "",
 		dataArray: this.props.tasks.filter((task) => (task.time > 0)),
-		displayHeading: "Task"
+		displayHeading: "Task",
+		status: "all"
 	}
 
 	 getHours = (sec) => 
@@ -123,8 +125,27 @@ export default class ChartContainer extends Component {
 	}
 
 	getChartData = (e) => {
-		if (e) e.preventDefault();		
+		if (e) e.preventDefault();
 		let taskLevelData = [];
+		let tasksMatchingStatus = [];
+		let displayHeading = this.state.display.charAt(0).toUpperCase() +  
+					this.state.display.substr(1)
+
+		//filter tasks according to status 
+		if (this.state.status === "all") {
+			tasksMatchingStatus = this.props.tasks;
+		} else if (this.state.status === "current") {
+			displayHeading = displayHeading + " (Current)"; 
+			tasksMatchingStatus = this.props.tasks.filter((task) => (
+				(task.timefinished === null || task.timefinished === undefined)
+			));
+		} else if (this.state.status === "finished") {
+			displayHeading = displayHeading + " (Finished)"; 
+			tasksMatchingStatus = this.props.tasks.filter((task) => (
+				(task.timefinished !== null && task.timefinished !== undefined)
+			));
+		}
+
 		//Translate start and end strings to timestamps. 
 		if (this.state.start === "") {
 			var startTs = 0;
@@ -144,13 +165,13 @@ export default class ChartContainer extends Component {
 			//But must handle intervals that bridge or overlap the start and end dates.
 			//An Array of objets is built containing Task, Project, Client, and Time.
 			//Time is rounded down from milliseconds to seconds.	
-			for (let i = 0; i < this.props.tasks.length; i++) {
-				let task = this.props.tasks[i];
+			for (let i = 0; i < tasksMatchingStatus.length; i++) {
+				let task = tasksMatchingStatus[i];
 				let taskTotal = 0;
 				taskLevelData.push({
-					client: this.props.tasks[i].client,
-					project: this.props.tasks[i].project,
-					task: this.props.tasks[i].task,
+					client: tasksMatchingStatus[i].client,
+					project: tasksMatchingStatus[i].project,
+					task: tasksMatchingStatus[i].task,
 					time: taskTotal
 				})
 				if (task.timeintervals !== undefined && task.timeintervals.length > 0) {
@@ -178,11 +199,12 @@ export default class ChartContainer extends Component {
 			}
 			taskLevelData = taskLevelData.filter((task) => (task.time > 0));
 		} else {
-			taskLevelData = this.props.tasks.filter((task) => (task.time > 0));
+			taskLevelData = tasksMatchingStatus.filter((task) => (task.time > 0));
 		}
 
+
 		//Check to see if display is something other than tasks.
-		//If it is an array of Objects will be built with the display name, total time, 
+		//If it is, an array of Objects will be built with the display name, total time, 
 		//and number of aggregate tasks.
 		if (this.state.display !== "task") {
 			let displayLabels = [];
@@ -221,14 +243,12 @@ export default class ChartContainer extends Component {
 			
 			this.setState({
 				dataArray: displayLevelData,
-				displayHeading: this.state.display.charAt(0).toUpperCase() +  
-					this.state.display.substr(1)
+				displayHeading: displayHeading
 			});
 		} else {
 			this.setState({
 				dataArray: taskLevelData,
-				displayHeading: this.state.display.charAt(0).toUpperCase() +
-					this.state.display.substr(1)
+				displayHeading: displayHeading
 			});
 		}
 	}
@@ -243,6 +263,10 @@ export default class ChartContainer extends Component {
 
 	selectDisplay = (e) => {
 		this.setState({display: e.target.value});
+	}
+
+	selectStatus = (e) => {
+		this.setState({status: e.target.value});
 	}
 	
 	selectRange = (e) => {
@@ -291,7 +315,7 @@ export default class ChartContainer extends Component {
 				<h1>Charts and Graphs</h1>
 				<form id='chartSettings' onSubmit={this.getChartData}>
 					<Row className="chartSettings">
-						<Col className="radioGroup" xs={6}>
+						<Col className="radioGroup" xs={6} sm={4} md={3}>
 							<p>Display:</p>
 							<div className="radio-button">
 								<input 
@@ -324,7 +348,40 @@ export default class ChartContainer extends Component {
 								<label htmlFor="clients">Clients</label>
 							</div>
 						</Col>
-						<Col className="radioGroup" xs={6}>
+						<Col className="radioGroup" xs={6} sm={4} md={3}>
+							<p>Task Status:</p>
+							<div className="radio-button">
+								<input 
+									type="radio"
+									value="all"
+									htmlFor="all"
+									checked={this.state.status === "all"}
+									onChange={this.selectStatus}
+								/>
+								<label htmlFor="all">All</label>
+							</div>
+							<div className="radio-button">
+								<input 
+									type="radio"
+									value="current"
+									htmlFor="current"
+									checked={this.state.status === "current"}
+									onChange={this.selectStatus}
+								/>
+								<label htmlFor="current">Current</label>
+							</div>
+							<div className="radio-button">
+								<input 
+									type="radio"
+									value="finished"
+									htmlFor="finished"
+									checked={this.state.status === "finished"}
+									onChange={this.selectStatus}
+								/>
+								<label htmlFor="finished">Finished</label>
+							</div>														
+						</Col> 
+						<Col className="radioGroup" xs={6} sm={4} md={3}>
 							<p>Date Range:</p>
 							<div className="radio-button">
 								<input 
@@ -367,8 +424,9 @@ export default class ChartContainer extends Component {
 								<label htmlFor="custom">Custom</label>
 							</div>
 						</Col>
-						<Col xs={12} sm={4}>	
+						<Col xs={6} sm={12} md={3}>	
 							<p>Custom Date Range:</p>
+							<label htmlFor="start">Start:</label>
 							<input 
 								id="start"
 								className="time-input"
@@ -376,6 +434,7 @@ export default class ChartContainer extends Component {
 								value={this.state.start}
 								onChange={this.onChangeDateStart}
 							/>
+							<label htmlFor="end">Stop:</label>
 							<input 
 								id="end"
 								className="time-input"
@@ -409,6 +468,7 @@ export default class ChartContainer extends Component {
 								displayHeading={this.state.displayHeading}
 							/>
 						}
+						<LineChart />
 					</Col>
 				</Row>
 			</Grid>
