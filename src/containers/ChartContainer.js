@@ -128,15 +128,19 @@ export default class ChartContainer extends Component {
 		if (e) e.preventDefault();
 		let taskLevelData = [];
 		let tasksMatchingStatus = [];
+		let displayHeading = this.state.display.charAt(0).toUpperCase() +  
+					this.state.display.substr(1)
 
 		//filter tasks according to status 
 		if (this.state.status === "all") {
 			tasksMatchingStatus = this.props.tasks;
 		} else if (this.state.status === "current") {
+			displayHeading = displayHeading + " (Current)"; 
 			tasksMatchingStatus = this.props.tasks.filter((task) => (
 				(task.timefinished === null || task.timefinished === undefined)
 			));
 		} else if (this.state.status === "finished") {
+			displayHeading = displayHeading + " (Finished)"; 
 			tasksMatchingStatus = this.props.tasks.filter((task) => (
 				(task.timefinished !== null && task.timefinished !== undefined)
 			));
@@ -198,8 +202,9 @@ export default class ChartContainer extends Component {
 			taskLevelData = tasksMatchingStatus.filter((task) => (task.time > 0));
 		}
 
+
 		//Check to see if display is something other than tasks.
-		//If it is an array of Objects will be built with the display name, total time, 
+		//If it is, an array of Objects will be built with the display name, total time, 
 		//and number of aggregate tasks.
 		if (this.state.display !== "task") {
 			let displayLabels = [];
@@ -238,14 +243,12 @@ export default class ChartContainer extends Component {
 			
 			this.setState({
 				dataArray: displayLevelData,
-				displayHeading: this.state.display.charAt(0).toUpperCase() +  
-					this.state.display.substr(1)
+				displayHeading: displayHeading
 			});
 		} else {
 			this.setState({
 				dataArray: taskLevelData,
-				displayHeading: this.state.display.charAt(0).toUpperCase() +
-					this.state.display.substr(1)
+				displayHeading: displayHeading
 			});
 		}
 	}

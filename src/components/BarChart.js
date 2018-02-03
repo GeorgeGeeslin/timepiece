@@ -26,9 +26,12 @@ export default class BarChart extends Component {
 		if (dataArray.length > 0 ) {
 			let labels = [];
 			if (dataArray[0].hasOwnProperty("display")) {
-				labels = dataArray.map((item) => (
-					item.display
-				));
+				labels = dataArray.map((item) => {
+					let taskDisplay = item.display;
+					let taskCount = item.taskCount;
+					let taskLabel = taskDisplay + ": " + taskCount + " task(s)"; 
+					return taskLabel;
+				});
 			} else {
 				labels = dataArray.map((item) => (
 					item.task
