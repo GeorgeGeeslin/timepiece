@@ -124,8 +124,23 @@ export default class ChartContainer extends Component {
 	}
 
 	getChartData = (e) => {
-		if (e) e.preventDefault();		
+		if (e) e.preventDefault();
 		let taskLevelData = [];
+		let tasksMatchingStatus = [];
+
+		//filter tasks according to status 
+		if (this.state.status === "all") {
+			tasksMatchingStatus = this.props.tasks;
+		} else if (this.state.status === "current") {
+			tasksMatchingStatus = this.props.tasks.filter((task) => (
+				(task.timefinished === null || task.timefinished === undefined)
+			));
+		} else if (this.state.status === "finished") {
+			tasksMatchingStatus = this.props.tasks.filter((task) => (
+				(task.timefinished !== null && task.timefinished !== undefined)
+			));
+		}
+
 		//Translate start and end strings to timestamps. 
 		if (this.state.start === "") {
 			var startTs = 0;
@@ -145,13 +160,13 @@ export default class ChartContainer extends Component {
 			//But must handle intervals that bridge or overlap the start and end dates.
 			//An Array of objets is built containing Task, Project, Client, and Time.
 			//Time is rounded down from milliseconds to seconds.	
-			for (let i = 0; i < this.props.tasks.length; i++) {
-				let task = this.props.tasks[i];
+			for (let i = 0; i < tasksMatchingStatus.length; i++) {
+				let task = tasksMatchingStatus[i];
 				let taskTotal = 0;
 				taskLevelData.push({
-					client: this.props.tasks[i].client,
-					project: this.props.tasks[i].project,
-					task: this.props.tasks[i].task,
+					client: tasksMatchingStatus[i].client,
+					project: tasksMatchingStatus[i].project,
+					task: tasksMatchingStatus[i].task,
 					time: taskTotal
 				})
 				if (task.timeintervals !== undefined && task.timeintervals.length > 0) {
@@ -179,7 +194,7 @@ export default class ChartContainer extends Component {
 			}
 			taskLevelData = taskLevelData.filter((task) => (task.time > 0));
 		} else {
-			taskLevelData = this.props.tasks.filter((task) => (task.time > 0));
+			taskLevelData = tasksMatchingStatus.filter((task) => (task.time > 0));
 		}
 
 		//Check to see if display is something other than tasks.
@@ -330,7 +345,7 @@ export default class ChartContainer extends Component {
 							</div>
 						</Col>
 						<Col className="radioGroup" xs={6} sm={4} md={3}>
-							<p>Completion Status:</p>
+							<p>Task Status:</p>
 							<div className="radio-button">
 								<input 
 									type="radio"
