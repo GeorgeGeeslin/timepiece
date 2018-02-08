@@ -4,6 +4,7 @@ import { Grid, Col, Row } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
 import EmptyBarChart from '../components/EmptyBarChart';
 import LineChart from '../components/LineChart';
+import PieChart from '../components/PieChart';
 
 const now = new Date();
 const currDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -79,7 +80,7 @@ export default class ChartContainer extends Component {
 		range: "all",
 		start: "",
 		end: "",
-		dataArray: this.props.tasks.filter((task) => (task.time > 0)),
+		dataArray: this.getFirstData(),
 		displayHeading: "Task",
 		status: "all",
 		lineChartDates: this.lineChartDates("", "", this.props.tasks.filter((task) => (task.time > 0)))
@@ -125,13 +126,14 @@ export default class ChartContainer extends Component {
 		}
 	}
 
+	getFirstData() {
+		return this.props.tasks.filter((task) => (task.time > 0))
+	}
+	
 
-
-
-
-	getChartData = (e) => {
+	getChartData = text => e => {
 		if (e) e.preventDefault();
-
+		console.log(text)
 		//variables used in function
 		let taskLevelData = [];
 		let tasksMatchingStatus = [];
@@ -388,7 +390,7 @@ export default class ChartContainer extends Component {
 		return (
 			<Grid onClick= { () => this.props.closeUserMenu()}>
 				<h1>Charts and Graphs</h1>
-				<form id='chartSettings' onSubmit={this.getChartData}>
+				<form id='chartSettings' onSubmit={this.getChartData("test!")}>
 					<Row className="chartSettings">
 						<Col className="radioGroup" xs={6} sm={4} md={3}>
 							<p>Display:</p>
@@ -549,6 +551,8 @@ export default class ChartContainer extends Component {
 							displayHeading={this.state.displayHeading}
 							dataArray={this.state.dataArray}
 							lineChartDates={this.state.lineChartDates}
+						/>
+						<PieChart 
 						/>
 					</Col>
 				</Row>
