@@ -81,7 +81,8 @@ export default class ChartContainer extends Component {
 		end: "",
 		dataArray: this.props.tasks.filter((task) => (task.time > 0)),
 		displayHeading: "Task",
-		status: "all"
+		status: "all",
+		lineChartDates: this.lineChartDates("", "", this.props.tasks.filter((task) => (task.time > 0)))
 	}
 
 	 getHours = (sec) => 
@@ -124,12 +125,30 @@ export default class ChartContainer extends Component {
 		}
 	}
 
+
+
+
+
 	getChartData = (e) => {
 		if (e) e.preventDefault();
+
+		//variables used in function
 		let taskLevelData = [];
 		let tasksMatchingStatus = [];
 		let displayHeading = this.state.display.charAt(0).toUpperCase() +  
 					this.state.display.substr(1)
+
+		//Translate start and end strings to timestamps. 
+		if (this.state.start === "") {
+			var startTs = 0;
+		} else {
+			var startTs = this.formatUnixTime(this.state.start);
+		}
+		if (this.state.end === "") {
+			var endTs = Infinity; 
+		} else {
+			var endTs = this.formatUnixTime(this.state.end) + 86399000;
+		}
 
 		//filter tasks according to status 
 		if (this.state.status === "all") {
@@ -145,25 +164,13 @@ export default class ChartContainer extends Component {
 				(task.timefinished !== null && task.timefinished !== undefined)
 			));
 		}
-
-		//Translate start and end strings to timestamps. 
-		if (this.state.start === "") {
-			var startTs = 0;
-		} else {
-			var startTs = this.formatUnixTime(this.state.start);
-		}
-		if (this.state.end === "") {
-			var endTs = Infinity; 
-		} else {
-			var endTs = this.formatUnixTime(this.state.end) + 86399000;
-		}
     
     //Check to see if date range is something other than "All Time"
-		if (this.state.start !== "" && this.state.end !== "") {
+		if (this.state.start !== "" || this.state.end !== "") {
 			//Filter tasks at time interval level:
 			//I only care about total time of intervals, not keeping individual intervals intact.
 			//But must handle intervals that bridge or overlap the start and end dates.
-			//An Array of objets is built containing Task, Project, Client, and Time.
+			//An Array of objects is built containing Task, Project, Client, and Time.
 			//Time is rounded down from milliseconds to seconds.	
 			for (let i = 0; i < tasksMatchingStatus.length; i++) {
 				let task = tasksMatchingStatus[i];
@@ -177,18 +184,22 @@ export default class ChartContainer extends Component {
 				if (task.timeintervals !== undefined && task.timeintervals.length > 0) {
 					for (let j = 0; j < task.timeintervals.length; j++) {
 						let timeinterval = task.timeintervals[j];
+
 						// Time interval starts before date range and ends after date range.
 						if (timeinterval.startTime <= startTs && timeinterval.stopTime >= endTs) {
 							taskTotal = taskTotal + Math.floor((endTs - startTs) / 1000);
 							taskLevelData[i].time = taskTotal;
+
 						// Time interval starts before date range and ends during date range.
 						} else if (timeinterval.startTime <= startTs && timeinterval.stopTime <= endTs && timeinterval.stopTime >= startTs) {
 							taskTotal = taskTotal + Math.floor((timeinterval.stopTime - startTs) / 1000);
 							taskLevelData[i].time = taskTotal;
+
 						// Time interval starts during date range and ends after date range.
 						} else if (timeinterval.startTime >= startTs && timeinterval.stopTime >= endTs && timeinterval.startTime <= endTs) {
 							taskTotal = taskTotal + Math.floor((endTs - timeinterval.startTime) / 1000);
 							taskLevelData[i].time = taskTotal;
+
 						// Time interval starts and stops within date range.
 						} else if (timeinterval.startTime >= startTs && timeinterval.stopTime <= endTs) {
 							taskTotal = taskTotal + Math.floor((timeinterval.stopTime - timeinterval.startTime) / 1000);
@@ -239,19 +250,83 @@ export default class ChartContainer extends Component {
 						taskCount: taskCount
 					})
 				}
-			}
+			}		
 			
 			this.setState({
 				dataArray: displayLevelData,
-				displayHeading: displayHeading
+				displayHeading: displayHeading,
+				//lineChartDates: this.lineChartDates(this.state.start, this.state.end, dataArray),
+				//lineChartData: this.lineChartData()
 			});
 		} else {
 			this.setState({
 				dataArray: taskLevelData,
-				displayHeading: displayHeading
+				displayHeading: displayHeading,
+				//lineChartDates: this.lineChartDates(this.state.start, this.state.end, dataArray),
+				//lineChartData: this.lineChartData()
 			});
 		}
 	}
+
+	lineChartDates(start, end, dataArray) {
+		console.log("--------------------------------------------")
+		let lineChartData = [];
+		let labelArray = [];
+		let startDate;
+		let endDate;
+
+		//let startHolder = Infinity;
+		//let stopHolder = 0;
+
+		//const fill
+
+
+
+		if (start !== "" && end !== "") {
+			let s = new Date(start);
+			let e = new Date(end);
+			let offSet = new Date(start).getTimezoneOffset()*60*1000;
+			startDate = new Date(s.getTime() + offSet);
+			endDate = new Date(e.getTime() + offSet);
+		} else if (start === "" && end !== "") {
+			//findEarlistInterval()
+			
+		} else if (start !== "" && end === "") {
+			//findLatestInterval(dataArray)
+		} else {
+			//findEarlistInterval(dataArray)
+			//findLatestInterval(dataArray)
+		}
+		const dayCount = ((endDate - startDate) / 86400000) + 1 ;
+		
+		function addDays(date, days) {
+			let result = new Date(date);
+			result.setDate(result.getDate() + days);
+			return result;
+		}
+
+		for (let i = 0; i < dayCount; i++) {
+			let date = addDays(startDate, i);
+			let year = date.getFullYear();
+			let days = ("0" + date.getDate()).slice(-2);
+			let month = ("0" + (date.getMonth() + 1)).slice(-2);
+			let dateString = year+"-"+month+"-"+days;
+			labelArray.push(dateString);
+		}
+		lineChartData.dateLabels = labelArray;
+		return lineChartData;
+	}
+
+/*
+	findEarliestInterval(dataArray) {
+		let start;
+		for (let i = 0; i < dataArray.length; i++) {
+
+			for (let j = 0; j < dataArray[i].)
+
+		}
+	}
+*/
 
 	formatDateString = (timeStamp) => {
 		const date = new Date(timeStamp);
@@ -468,7 +543,13 @@ export default class ChartContainer extends Component {
 								displayHeading={this.state.displayHeading}
 							/>
 						}
-						<LineChart />
+						<LineChart 
+							buildBorderArray={this.buildBorderArray}
+							buildColorArray={this.buildColorArray}
+							displayHeading={this.state.displayHeading}
+							dataArray={this.state.dataArray}
+							lineChartDates={this.state.lineChartDates}
+						/>
 					</Col>
 				</Row>
 			</Grid>
