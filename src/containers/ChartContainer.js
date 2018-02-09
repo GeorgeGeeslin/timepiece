@@ -80,21 +80,15 @@ export default class ChartContainer extends Component {
 		range: "all",
 		start: "",
 		end: "",
-		dataArray: this.getFirstData(),
-		displayHeading: "Task",
+		//dataArray: this.getFirstData(),
+		//displayHeading: "Task",
 		status: "all",
-		lineChartDates: this.lineChartDates("", "", this.props.tasks.filter((task) => (task.time > 0)))
+		chartData: this.getChartData()
+		//lineChartDates: this.lineChartDates("", "", this.props.tasks.filter((task) => (task.time > 0)))
 	}
 
 	 getHours = (sec) => 
   		Math.round(sec/3600 * 100) / 100;
-
-	formatUnixTime(dateString) {
-		const year = dateString.slice(0,4);
-		const month = dateString.slice(5,7) - 1;
-		const day = dateString.slice(8,10);
-		return new Date(year,month,day).getTime();
-	};
 
 	buildColorArray(size) {
 		let arr = [];
@@ -126,17 +120,243 @@ export default class ChartContainer extends Component {
 		}
 	}
 
+	/*
 	getFirstData() {
 		return this.props.tasks.filter((task) => (task.time > 0))
 	}
-	
+	*/
 
-	getChartData = text => e => {
+	getChartData = (e) => {
+		if (e) e.preventDefault();
+		let chartData = {
+			barChart: {},
+			lineChart: {},
+			pieChart: {}
+		};
+
+		let tasksInDateRange = [];
+		let firstStart = Infinity;
+		let lastStop = 0;
+
+		const displayHeading = this.state.display.charAt(0).toUpperCase() +  
+					this.state.display.substr(1);
+		const barChartTitle = "Hours per " + displayHeading;
+		const lineChartTitle = displayHeading + " Hours per Day";
+		const pieChartTitle = displayHeading;
+
+		chartData.barChart.title = barChartTitle
+		chartData.lineChart.title = lineChartTitle
+		chartData.pieChart.title = pieChartTitle
+
+		// Takes date string and type (start or stop) and returns timestamp.
+		formatStartStop(dateString, type) {
+			if (type === "start") {
+				if (dateString === "") {
+					return 0;
+				} else {
+					const year = dateString.slice(0,4);
+					const month = dateString.slice(5,7) - 1;
+					const day = dateString.slice(8,10);
+					return new Date(year,month,day).getTime();
+				}
+			} else if (type === "stop") {
+				if (dateString === "") {
+					return Infinity;
+				} else {
+					const year = dateString.slice(0,4);
+					const month = dateString.slice(5,7) - 1;
+					const day = dateString.slice(8,10);
+					return new Date(year,month,day).getTime() + 86399000;
+				}
+			}
+		};
+
+		getLineChartDates(start, end) {
+			let labelArray = [];
+			let startDate;
+			let endDate;
+
+			let s = new Date(start);
+			let e = new Date(end);
+			let offSet = new Date(start).getTimezoneOffset()*60*1000;
+
+			startDate = new Date(s.getTime() + offSet);
+			endDate = new Date(e.getTime() + offSet);
+				
+			const dayCount = ((endDate - startDate) / 86400000) + 1 ;
+			
+			function addDays(date, days) {
+				let result = new Date(date);
+				result.setDate(result.getDate() + days);
+				return result;
+			}
+
+			for (let i = 0; i < dayCount; i++) {
+				let date = addDays(startDate, i);
+				let year = date.getFullYear();
+				let days = ("0" + date.getDate()).slice(-2);
+				let month = ("0" + (date.getMonth() + 1)).slice(-2);
+				let dateString = year+"-"+month+"-"+days;
+				labelArray.push(dateString);
+			}
+
+		return labelArray;
+	}
+
+		//Translate start and end strings to timestamps. 
+		const startTs = formatStartStop(this.state.start, "start");
+		const endTs = formatStartStop(this.state.stop, "stop");
+
+		//Filter tasks by completion status and remove tasks with 0 time
+		if (this.state.status === "all") {
+			const taskData = this.props.tasks.filter((task) => (task.time > 0));
+		} else if (this.state.status === "current") {
+			const taskData = this.props.tasks.filter((task) => 
+				(task.time > 0 && (task.timefinished === null || task.timefinished === undefined)))
+		} else if (this.state.status === "finished") {
+			const taskData = this.props.tasks.filter((task) => 
+				(task.time > 0 && (task.timefinished !== null && task.timefinished !== undefined)))
+		}
+		
+		//Check to see if date range is something other than "All Time"
+		if (this.state.start !== "" || this.state.end !== "") {
+			//Loop through each task and each of its time intervals. 
+			//Prepare data for each chart type
+			for (let i = 0; i < taskData.length; i++;) {
+				let task = taskData[i];
+				let taskTime = 0;
+				tasksInDateRange.push({
+					client: tasksMatchingStatus[i].client,
+					project: tasksMatchingStatus[i].project,
+					task: tasksMatchingStatus[i].task,
+					time: taskTime
+				})
+
+				//Look into the intervals to get the total time for each task.
+				//Can't just use the time property from this because it could include time 
+				//from outside the desired date range.
+				//Also get First and Last interval for use in setting lineChart Date Labels.
+				if (task.timeintervals !== undefined && task.timeintervals.length > 0) {
+					for (let j = 0; j < task.timeintervals.length; j++) { 
+						let timeinterval = task.timeintervals[j];
+
+						// Time interval starts before date range and ends after date range.
+						if (timeinterval.startTime <= startTs && timeinterval.stopTime >= endTs) {
+							taskTime = taskTime + Math.floor((endTs - startTs) / 1000);
+							tasksInDateRange[i].time = taskTime;
+							if (startTs < firstStart) {
+								firstStart = startTs;
+							}
+							if (endTs > lastStop) {
+									lastStop = endTs;
+								}
+
+						// Time interval starts before date range and ends during date range.
+						} else if (timeinterval.startTime <= startTs && timeinterval.stopTime <= endTs && timeinterval.stopTime >= startTs) {
+							taskTime = taskTime + Math.floor((timeinterval.stopTime - startTs) / 1000);
+							tasksInDateRange[i].time = taskTime;
+							if (startTs < firstStart) {
+								firstStart = startTs;
+							}
+							if (timeinterval.stopTime > lastStop) {
+								lastStop = timeinterval.stopTime;
+							}
+
+						// Time interval starts during date range and ends after date range.
+						} else if (timeinterval.startTime >= startTs && timeinterval.stopTime >= endTs && timeinterval.startTime <= endTs) {
+							taskTime = taskTime + Math.floor((endTs - timeinterval.startTime) / 1000);
+							tasksInDateRange[i].time = taskTime;
+							if (timeinterval.startTime < firstStart) {
+								firstStart = timeinterval.startTime
+							}
+							if (endTs > lastStop) {
+									lastStop = endTs;
+								}
+
+						// Time interval starts and stops within date range.
+						} else if (timeinterval.startTime >= startTs && timeinterval.stopTime <= endTs) {
+							taskTime = taskTime + Math.floor((timeinterval.stopTime - timeinterval.startTime) / 1000);
+							tasksInDateRange[i].time = taskTime;
+							if (timeinterval.startTime < firstStart) {
+								firstStart = timeinterval.startTime
+							}
+							if (timeinterval.stopTime > lastStop) {
+								lastStop = timeinterval.stopTime;
+							}
+						}
+					} // end inner loop
+				} 
+			} // end outer loop
+			firstStart = Array.min(startTimes);
+			lastStop = Array.max(startTimes);
+			const firstDate = new Date(firstStart);
+			const lastDate = new Date(lastStop);
+			const firstDateString = firstDate.getFullYear() + "-" + (firstDate.getMonth()+1) + "-" + firstDate.getDate();
+			const lastDateString = lastDate.getFullYear() + "-" + (lastDate.getMonth()+1) + "-" + lastDate.getDate();
+			if (this.state.start === "") {
+				chartData.lineChart.labels = getLineChartDates(firstDateString, this.state.end);
+			} else if (this.state.end === "") {
+				chartData.lineChart.labels = getLineChartDates(this.state.start, lastDateString);
+			} else {
+				chartData.lineChart.labels = getLineChartDates(this.state.start, this.state.end);
+			}
+
+		} else {
+			Array.max = function(array) {
+				return Math.max.apply(Math, array)
+			}
+			Array.min = function(array) {
+				return Math.min.apply(Math, array);
+			}
+
+			tasksInDateRange = taskData;
+			let startTimes = [];
+			let stopTimes = [];
+			tasksInDateRange.forEach((task) => {
+				startTimes.push(task.timeintervals.startTime);
+				stopTimes.push(task.timeintervals.stopTime);
+			})
+			firstStart = Array.min(startTimes);
+			lastStop = Array.max(startTimes);
+			const firstDate = new Date(firstStart);
+			const lastDate = new Date(lastStop);
+			const firstDateString = firstDate.getFullYear() + "-" + (firstDate.getMonth()+1) + "-" + firstDate.getDate();
+			const lastDateString = lastDate.getFullYear() + "-" + (lastDate.getMonth()+1) + "-" + lastDate.getDate();
+			chartData.lineChart.labels = getLineChartDates(firstDateString, lastDateString);
+		} // End of preparing tasks based on date range. 
+
+		//Check to see if display is something other than tasks. If it is aggregate the tasks 
+		//and prepare the chartData object 
+		if (this.state.display !== "task") {
+
+		} else {
+			let labels = [];
+
+			tasksInDateRange.forEach((task) => {
+				labels.push(task.task)
+				//chartData.labels.push(task.task);
+
+			})
+		}
+
+
+
+
+
+
+
+
+		return chartData;
+	}
+
+	getChartDataOld = text => e => {
 		if (e) e.preventDefault();
 		console.log(text)
 		//variables used in function
 		let taskLevelData = [];
 		let tasksMatchingStatus = [];
+
+
 		let displayHeading = this.state.display.charAt(0).toUpperCase() +  
 					this.state.display.substr(1)
 
@@ -271,18 +491,10 @@ export default class ChartContainer extends Component {
 	}
 
 	lineChartDates(start, end, dataArray) {
-		console.log("--------------------------------------------")
 		let lineChartData = [];
 		let labelArray = [];
 		let startDate;
 		let endDate;
-
-		//let startHolder = Infinity;
-		//let stopHolder = 0;
-
-		//const fill
-
-
 
 		if (start !== "" && end !== "") {
 			let s = new Date(start);
