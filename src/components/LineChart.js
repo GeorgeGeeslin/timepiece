@@ -4,9 +4,9 @@ import { Line } from 'react-chartjs-2';
 
 export default class LineChart extends Component {
 	static propTypes = {
-		buildBorderArray: PropTypes.func.isRequired,
-		buildColorArray: PropTypes.func.isRequired,
-		dataArray: PropTypes.array.isRequired,
+		//buildBorderArray: PropTypes.func.isRequired,
+		//buildColorArray: PropTypes.func.isRequired,
+		//dataArray: PropTypes.array.isRequired,
 	//	start: PropTypes.string.isRequired,
 	//	end: PropTypes.string.isRequired
 	}

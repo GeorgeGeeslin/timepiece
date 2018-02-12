@@ -4,24 +4,28 @@ import { HorizontalBar } from 'react-chartjs-2';
 
 export default class BarChart extends Component {
 	static propTypes = {
-		dataArray: PropTypes.array.isRequired,
-		display: PropTypes.string.isRequired,
-		getHours: PropTypes.func.isRequired,
-		buildColorArray: PropTypes.func.isRequired,
-		buildBorderArray: PropTypes.func.isRequired,
-		displayHeading: PropTypes.string.isRequired
+//		dataArray: PropTypes.array.isRequired,
+//		display: PropTypes.string.isRequired,
+//		getHours: PropTypes.func.isRequired,
+//		buildColorArray: PropTypes.func.isRequired,
+//		buildBorderArray: PropTypes.func.isRequired,
+	//	displayHeading: PropTypes.string.isRequired
+	//	title: PropTypes.string.isRequired,
+		data: PropTypes.object.isRequired
+
 	}
 
 	state = {
-		height: this.barChartHeight(this.props.dataArray.length)
+		height: this.barChartHeight(this.props.data.labels.length)
 	}
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.dataArray.length !== this.props.dataArray.length) {
-			this.setState({height: this.barChartHeight(this.props.dataArray.length)})
+		if (this.props.data.labels.length !== this.props.data.labels.length) {
+			this.setState({height: this.barChartHeight(this.props.data.labels.length)})
 		}
 	}
 
+/*
 	barChartData = (dataArray) => {
 		let labels = [];
 		if (dataArray[0].hasOwnProperty("display")) {
@@ -54,12 +58,13 @@ export default class BarChart extends Component {
 		}
 		return chartData;
 	}
-
+*/
 	barChartHeight(length) {
 		return (30 * length) + 100;
 	}
 
 	render() {
+	
 	const chartData = {
 		labels: ["Slacking off: 1 task(s)", "Expenditures by category report: 1 task(s)", "Project 3", "Project 4"],
 		datasets: [{
@@ -84,16 +89,17 @@ export default class BarChart extends Component {
 			borderWidth: 1
 		}]
 	}
-
+//<div style={{height: this.state.height+"px"}}>
+////					height={this.state.height}
 		return (
 			<div style={{height: this.state.height+"px"}}>
 				<HorizontalBar
-					data={this.barChartData(this.props.dataArray)}
+					data={this.props.data}
 					height={this.state.height}
 					options={{
 						title: {
 							display: true,
-							text: "Hours per " + this.props.displayHeading
+							text: "this.props.title"
 						},
 						maintainAspectRatio: false,
 						legend: {
