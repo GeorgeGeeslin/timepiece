@@ -123,6 +123,10 @@ export default class ChartContainer extends Component {
 		}
 
 		function barAndPieData(tasks) {
+			function getBarChartHeight(length) {
+				return (30 * length) + 100;
+			}
+
 			const barChartTitle = "Hours per Task";
 			const pieChartTitle = "Tasks";	
 			let chartData = {};
@@ -149,9 +153,11 @@ export default class ChartContainer extends Component {
 				barChartTitle: barChartTitle,
 				pieChartTitle: pieChartTitle,
 				barChartData: chartData,
-				pieChartData: chartData
+				pieChartData: chartData,
+				barChartHeight: getBarChartHeight(chartData.labels.length)
 			}
 		}
+
 		return barAndPieData(tasks);
 	}
 	
@@ -397,10 +403,12 @@ export default class ChartContainer extends Component {
 						}
 					}
 					if (displayLabels[i].trim() === "") {
+						console.log("test")
 						displayLevelData.push({
 							display: "[blank]",
 							taskCount: taskCount
 						})
+						console.log(displayLevelData)
 					} else {
 						displayLevelData.push({
 							displayLevelData: displayLabels[i],
@@ -454,8 +462,8 @@ export default class ChartContainer extends Component {
 		/* !!!!HELPER FUNCTIONS END!!!! */
 
 		/* !!!!WORK STARTS HERE!!!! */ 
-		let tasks; //Array to hold tasks. Gets passed through multiple filters until only desired tasks remain.
-		let chartData = {}; //Object to hold data for the various chart types. 
+		let tasks; 
+		let chartData = {}; 
 
 		//Translate start and end strings to timestamps. 
 		const startTs = formatStartStop(this.state.start, "start");
@@ -472,7 +480,7 @@ export default class ChartContainer extends Component {
 		tasks = filterByStatus(this.state.status, this.props.tasks)
 		tasks = filterByDate(tasks, this.state.start, this.state.end, startTs, endTs);
 		let barAndPie = barAndPieData(tasks.tasks, this.state.display, displayHeading);
-		let barChartHeight = getBarChartHeight(barAndPie.barChartData.labels);
+		let barChartHeight = getBarChartHeight(barAndPie.barChartData.labels.length);
 
 		chartData.barChartTitle = barAndPie.barChartTitle;
 		chartData.pieChartTitle = barAndPie.pieChartTitle;
@@ -686,7 +694,8 @@ export default class ChartContainer extends Component {
 						{ this.state.chartData.barChartData.labels.length > 0 && 
 							<BarChart 
 								data={this.state.chartData.barChartData}
-
+								title={this.state.chartData.barChartTitle}
+								height={this.state.chartData.barChartHeight}
 							/>
 						}
 						{ this.state.chartData.barChartData.labels.length === 0 &&
@@ -695,8 +704,7 @@ export default class ChartContainer extends Component {
 						}
 						<LineChart 
 						/>
-						<PieChart 
-						/>
+
 					</Col>
 				</Row>
 			</Grid>

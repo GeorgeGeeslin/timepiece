@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { HorizontalBar } from 'react-chartjs-2';
+import Radium from 'radium'
 
+@Radium
 export default class BarChart extends Component {
 	static propTypes = {
-//		dataArray: PropTypes.array.isRequired,
-//		display: PropTypes.string.isRequired,
-//		getHours: PropTypes.func.isRequired,
-//		buildColorArray: PropTypes.func.isRequired,
-//		buildBorderArray: PropTypes.func.isRequired,
-	//	displayHeading: PropTypes.string.isRequired
-	//	title: PropTypes.string.isRequired,
-		data: PropTypes.object.isRequired
-
-	}
-
-	state = {
-		height: 280//this.barChartHeight(this.props.data.labels.length)
+		data: PropTypes.object.isRequired,
+		title: PropTypes.string.isRequired,
+		height: PropTypes.number.isRequired
 	}
 /*
 	componentDidUpdate(prevProps) {
@@ -26,29 +18,28 @@ export default class BarChart extends Component {
 		}
 	}
 */
-	barChartHeight(length) {
-		return (30 * length) + 100;
-	}
-
 	render() {
 		const barChart = {
-			height: this.state.height+"px",
+			height: this.props.height+"px",
 			transition: "height 1s",
 			transitionDelay: "2s"
 		};
 
-	
-//<div style={{height: this.state.height+"px"}}>
-////					height={this.state.height}
+		const styles = {
+			barChart: {
+
+			}
+		};
+
 		return (
-			<div id="barChart" style={{height: this.state.height+"px"}}>
+			<div id="barChart" style={{height: this.props.height+"px"}}>
 				<HorizontalBar
 					data={this.props.data}
-					height={this.state.height}
+					height={this.props.height}
 					options={{
 						title: {
 							display: true,
-							text: "this.props.title"
+							text: this.props.title
 						},
 						maintainAspectRatio: false,
 						legend: {
