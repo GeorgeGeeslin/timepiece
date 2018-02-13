@@ -702,6 +702,10 @@ export default class ChartContainer extends Component {
 						}
 						<LineChart 
 						/>
+						<PieChart
+							data={this.state.chartData.pieChartData}
+							title={this.state.chartData.pieChartTitle}
+						/>
 
 					</Col>
 				</Row>

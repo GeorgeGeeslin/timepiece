@@ -4,31 +4,12 @@ import { Line } from 'react-chartjs-2';
 
 export default class LineChart extends Component {
 	static propTypes = {
-		//buildBorderArray: PropTypes.func.isRequired,
-		//buildColorArray: PropTypes.func.isRequired,
-		//dataArray: PropTypes.array.isRequired,
-	//	start: PropTypes.string.isRequired,
-	//	end: PropTypes.string.isRequired
+	//	data: PropTypes.object.isRequired,
+	//	title: PropTypes.string.isRequired,
+	//	height: PropTypes.number.isRequired
 	}
 
-	/*state = {
-		labels: this.lineChartLabels(this.props.start, this.props.end, this.props.dataArray)
-	}*/
 
-	/*findFirstStart = (dataArray) => {
-
-	}*/
-	/*componentDidMount() {
-		let labelArray = this.lineChartLabels(this.props.start, this.props.end, this.props.dataArray)
-		this.setState({labels: labelArray});
-	}*/
-
-	/*componentDidUpdate(prevProps) {
-		if (prevProps.start !== this.props.start || prevProps.end !== this.props.end) {
-			let labelArray = this.lineChartLabels(this.props.start, this.props.end, this.props.dataArray)
-			this.setState({labels: labelArray});			
-		}
-	}*/
 
 	render() {
 		//const labels = this.lineChartLabels (this.props.state, this.props.end, this.props.dataArray);
