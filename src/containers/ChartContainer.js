@@ -403,19 +403,17 @@ export default class ChartContainer extends Component {
 						}
 					}
 					if (displayLabels[i].trim() === "") {
-						console.log("test")
 						displayLevelData.push({
-							display: "[blank]",
+							displayLabel: "[blank]",
 							taskCount: taskCount
 						})
-						console.log(displayLevelData)
 					} else {
 						displayLevelData.push({
-							displayLevelData: displayLabels[i],
+							displayLabel: displayLabels[i],
 							taskCount: taskCount
 						})
 					}
-					chartLabels.push(displayLabels[i] + ": " + taskCount + " task(s)");
+					chartLabels.push(displayLevelData[i].displayLabel + ": " + taskCount + " task(s)");
 					times.push(Math.round(totalTime/3600 * 100) / 100);
 
 					chartData = {
