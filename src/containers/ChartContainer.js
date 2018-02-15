@@ -234,7 +234,7 @@ export default class ChartContainer extends Component {
 			startDate = new Date(s.getTime() + offSet);
 			endDate = new Date(e.getTime() + offSet);
 				
-			const dayCount = ((endDate - startDate) / 86400000) + 1 ;
+			const dayCount = ((endDate - startDate) / 86400000);
 			
 			function addDays(date, days) {
 				let result = new Date(date);
@@ -365,7 +365,7 @@ export default class ChartContainer extends Component {
 				return Math.min.apply(Math, array);
 			}
 			firstStart = Array.min(intervalArray);
-			lastStop = Array.min(intervalArray)			
+			lastStop = Array.max(intervalArray)			
 				return {
 					tasks: tasks,
 					firstStart: firstStart,
@@ -454,6 +454,67 @@ export default class ChartContainer extends Component {
 			}
 		}
 
+		function getLineChartData(tasks, display, labels) {
+				const lineChartTitle = displayHeading + " Hours by Day";
+
+				if (display !== "task") {
+
+				} else {
+					tasks.forEach((task) => { //each task is its own dataset
+						let dataSet = {
+							label: task.task,
+							data: []
+						};
+						let days = {
+							times: [],
+							dates: []
+						}
+						let times = []
+						let dates = [];
+						task.timeintervals.forEach((interval) => { 
+							const s = new Date(interval.startTime);
+							const e = new Date(interval.stopTime);
+
+							const start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
+							const end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+
+							const dayCount = Math.round((end.getTime() - start.getTime()) / (86400000))
+																							
+							if (dayCount === 0) {
+								days.dates.push(start);
+								const currTime = interval.stopTime - interval.startTime;
+								days.times.push(Math.round(currTime/36000) / 100);
+							} else {
+								for(let i = 0; i <= dayCount; i++) {
+									if (i === 0) {
+										console.log("first day")
+										//console.log(start)
+										const currTime = new Date(start.getTime() + 86400000) - interval.startTime;
+										days.dates.push(start);
+										//console.log(days.dates)
+										days.times.push(Math.round(currTime/36000) /100);
+									} else if (i === dayCount) {
+										const currTime = interval.stopTime - end.getTime()
+										days.dates.push(end);
+										days.times.push(Math.round(currTime/36000) /100);
+									} else if (i !== 0 && i !== dayCount) {
+										days.dates.push(new Date(start.setDate(start.getDate() + i)));
+										days.times.push(24);
+									}
+								}
+							}
+						})
+						//Why is the first day in my 3 day long task getting overwritten with the 2nd day's date?
+						//Also how do I sort this so that everything is in accending order by date before trying to map against the date labels?
+						console.log(days)
+					})
+				}
+				return {
+					lineChartTitle: lineChartTitle,
+					//lineChartData: chartData
+				}
+		}
+
 		function getBarChartHeight(length) {
 			return (30 * length) + 100;
 		}
@@ -461,31 +522,53 @@ export default class ChartContainer extends Component {
 
 		/* !!!!WORK STARTS HERE!!!! */ 
 		let tasks; 
-		let chartData = {}; 
+		let chartData = {
+			barChartData: {},
+			pieChartData: {},
+			lineChartData: {}
+		}; 
 
 		//Translate start and end strings to timestamps. 
 		const startTs = formatStartStop(this.state.start, "start");
 		const endTs = formatStartStop(this.state.end, "stop");
+		let firstStart;
+		let lastStop;
 
 		//Proper cased display heading for use in Chart Titles. 
 		const displayHeading = this.state.display.charAt(0).toUpperCase() +  
 			this.state.display.substr(1);
 
-		//Chart Titles for each Chart Type.
-		//const lineChartTitle = displayHeading + " Hours per Day";
+
+		const lineChartTitle = displayHeading + " Hours by Day";
 
 		/* !!!!FLOW STARTS HERE!!!! */
+
 		tasks = filterByStatus(this.state.status, this.props.tasks)
 		tasks = filterByDate(tasks, this.state.start, this.state.end, startTs, endTs);
 		let barAndPie = barAndPieData(tasks.tasks, this.state.display, displayHeading);
 		let barChartHeight = getBarChartHeight(barAndPie.barChartData.labels.length);
+		if (this.state.start === "") {
+			firstStart = tasks.firstStart;
+		} else {
+			firstStart = startTs;
+		}
+		if (this.state.end === "") {
+			lastStop = tasks.lastStop;
+		} else {
+			lastStop = endTs;
+		}
+		let lineChartLabels = getLineChartDates(firstStart, lastStop);
 
 		chartData.barChartTitle = barAndPie.barChartTitle;
 		chartData.pieChartTitle = barAndPie.pieChartTitle;
 		chartData.barChartData = barAndPie.barChartData;
 		chartData.pieChartData = barAndPie.pieChartData;
 		chartData.barChartHeight = barChartHeight;
+		chartData.lineChartData.labels = lineChartLabels;
+		chartData.lineChartTitle = lineChartTitle;
 
+		console.log(getLineChartData(tasks.tasks, this.state.display, lineChartLabels)) /
+		
 		this.setState({chartData: chartData});
 	}	
 
