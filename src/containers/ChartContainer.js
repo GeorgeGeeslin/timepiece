@@ -487,24 +487,21 @@ export default class ChartContainer extends Component {
 							} else {
 								for(let i = 0; i <= dayCount; i++) {
 									if (i === 0) {
-										console.log("first day")
-										//console.log(start)
 										const currTime = new Date(start.getTime() + 86400000) - interval.startTime;
 										days.dates.push(start);
-										//console.log(days.dates)
 										days.times.push(Math.round(currTime/36000) /100);
 									} else if (i === dayCount) {
 										const currTime = interval.stopTime - end.getTime()
 										days.dates.push(end);
 										days.times.push(Math.round(currTime/36000) /100);
-									} else if (i !== 0 && i !== dayCount) {
-										days.dates.push(new Date(start.setDate(start.getDate() + i)));
+									} else if (i > 0 && i < dayCount) {
+										let day = new Date(start.getTime() + (i * 86400000));
+										days.dates.push(day)
 										days.times.push(24);
 									}
 								}
 							}
 						})
-						//Why is the first day in my 3 day long task getting overwritten with the 2nd day's date?
 						//Also how do I sort this so that everything is in accending order by date before trying to map against the date labels?
 						console.log(days)
 					})
