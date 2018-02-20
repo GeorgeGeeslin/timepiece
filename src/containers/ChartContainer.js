@@ -455,22 +455,66 @@ export default class ChartContainer extends Component {
 		}
 
 		function getLineChartData(tasks, display, labels) {
-				const lineChartTitle = displayHeading + " Hours by Day";
+			const lineChartTitle = displayHeading + " Hours by Day";
+			let datasets = [];
+
+	/*			function bubbleSort(a, b) {
+					let swapped;
+					do {
+						swapped = false;
+						for (let i = 0; i < a.length-1; i++) {
+							if (a[i] > a[i+1]) {
+								let temp = a[i];
+								a[i] = a[i+1];
+								a[i+1] = temp;
+
+								temp = b[i];
+								b[i] = b[i+1];
+								b[i+1] = temp;
+								swapped = true;
+							}
+						}
+					} while (swapped);
+				};
+*/
+				function dateToString(date) {
+					let month = ('0' + (date.getMonth() + 1)).slice(-2);
+					let day = ('0' + date.getDate()).slice(-2);
+					let year = date.getFullYear();
+					return year + '-' + month + '-' + day;
+				}
+
+				function mapDataToLabels(arr, labels) {
+					let data = [];
+					let j = 0;
+					for (let i = 0; i < arr.length; i++) {
+						let unmatched = true;
+						let labelLength = (labels.length - 1);
+						while (unmatched) { 
+							if (arr[i].date === labels[j]) {
+								data.push(arr[i].time);
+								unmatched = false;
+							} else {
+								data.push(null);
+							}
+							if (j >= labelLength) {
+								unmatched = false;
+							}
+							j++;
+						} // End While Loop
+					} // End for Loop
+					return data;
+				};
 
 				if (display !== "task") {
-
+				// TODO when display is other than task.
 				} else {
 					tasks.forEach((task) => { //each task is its own dataset
-						let dataSet = {
-							label: task.task,
-							data: []
-						};
-						let days = {
-							times: [],
-							dates: []
-						}
-						let times = []
-						let dates = [];
+						let label = task.task;
+						let data = [];
+						let mappedData = [];
+						let includedDates = [];
+
 						task.timeintervals.forEach((interval) => { 
 							const s = new Date(interval.startTime);
 							const e = new Date(interval.stopTime);
@@ -481,35 +525,81 @@ export default class ChartContainer extends Component {
 							const dayCount = Math.round((end.getTime() - start.getTime()) / (86400000))
 																							
 							if (dayCount === 0) {
-								days.dates.push(start);
-								const currTime = interval.stopTime - interval.startTime;
-								days.times.push(Math.round(currTime/36000) / 100);
+								let date = dateToString(start);
+								let time = interval.stopTime - interval.startTime;
+								time = parseFloat(Number(Math.round(time/36000) / 100).toFixed(2));
+								if ( includedDates.includes(date) === false ) {
+									includedDates.push(date);
+									data.push({date: date, time: time})
+								} else {
+									let index = data.findIndex(x => x.date === date);
+									const prevTime = data[index].time;
+									data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+								}	
 							} else {
+								//First day in multi-day continuous task
 								for(let i = 0; i <= dayCount; i++) {
 									if (i === 0) {
-										const currTime = new Date(start.getTime() + 86400000) - interval.startTime;
-										days.dates.push(start);
-										days.times.push(Math.round(currTime/36000) /100);
+										let date = dateToString(start);
+										let time = new Date(start.getTime() + 86400000) - interval.startTime;
+										time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
+										if (includedDates.includes(date) === false ) {
+											includedDates.push(date);
+											data.push({date: date, time: time});								
+										} else {
+											let index = data.findIndex(x => x.date === date);
+											const prevTime = data[index].time;
+											data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+										}
+									//Last day in multi-day task continuous task
 									} else if (i === dayCount) {
-										const currTime = interval.stopTime - end.getTime()
-										days.dates.push(end);
-										days.times.push(Math.round(currTime/36000) /100);
+										let date = dateToString(end)
+										let time = interval.stopTime - end.getTime();
+										time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
+										if (includedDates.includes(date) === false) {
+											includedDates.push(date);
+											data.push({date: date, time: time});
+										} else {
+											let index = data.findIndex(x => x.date === date);
+											const prevTime = data[index].time;
+											data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+										}
+									//In between days in mult-day continous task
 									} else if (i > 0 && i < dayCount) {
 										let day = new Date(start.getTime() + (i * 86400000));
-										days.dates.push(day)
-										days.times.push(24);
+										let date = dateToString(day);
+										let time = 24;
+										if (includedDates.includes(date) === false) {
+											includedDates.push(date);
+											data.push({date: date, time: time});						
+										} else {
+											let index = data.findIndex(x => x.date === date);
+											const prevTime = data[index].time;
+											data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+										}
 									}
 								}
 							}
-						})
-						//Also how do I sort this so that everything is in accending order by date before trying to map against the date labels?
-						console.log(days)
-					})
+						}) // End of interval forEach.
+
+						data = data.sort((a, b) => { 
+							const date1 = new Date(a.date);
+							const date2 = new Date(b.date);
+							return  date1 - date2 
+						});
+						mappedData = mapDataToLabels(data, labels);
+						datasets.push({label: label, data: mappedData, borderWidth: 1});
+					}) // End of task forEach.
+				}
+				let chartData = {
+					labels: labels,
+					datasets: datasets
 				}
 				return {
 					lineChartTitle: lineChartTitle,
-					//lineChartData: chartData
-				}
+					data: chartData
+				} 
+
 		}
 
 		function getBarChartHeight(length) {
@@ -555,16 +645,14 @@ export default class ChartContainer extends Component {
 			lastStop = endTs;
 		}
 		let lineChartLabels = getLineChartDates(firstStart, lastStop);
+		let lineChartData = getLineChartData(tasks.tasks, this.state.display, lineChartLabels);
 
 		chartData.barChartTitle = barAndPie.barChartTitle;
 		chartData.pieChartTitle = barAndPie.pieChartTitle;
 		chartData.barChartData = barAndPie.barChartData;
 		chartData.pieChartData = barAndPie.pieChartData;
 		chartData.barChartHeight = barChartHeight;
-		chartData.lineChartData.labels = lineChartLabels;
-		chartData.lineChartTitle = lineChartTitle;
-
-		console.log(getLineChartData(tasks.tasks, this.state.display, lineChartLabels)) /
+		chartData.lineChartData = lineChartData
 		
 		this.setState({chartData: chartData});
 	}	

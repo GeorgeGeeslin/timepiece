@@ -22,7 +22,7 @@ export default class LineChart extends Component {
 					datasets: [{
 						fill: false,
 						label: "task1",
-						data: [5, 2.6, 3,,,,],
+						data: [5, 2, null,3],
 						backgroundColor: "rgba(255, 99, 132, 0.2)",
 						borderColor: "rgba(255,99,132,1)",
 						borderWidth: 1
