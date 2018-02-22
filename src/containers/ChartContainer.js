@@ -80,11 +80,9 @@ export default class ChartContainer extends Component {
 		range: "all",
 		start: "",
 		end: "",
-		//dataArray: this.getFirstData(),
-		//displayHeading: "Task",
+		displayHeading: "Task",
 		status: "all",
 		chartData: this.getFirstData()
-		//lineChartDates: this.lineChartDates("", "", this.props.tasks.filter((task) => (task.time > 0)))
 	}
 
 	getFirstData() {
@@ -122,11 +120,58 @@ export default class ChartContainer extends Component {
 			}
 		}
 
-		function barAndPieData(tasks) {
-			function getBarChartHeight(length) {
+		function getLineStartandStop(tasks) {
+			let firstStart = Infinity;
+			let lastStop = 0;
+			tasks.forEach((task) => {
+				task.timeintervals.forEach((interval) => {
+					if (interval.startTime < firstStart) {
+						firstStart = interval.startTime;
+					}
+					if (interval.stopTime > lastStop) {
+						lastStop = interval.stopTime;
+					}
+				})
+			})
+			return {firstStart: firstStart, lastStop: lastStop}
+		}
+
+		function getLineChartDates(start, end) {
+			console.log (start + "," + end)
+			let labelArray = [];
+			let startDate;
+			let endDate;
+
+			let s = new Date(start);
+			let e = new Date(end);
+			let offSet = new Date(start).getTimezoneOffset()*60*1000;
+
+			startDate = new Date(s.getTime() + offSet);
+			endDate = new Date(e.getTime() + offSet);
+				
+			const dayCount = ((endDate - startDate) / 86400000);
+			
+			function addDays(date, days) {
+				let result = new Date(date);
+				result.setDate(result.getDate() + days);
+				return result;
+			}
+			for (let i = 0; i < dayCount; i++) {
+				let date = addDays(startDate, i);
+				let year = date.getFullYear();
+				let days = ("0" + date.getDate()).slice(-2);
+				let month = ("0" + (date.getMonth() + 1)).slice(-2);
+				let dateString = year+"-"+month+"-"+days;
+				labelArray.push(dateString);
+			}
+			return labelArray;
+		}
+
+		function getBarChartHeight(length) {
 				return (30 * length) + 100;
 			}
 
+		function barAndPieData(tasks) {
 			const barChartTitle = "Hours per Task";
 			const pieChartTitle = "Tasks";	
 			let chartData = {};
@@ -154,11 +199,158 @@ export default class ChartContainer extends Component {
 				pieChartTitle: pieChartTitle,
 				barChartData: chartData,
 				pieChartData: chartData,
-				barChartHeight: getBarChartHeight(chartData.labels.length)
+				//barChartHeight: getBarChartHeight(chartData.labels.length)
 			}
 		}
 
-		return barAndPieData(tasks);
+		function getLineChartData(tasks, display, labels) {
+			const lineChartTitle = "Task Hours by Day";
+			let datasets = [];
+
+				function dateToString(date) {
+					let month = ('0' + (date.getMonth() + 1)).slice(-2);
+					let day = ('0' + date.getDate()).slice(-2);
+					let year = date.getFullYear();
+					return year + '-' + month + '-' + day;
+				}
+
+				function mapDataToLabels(arr, labels) {
+					console.log(arr)
+					let data = [];
+					let j = 0;
+					for (let i = 0; i < arr.length; i++) {
+						let unmatched = true;
+						let labelLength = (labels.length - 1);
+						while (unmatched) { 
+							if (arr[i].date === labels[j]) {
+								data.push(arr[i].time);
+								unmatched = false;
+							} else {
+								data.push(null);
+							}
+							if (j >= labelLength) {
+								unmatched = false;
+							}
+							j++;
+						} // End While Loop
+					} // End for Loop
+					return data;
+				};
+
+				function processLineTasks(tasks, labels) {
+					tasks.forEach((task) => { //each task is its own dataset
+						let label = task.task;
+						let data = [];
+						let mappedData = [];
+						let includedDates = [];
+
+					task.timeintervals.forEach((interval) => { 
+						const s = new Date(interval.startTime);
+						const e = new Date(interval.stopTime);
+
+						const start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
+						const end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+
+						const dayCount = Math.round((end.getTime() - start.getTime()) / (86400000))
+																						
+						if (dayCount === 0) {
+							let date = dateToString(start);
+							let time = interval.stopTime - interval.startTime;
+							time = parseFloat(Number(Math.round(time/36000) / 100).toFixed(2));
+							if ( includedDates.includes(date) === false ) {
+								includedDates.push(date);
+								data.push({date: date, time: time})
+							} else {
+								let index = data.findIndex(x => x.date === date);
+								const prevTime = data[index].time;
+								data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+							}	
+						} else {
+							//First day in multi-day continuous task
+							for(let i = 0; i <= dayCount; i++) {
+								if (i === 0) {
+									let date = dateToString(start);
+									let time = new Date(start.getTime() + 86400000) - interval.startTime;
+									time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
+									if (includedDates.includes(date) === false ) {
+										includedDates.push(date);
+										data.push({date: date, time: time});								
+									} else {
+										let index = data.findIndex(x => x.date === date);
+										const prevTime = data[index].time;
+										data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+									}
+								//Last day in multi-day task continuous task
+								} else if (i === dayCount) {
+									let date = dateToString(end)
+									let time = interval.stopTime - end.getTime();
+									time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
+									if (includedDates.includes(date) === false) {
+										includedDates.push(date);
+										data.push({date: date, time: time});
+									} else {
+										let index = data.findIndex(x => x.date === date);
+										const prevTime = data[index].time;
+										data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+									}
+								//In between days in mult-day continous task
+								} else if (i > 0 && i < dayCount) {
+									let day = new Date(start.getTime() + (i * 86400000));
+									let date = dateToString(day);
+									let time = 24;
+									if (includedDates.includes(date) === false) {
+										includedDates.push(date);
+										data.push({date: date, time: time});						
+									} else {
+										let index = data.findIndex(x => x.date === date);
+										const prevTime = data[index].time;
+										data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+									}
+								}
+							}
+						}
+					}) // End of interval forEach.
+
+					data = data.sort((a, b) => { 
+						const date1 = new Date(a.date);
+						const date2 = new Date(b.date);
+						return  date1 - date2 
+					});
+					mappedData = mapDataToLabels(data, labels);
+					datasets.push({label: label, data: mappedData, borderWidth: 1});
+				}) // End of task forEach.
+				let chartData = {
+					labels: labels,
+					datasets: datasets
+				}
+				return {
+					lineChartTitle: lineChartTitle,
+					data: chartData
+				} 
+			}
+			return processLineTasks(tasks);
+		}
+		/* End of Line Chart Helper Functions */ 
+		let chartData = {
+			barChartData: {},
+			pieChartData: {},
+			lineChartData: {}
+		}; 
+		const startAndStop = getLineStartandStop(tasks);
+		const lineChartLabels = getLineChartDates(startAndStop.firstStart, startAndStop.lastStop);
+		const lineChartData = getLineChartData(tasks, "task", lineChartLabels);
+		const barAndPie = barAndPieData(tasks);
+		const barChartHeight = getBarChartHeight(barAndPie.barChartData.labels.length);
+
+		chartData.barChartTitle = barAndPie.barChartTitle;
+		chartData.pieChartTitle = barAndPie.pieChartTitle;
+		chartData.barChartData = barAndPie.barChartData;
+		chartData.pieChartData = barAndPie.pieChartData;
+		chartData.barChartHeight = barChartHeight;
+		chartData.lineChartData = lineChartData
+		
+		return chartData;
+		//return barAndPieData(tasks);
 	}
 	
 	getChartData = e => {
@@ -458,25 +650,6 @@ export default class ChartContainer extends Component {
 			const lineChartTitle = displayHeading + " Hours by Day";
 			let datasets = [];
 
-	/*			function bubbleSort(a, b) {
-					let swapped;
-					do {
-						swapped = false;
-						for (let i = 0; i < a.length-1; i++) {
-							if (a[i] > a[i+1]) {
-								let temp = a[i];
-								a[i] = a[i+1];
-								a[i+1] = temp;
-
-								temp = b[i];
-								b[i] = b[i+1];
-								b[i+1] = temp;
-								swapped = true;
-							}
-						}
-					} while (swapped);
-				};
-*/
 				function dateToString(date) {
 					let month = ('0' + (date.getMonth() + 1)).slice(-2);
 					let day = ('0' + date.getDate()).slice(-2);
@@ -506,101 +679,121 @@ export default class ChartContainer extends Component {
 					return data;
 				};
 
-				if (display !== "task") {
-				// TODO when display is other than task.
-				} else {
+				function processLineTasks(tasks) {
 					tasks.forEach((task) => { //each task is its own dataset
 						let label = task.task;
 						let data = [];
 						let mappedData = [];
 						let includedDates = [];
 
-						task.timeintervals.forEach((interval) => { 
-							const s = new Date(interval.startTime);
-							const e = new Date(interval.stopTime);
+					task.timeintervals.forEach((interval) => { 
+						const s = new Date(interval.startTime);
+						const e = new Date(interval.stopTime);
 
-							const start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
-							const end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+						const start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
+						const end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
 
-							const dayCount = Math.round((end.getTime() - start.getTime()) / (86400000))
-																							
-							if (dayCount === 0) {
-								let date = dateToString(start);
-								let time = interval.stopTime - interval.startTime;
-								time = parseFloat(Number(Math.round(time/36000) / 100).toFixed(2));
-								if ( includedDates.includes(date) === false ) {
-									includedDates.push(date);
-									data.push({date: date, time: time})
-								} else {
-									let index = data.findIndex(x => x.date === date);
-									const prevTime = data[index].time;
-									data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
-								}	
+						const dayCount = Math.round((end.getTime() - start.getTime()) / (86400000))
+																						
+						if (dayCount === 0) {
+							let date = dateToString(start);
+							let time = interval.stopTime - interval.startTime;
+							time = parseFloat(Number(Math.round(time/36000) / 100).toFixed(2));
+							if ( includedDates.includes(date) === false ) {
+								includedDates.push(date);
+								data.push({date: date, time: time})
 							} else {
-								//First day in multi-day continuous task
-								for(let i = 0; i <= dayCount; i++) {
-									if (i === 0) {
-										let date = dateToString(start);
-										let time = new Date(start.getTime() + 86400000) - interval.startTime;
-										time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
-										if (includedDates.includes(date) === false ) {
-											includedDates.push(date);
-											data.push({date: date, time: time});								
-										} else {
-											let index = data.findIndex(x => x.date === date);
-											const prevTime = data[index].time;
-											data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
-										}
-									//Last day in multi-day task continuous task
-									} else if (i === dayCount) {
-										let date = dateToString(end)
-										let time = interval.stopTime - end.getTime();
-										time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
-										if (includedDates.includes(date) === false) {
-											includedDates.push(date);
-											data.push({date: date, time: time});
-										} else {
-											let index = data.findIndex(x => x.date === date);
-											const prevTime = data[index].time;
-											data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
-										}
-									//In between days in mult-day continous task
-									} else if (i > 0 && i < dayCount) {
-										let day = new Date(start.getTime() + (i * 86400000));
-										let date = dateToString(day);
-										let time = 24;
-										if (includedDates.includes(date) === false) {
-											includedDates.push(date);
-											data.push({date: date, time: time});						
-										} else {
-											let index = data.findIndex(x => x.date === date);
-											const prevTime = data[index].time;
-											data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
-										}
+								let index = data.findIndex(x => x.date === date);
+								const prevTime = data[index].time;
+								data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+							}	
+						} else {
+							//First day in multi-day continuous task
+							for(let i = 0; i <= dayCount; i++) {
+								if (i === 0) {
+									let date = dateToString(start);
+									let time = new Date(start.getTime() + 86400000) - interval.startTime;
+									time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
+									if (includedDates.includes(date) === false ) {
+										includedDates.push(date);
+										data.push({date: date, time: time});								
+									} else {
+										let index = data.findIndex(x => x.date === date);
+										const prevTime = data[index].time;
+										data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+									}
+								//Last day in multi-day task continuous task
+								} else if (i === dayCount) {
+									let date = dateToString(end)
+									let time = interval.stopTime - end.getTime();
+									time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
+									if (includedDates.includes(date) === false) {
+										includedDates.push(date);
+										data.push({date: date, time: time});
+									} else {
+										let index = data.findIndex(x => x.date === date);
+										const prevTime = data[index].time;
+										data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
+									}
+								//In between days in mult-day continous task
+								} else if (i > 0 && i < dayCount) {
+									let day = new Date(start.getTime() + (i * 86400000));
+									let date = dateToString(day);
+									let time = 24;
+									if (includedDates.includes(date) === false) {
+										includedDates.push(date);
+										data.push({date: date, time: time});						
+									} else {
+										let index = data.findIndex(x => x.date === date);
+										const prevTime = data[index].time;
+										data[index].time = parseFloat(Number(prevTime + time).toFixed(2));
 									}
 								}
 							}
-						}) // End of interval forEach.
+						}
+					}) // End of interval forEach.
 
-						data = data.sort((a, b) => { 
-							const date1 = new Date(a.date);
-							const date2 = new Date(b.date);
-							return  date1 - date2 
-						});
-						mappedData = mapDataToLabels(data, labels);
-						datasets.push({label: label, data: mappedData, borderWidth: 1});
-					}) // End of task forEach.
+					data = data.sort((a, b) => { 
+						const date1 = new Date(a.date);
+						const date2 = new Date(b.date);
+						return  date1 - date2 
+					});
+					mappedData = mapDataToLabels(data, labels);
+					datasets.push({label: label, data: mappedData, borderWidth: 1});
+				}) // End of task forEach.
+					let chartData = {
+						labels: labels,
+						datasets: datasets
+					}
+					return {
+						lineChartTitle: lineChartTitle,
+						data: chartData
+					} 
 				}
-				let chartData = {
-					labels: labels,
-					datasets: datasets
-				}
-				return {
-					lineChartTitle: lineChartTitle,
-					data: chartData
-				} 
+				/* End of Line Chart Helper Functions */ 
 
-		}
+				if (display !== "task") {
+					let taskObj = [];
+
+					tasks.forEach((task) => {
+						let included = taskObj.filter(obj => obj.display === task[display] || (obj.display === "[blank]" && task[display] === ""));
+						if (included.length < 1) {
+							if (task[display] === "") {
+								taskObj.push({display: "[blank]", taskCount: 1, timeintervals: task.timeintervals})
+							} else {
+								taskObj.push({display: task[display], taskCount: 1, timeintervals: task.timeintervals})			
+							}
+						} else {
+							let index = taskObj.findIndex(obj => (obj.display === task[display] || (obj.display ==="[blank]" && task[display] === "")));
+							taskObj[index].taskCount = taskObj[index].taskCount + 1;
+							taskObj[index].timeintervals = taskObj[index].timeintervals.concat(task.timeintervals)
+						}
+					}) 
+					return processLineTasks(taskObj);					 
+				} else {
+					return processLineTasks(tasks);
+				}
+			}
 
 		function getBarChartHeight(length) {
 			return (30 * length) + 100;
@@ -608,7 +801,6 @@ export default class ChartContainer extends Component {
 		/* !!!!HELPER FUNCTIONS END!!!! */
 
 		/* !!!!WORK STARTS HERE!!!! */ 
-		let tasks; 
 		let chartData = {
 			barChartData: {},
 			pieChartData: {},
@@ -628,9 +820,7 @@ export default class ChartContainer extends Component {
 
 		const lineChartTitle = displayHeading + " Hours by Day";
 
-		/* !!!!FLOW STARTS HERE!!!! */
-
-		tasks = filterByStatus(this.state.status, this.props.tasks)
+		let tasks = filterByStatus(this.state.status, this.props.tasks)
 		tasks = filterByDate(tasks, this.state.start, this.state.end, startTs, endTs);
 		let barAndPie = barAndPieData(tasks.tasks, this.state.display, displayHeading);
 		let barChartHeight = getBarChartHeight(barAndPie.barChartData.labels.length);
@@ -714,6 +904,7 @@ export default class ChartContainer extends Component {
 	}
 
 	render () {	
+		//console.log(this.props.tasks)
 		return (
 			<Grid onClick= { () => this.props.closeUserMenu()}>
 				<h1>Charts and Graphs</h1>
@@ -866,9 +1057,11 @@ export default class ChartContainer extends Component {
 						}
 						{ this.state.chartData.barChartData.labels.length === 0 &&
 							<EmptyBarChart 
+								title={this.state.chartData.barChartTitle}
 							/>
 						}
-						<LineChart 
+						<LineChart
+	
 						/>
 						<PieChart
 							data={this.state.chartData.pieChartData}

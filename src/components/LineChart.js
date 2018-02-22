@@ -38,7 +38,7 @@ export default class LineChart extends Component {
 					options={{
 						title: {
 							display: true,
-							text: "Hours per Day"
+							text: this.props.title
 						},
 						maintainAspectRatio: true,
 						legend: {
