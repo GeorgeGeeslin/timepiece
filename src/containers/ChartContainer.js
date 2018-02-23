@@ -1077,7 +1077,7 @@ export default class ChartContainer extends Component {
 								title={this.state.chartData.barChartTitle}
 							/>
 						}
-						{this.state.chartData.lineChartData.data.datasets > 0 && 
+						{this.state.chartData.lineChartData.data.datasets.length > 0 && 
 							<LineChart
 								title={this.state.chartData.lineChartData.lineChartTitle}
 								data={this.state.chartData.lineChartData.data}
