@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Bar, HorizontalBar } from 'react-chartjs-2';
+import { HorizontalBar } from 'react-chartjs-2';
 
 const EmptyBarChart = props => (
 	<div style={{height: "225px"}}>
@@ -18,7 +18,7 @@ const EmptyBarChart = props => (
 			options={{
 				title: {
 					display: true,
-					text: "Hours per " + props.displayHeading
+					text: props.title
 				},
 				maintainAspectRatio: false,
 				legend: {
@@ -50,7 +50,7 @@ const EmptyBarChart = props => (
 );
 
 EmptyBarChart.propTypes = {
-	displayHeading: PropTypes.string.isRequired
+	title: PropTypes.string.isRequired
 };
 
 export default EmptyBarChart;
