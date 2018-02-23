@@ -49,7 +49,7 @@ class App extends Component {
 					loginError = {this.props.loginError}
 					loginErrorCode = {this.props.loginErrorCode}
 					loginErrorMsg = {this.props.loginErrorMsg}
-					/>
+				/>
 			}
 			{ user !== null &&
 				<div>

@@ -1,74 +1,26 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { Bar, HorizontalBar } from 'react-chartjs-2';
+import { HorizontalBar } from 'react-chartjs-2';
+//import Radium from 'radium'
 
+//@Radium
 export default class BarChart extends Component {
 	static propTypes = {
-		dataArray: PropTypes.array.isRequired,
-		display: PropTypes.string.isRequired,
-		getHours: PropTypes.func.isRequired,
-		buildColorArray: PropTypes.func.isRequired,
-		buildBorderArray: PropTypes.func.isRequired,
-		displayHeading: PropTypes.string.isRequired
-	}
-
-	state = {
-		height: this.barChartHeight(this.props.dataArray.length)
-	}
-
-	componentDidUpdate(prevProps) {
-		if (prevProps.dataArray.length !== this.props.dataArray.length) {
-			this.setState({height: this.barChartHeight(this.props.dataArray.length)})
-		}
-	}
-
-	barChartData = (dataArray) => {
-		let labels = [];
-		if (dataArray[0].hasOwnProperty("display")) {
-			labels = dataArray.map((item) => {
-				let taskDisplay = item.display;
-				let taskCount = item.taskCount;
-				let taskLabel = taskDisplay + ": " + taskCount + " task(s)"; 
-				return taskLabel;
-			});
-		} else {
-			labels = dataArray.map((item) => (
-				item.task
-			));
-		}
-		const data = dataArray.map((item) => (
-			this.props.getHours(item.time)
-		));
-		const color = this.props.buildColorArray(labels.length)	
-		const border = this.props.buildBorderArray(labels.length)
-
-		const chartData = {
-			labels: labels,
-			datasets: [{
-				label: "Hours",
-				data: data,
-				backgroundColor: color,
-				borderColor: border,
-				borderWidth: 1
-			}]
-		}
-		return chartData;
-	}
-
-	barChartHeight(length) {
-		return (30 * length) + 100;
+		data: PropTypes.object.isRequired,
+		title: PropTypes.string.isRequired,
+		height: PropTypes.number.isRequired
 	}
 
 	render() {
 		return (
-			<div style={{height: this.state.height+"px"}}>
+			<div style={{height: this.props.height+"px"}}>
 				<HorizontalBar
-					data={this.barChartData(this.props.dataArray)}
-					height={this.state.height}
+					data={this.props.data}
+					height={this.props.height}
 					options={{
 						title: {
 							display: true,
-							text: "Hours per " + this.props.displayHeading
+							text: this.props.title
 						},
 						maintainAspectRatio: false,
 						legend: {
