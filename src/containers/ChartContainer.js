@@ -104,7 +104,7 @@ export default class ChartContainer extends Component {
 			}
 		}
 
-		//Create an array of background colors for cart items based on the number of items in an array.
+		//Create an array of background colors for chart items based on the number of items in an array.
 		function buildBorderArray(size) {
 			let arr = [];
 			if (size <= 6) {
@@ -137,7 +137,6 @@ export default class ChartContainer extends Component {
 		}
 
 		function getLineChartDates(start, end) {
-			console.log (start + "," + end)
 			let labelArray = [];
 			let startDate;
 			let endDate;
@@ -215,7 +214,6 @@ export default class ChartContainer extends Component {
 				}
 
 				function mapDataToLabels(arr, labels) {
-					console.log(arr)
 					let data = [];
 					let j = 0;
 					for (let i = 0; i < arr.length; i++) {
@@ -317,8 +315,19 @@ export default class ChartContainer extends Component {
 						return  date1 - date2 
 					});
 					mappedData = mapDataToLabels(data, labels);
-					datasets.push({label: label, data: mappedData, borderWidth: 1});
+					datasets.push({
+						label: label, 
+						data: mappedData, 
+						borderWidth: 1, 
+						fill: false,
+					});
 				}) // End of task forEach.
+					let colorArray = buildColorArray(datasets.length)
+					let borderArray = buildBorderArray(datasets.length)
+					datasets.forEach((dataset, index) => {
+						dataset.backgroundColor = colorArray[index];
+						dataset.borderColor = borderArray[index];
+					})
 				let chartData = {
 					labels: labels,
 					datasets: datasets
@@ -328,7 +337,7 @@ export default class ChartContainer extends Component {
 					data: chartData
 				} 
 			}
-			return processLineTasks(tasks);
+			return processLineTasks(tasks, labels);
 		}
 		/* End of Line Chart Helper Functions */ 
 		let chartData = {
@@ -423,8 +432,8 @@ export default class ChartContainer extends Component {
 			let e = new Date(end);
 			let offSet = new Date(start).getTimezoneOffset()*60*1000;
 
-			startDate = new Date(s.getTime() + offSet);
-			endDate = new Date(e.getTime() + offSet);
+			startDate = new Date(s.getTime());
+			endDate = new Date(e.getTime()); 
 				
 			const dayCount = ((endDate - startDate) / 86400000);
 			
@@ -433,7 +442,6 @@ export default class ChartContainer extends Component {
 				result.setDate(result.getDate() + days);
 				return result;
 			}
-
 			for (let i = 0; i < dayCount; i++) {
 				let date = addDays(startDate, i);
 				let year = date.getFullYear();
@@ -557,7 +565,7 @@ export default class ChartContainer extends Component {
 				return Math.min.apply(Math, array);
 			}
 			firstStart = Array.min(intervalArray);
-			lastStop = Array.max(intervalArray)			
+			lastStop = Array.max(intervalArray)		
 				return {
 					tasks: tasks,
 					firstStart: firstStart,
@@ -679,9 +687,14 @@ export default class ChartContainer extends Component {
 					return data;
 				};
 
-				function processLineTasks(tasks) {
+				function processLineTasks(tasks, display) {
 					tasks.forEach((task) => { //each task is its own dataset
-						let label = task.task;
+						let label;
+						if (display) {
+							label = task.display;
+						} else {
+							label = task.task;
+						}
 						let data = [];
 						let mappedData = [];
 						let includedDates = [];
@@ -752,15 +765,20 @@ export default class ChartContainer extends Component {
 							}
 						}
 					}) // End of interval forEach.
-
 					data = data.sort((a, b) => { 
 						const date1 = new Date(a.date);
 						const date2 = new Date(b.date);
 						return  date1 - date2 
 					});
 					mappedData = mapDataToLabels(data, labels);
-					datasets.push({label: label, data: mappedData, borderWidth: 1});
+					datasets.push({label: label, data: mappedData, borderWidth: 1, fill: false});
 				}) // End of task forEach.
+					let colorArray = buildColorArray(datasets.length)
+					let borderArray = buildBorderArray(datasets.length)
+					datasets.forEach((dataset, index) => {
+						dataset.backgroundColor = colorArray[index];
+						dataset.borderColor = borderArray[index];
+					})
 					let chartData = {
 						labels: labels,
 						datasets: datasets
@@ -789,7 +807,7 @@ export default class ChartContainer extends Component {
 							taskObj[index].timeintervals = taskObj[index].timeintervals.concat(task.timeintervals)
 						}
 					}) 
-					return processLineTasks(taskObj);					 
+					return processLineTasks(taskObj, display);					 
 				} else {
 					return processLineTasks(tasks);
 				}
@@ -904,7 +922,6 @@ export default class ChartContainer extends Component {
 	}
 
 	render () {	
-		//console.log(this.props.tasks)
 		return (
 			<Grid onClick= { () => this.props.closeUserMenu()}>
 				<h1>Charts and Graphs</h1>
@@ -1060,9 +1077,12 @@ export default class ChartContainer extends Component {
 								title={this.state.chartData.barChartTitle}
 							/>
 						}
-						<LineChart
-	
-						/>
+						{this.state.chartData.lineChartData.data.datasets > 0 && 
+							<LineChart
+								title={this.state.chartData.lineChartData.lineChartTitle}
+								data={this.state.chartData.lineChartData.data}
+							/>
+						}
 						<PieChart
 							data={this.state.chartData.pieChartData}
 							title={this.state.chartData.pieChartTitle}
