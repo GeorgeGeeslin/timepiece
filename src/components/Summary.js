@@ -138,8 +138,6 @@ export default class Summary extends Component {
 							<p><span className='taskLabel'>TOTAL CLIENTS: </span>{this.totalClients().length}</p>
 						</Col>
 					</Row>
-					<p><span className='taskLabel'>TIME THIS WEEK: </span>{formatTime(this.timePeriodTotal('week'))}</p>
-					<p><span className='taskLabel'>TIME THIS MONTH: </span>{formatTime(this.timePeriodTotal('month'))}</p>
 					<p><span className='taskLabel'>TOTAL TIME SPENT: </span>{formatTime(this.totalTime())}</p>
 				</Grid>
 			</div>
