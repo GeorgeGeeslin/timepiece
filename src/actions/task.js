@@ -257,6 +257,19 @@ export const closeEdit = () => {
 	}
 }
 
+export const openConfirmDelete = (taskKey) => {
+	return {
+		type: TaskActionTypes.OPEN_CONFIRM_DELETE,
+		taskKey
+	}
+}
+
+export const closeConfirmDelete = (taskKey) => {
+	return {
+		type: TaskActionTypes.CLOSE_CONFIRM_DELETE
+	}
+}
+
 export const openCharts = () => {
 	return {
 		type: TaskActionTypes.OPEN_CHARTS

@@ -17,11 +17,12 @@ class App extends Component {
 		dispatch: PropTypes.func.isRequired,
 		user: PropTypes.object,
 		selectedTaskIndex: PropTypes.string,
-		lastManualUpdate: PropTypes.string
+		lastManualUpdate: PropTypes.string,
+		showConfirmDelete: PropTypes.bool.isRequired
 	};
 	
 	render() {
-		const { dispatch, tasks, selectedTaskIndex, editTaskIndex, lastManualUpdate, user, showEditScreen, showChartScreen, showUserMenu} = this.props;
+		const { dispatch, tasks, selectedTaskIndex, editTaskIndex, lastManualUpdate, user, showEditScreen, showChartScreen, showUserMenu, showConfirmDelete, confirmDeleteTaskIndex} = this.props;
 		const attemptLogin = bindActionCreators(TaskActionCreators.attemptLogin, dispatch);
 		const attemptSignOut = bindActionCreators(TaskActionCreators.attemptSignOut, dispatch);
 		const checkLoginStatus = bindActionCreators(TaskActionCreators.checkLoginStatus, dispatch);
@@ -38,6 +39,8 @@ class App extends Component {
 		const closeUserMenu = bindActionCreators(TaskActionCreators.closeUserMenu, dispatch);
 		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
 		const resumeTask = bindActionCreators(TaskActionCreators.resumeTask, dispatch);
+		const openConfirmDelete = bindActionCreators(TaskActionCreators.openConfirmDelete, dispatch);
+		const closeConfirmDelete = bindActionCreators(TaskActionCreators.closeConfirmDelete, dispatch);
 
 		return (
 			<div>
@@ -79,7 +82,11 @@ class App extends Component {
 							closeEdit = {closeEdit}
 							closeUserMenu = {closeUserMenu}
 							updateTask = {updateTask}
-							resumeTask = {resumeTask} 
+							resumeTask = {resumeTask}
+							openConfirmDelete = {openConfirmDelete}
+							closeConfirmDelete = {closeConfirmDelete} 
+							showConfirmDelete = {showConfirmDelete}
+							confirmDeleteTaskIndex = {confirmDeleteTaskIndex}
 						/>
 					}
 					{ showChartScreen === true &&
@@ -108,7 +115,9 @@ const mapStateToProps = state => (
 		showUserMenu: state.showUserMenu,
 		loginError: state.loginError,
 		loginErrorCode: state.loginErrorCode,
-		loginErrorMsg: state.loginErrorMsg
+		loginErrorMsg: state.loginErrorMsg,
+		showConfirmDelete: state.showConfirmDelete,
+		confirmDeleteTaskIndex: state.confirmDeleteTaskIndex
 	}
 );
 

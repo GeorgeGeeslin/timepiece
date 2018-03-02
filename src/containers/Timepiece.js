@@ -7,7 +7,8 @@ import CreateTaskForm from '../components/CreateTaskForm';
 import CurrentTask from '../components/CurrentTask';
 import FinishedTask from '../components/FinishedTask';
 import EditTask from '../components/EditTask';
-import Summary from '../components/Summary'
+import Summary from '../components/Summary';
+import ConfirmDelete from '../components/ConfirmDelete';
 
 export default class Timepiece extends Component {
 	static propTypes = {
@@ -25,8 +26,15 @@ export default class Timepiece extends Component {
 		user: PropTypes.object.isRequired,
 		showEditScreen: PropTypes.bool.isRequired,
 		lastManualUpdate: PropTypes.string,
-		selectedTaskIndex: PropTypes.string
+		selectedTaskIndex: PropTypes.string,
+		openConfirmDelete: PropTypes.func.isRequired,
+		closeConfirmDelete: PropTypes.func.isRequired,
+		showConfirmDelete: PropTypes.bool.isRequired
 	};
+
+	getTaskKey = (taskKey) => (
+		props.taskKey
+	);
 
 	render() {
 
@@ -78,6 +86,7 @@ export default class Timepiece extends Component {
 				secondsElapsed={tasks.time}
 				selectedTaskIndex={selectedTaskIndex}
 				uid={uid}
+				openConfirmDelete={this.props.openConfirmDelete}
 			/>
 		));
 
@@ -154,13 +163,24 @@ export default class Timepiece extends Component {
 								</div>
 							</Col>
 						</Row>
-						{this.props.showEditScreen === true && <EditTask
+						{this.props.showEditScreen === true && 
+							<EditTask
 							closeEdit={this.props.closeEdit} 
 							updateTask={this.props.updateTask}
 							showEditScreen={this.props.showEditScreen}
 							editTaskIndex={this.props.editTaskIndex}
 							uid={uid}
 							editTask={editTask}/>
+						}
+						{this.props.showConfirmDelete === true && 
+							<ConfirmDelete 
+								showConfirmDelete={this.props.showConfirmDelete}
+								closeConfirmDelete={this.props.closeConfirmDelete}
+								confirmDeleteTaskIndex={this.props.confirmDeleteTaskIndex}
+								uid={uid}
+								deleteTask={this.props.deleteTask}
+								selectedTaskIndex={selectedTaskIndex}
+							/>
 						}
 					</Grid>
 			</div>

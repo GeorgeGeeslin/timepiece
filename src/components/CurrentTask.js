@@ -23,7 +23,7 @@ const CurrentTask = props => (
 				</button>
 				<button
 					className='task-buttons'
-					onClick={ () => props.deleteTask(props.uid, props.taskKey, props.selectedTaskIndex)}>
+					onClick={ () => props.openConfirmDelete(props.taskKey)}>
 					DELETE
 				</button>
 				<button
@@ -47,7 +47,8 @@ CurrentTask.propTypes = {
 	taskKey: PropTypes.string.isRequired,
 	uid: PropTypes.string.isRequired,
 	formatTime: PropTypes.func.isRequired,
-	secondsElapsed: PropTypes.number.isRequired
+	secondsElapsed: PropTypes.number.isRequired,
+	openConfirmDelete: PropTypes.func.isRequired
 };
 
 export default CurrentTask;
