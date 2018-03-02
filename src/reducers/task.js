@@ -8,7 +8,8 @@ const initialState = {
 	showUserMenu: false,
 	lastManualUpdate: null,
 	user: null,
-	pendingLogin: false
+	pendingLogin: false,
+	showConfirmDelete: false
 }
 
 const currDate = new Date();
@@ -109,13 +110,15 @@ export default function Task(state=initialState, action) {
 				return {
 					...state,
 					tasks: deleteTask,
-					selectedTaskIndex: null
+					selectedTaskIndex: null,
+					showConfirmDelete: false
 				}
 			} else {
 				return {
 					...state,
 					tasks: deleteTask,
-					selectedTaskIndex: action.selectedTaskIndex
+					selectedTaskIndex: action.selectedTaskIndex,
+					showConfirmDelete: false
 				}
 			}
 
@@ -143,6 +146,20 @@ export default function Task(state=initialState, action) {
 				...state,
 				editTaskIndex: null,
 				showEditScreen: false
+			}
+
+		case TaskActionTypes.OPEN_CONFIRM_DELETE:
+			return {
+				...state,
+				confirmDeleteTaskIndex: action.taskKey,
+				showConfirmDelete: true
+			}
+
+		case TaskActionTypes.CLOSE_CONFIRM_DELETE:
+			return {
+				...state,
+				confirmDeleteTaskIndex: null,
+				showConfirmDelete: false
 			}
 
 		case TaskActionTypes.OPEN_CHARTS:
