@@ -231,7 +231,7 @@ export default class EditTask extends Component {
 			<Grid>
 				<Row className='show-grid'>
 					<Col sm={12}>
-						<Modal show={this.props.showEditScreen} className='edit-modal'>
+						<Modal show={this.props.showEditScreen} className='modal'>
 							<Modal.Header>
 								<h2>Edit Task</h2>
 							</Modal.Header>

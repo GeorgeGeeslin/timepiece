@@ -20,5 +20,3 @@ export const OPEN_CHARTS = 'task/OPEN_CHARTS';
 export const CLOSE_CHARTS = 'task/CLOSE_CHARTS';
 export const OPEN_USER_MENU = 'task/OPEN_USER_MENU';
 export const CLOSE_USER_MENU = 'task/CLOSE_USER_MENU';
-export const OPEN_CONFIRM_DELETE = 'task/OPEN_CONFIRM_DELETE';
-export const CLOSE_CONFIRM_DELETE = 'task/CLOSE_CONFIRM_DELETE';

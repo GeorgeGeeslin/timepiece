@@ -465,12 +465,11 @@ input[type="text"].inputError {
 }
 
 //div hidden behind modal. could be used for fade or to cover main content
-.edit-modal {
+.modal {
   -webkit-animation: fade $animation-time;
   animation: fade $animation-time;
   opacity: 1;
 	width: 100%;
-	height: 100%;
 	margin: auto;
 	.tasks {
 		opacity: 1;
@@ -485,6 +484,8 @@ input[type="text"].inputError {
     from {opacity: 0}
     to {opacity: 1}
 }
+
+
 
 .modal-content {
 	//top: 0;
