@@ -358,14 +358,13 @@ input[type="text"].inputError {
   transform: unset !important;
   -webkit-transform: unset !important; }
 
-.edit-modal {
+.modal {
   -webkit-animation: fade 0.4s;
   animation: fade 0.4s;
   opacity: 1;
   width: 100%;
-  height: 100%;
   margin: auto; }
-  .edit-modal .tasks {
+  .modal .tasks {
     opacity: 1; }
 
 @-webkit-keyframes fade {
