@@ -74,7 +74,7 @@ export default class CurrentTask extends Component {
 		<Grid className='tasks' style={{height: "106px"}}>
 			<Row style={{marginLeft: '0px'}}>
 				<Col>
-						<p>Delete this task?</p>
+						<p>Delete task: {this.props.task}?</p>
 				</Col>
 			</Row>
 			<Row style={{marginLeft: '0px'}}>
