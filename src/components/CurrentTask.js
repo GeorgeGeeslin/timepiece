@@ -85,7 +85,7 @@ export default class CurrentTask extends Component {
 			<Row style={{marginLeft: '0px'}}>
 				<Col sm={12}>
 						<h3>Delete this task?</h3>
-						<p>{this.props.task}</p>
+						<p style={{textAlign: "center"}}>{this.props.task}</p>
 				</Col>
 			</Row>
 			<Row style={{marginLeft: '0px', position: "absolute", bottom: "0", width: "100%"}}>
