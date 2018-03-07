@@ -18,7 +18,14 @@ export default class CurrentTask extends Component {
 	}
 
 	state = {
-		showConfirmDelete: false
+		showConfirmDelete: false,
+		height: "0px"
+	}
+
+	componentDidMount() {
+		let task = document.getElementsByClassName("tasks")[0]
+		let taskHeight = task.offsetHeight;
+		this.setState({height: taskHeight+"px"})
 	}
 
 	openConfirmDelete() {
@@ -31,10 +38,13 @@ export default class CurrentTask extends Component {
 
 	deleteTask() {
 		this.props.deleteTask(this.props.uid, this.props.taskKey, this.props.selectedTaskIndex)
+		this.setState({showConfirmDelete: false})
 	}
 
 
 	render () {
+		let height = this.state.height
+
 		return (
 			<div>
 			{ this.state.showConfirmDelete === false && 
@@ -50,34 +60,35 @@ export default class CurrentTask extends Component {
 							<p className='timeLabel'>{this.props.formatTime(this.props.secondsElapsed)}</p>
 						</Col>
 					</Row>
-				<Col className='task-button-container' sm={12}>
-					<button
-						className='task-buttons' 
-						onClick={() => this.props.selectTask(this.props.taskKey)}>
-						SELECT
-					</button>
-					<button
-						className='task-buttons'
-						onClick={ () => this.openConfirmDelete()}>
-						DELETE
-					</button>
-					<button
-						className='task-buttons'
-						onClick={ () => this.props.openEdit(this.props.taskKey)}>
-						EDIT
-					</button>
-				</Col>
-			</Row>
-					</Grid>
+					<Col className='task-button-container' sm={12}>
+						<button
+							className='task-buttons' 
+							onClick={() => this.props.selectTask(this.props.taskKey)}>
+							SELECT
+						</button>
+						<button
+							className='task-buttons'
+							onClick={ () => this.openConfirmDelete()}>
+							DELETE
+						</button>
+						<button
+							className='task-buttons'
+							onClick={ () => this.props.openEdit(this.props.taskKey)}>
+							EDIT
+						</button>
+					</Col>
+				</Row>
+			</Grid>
 		}
 		{this.state.showConfirmDelete === true && 
-		<Grid className='tasks' style={{height: "106px"}}>
+		<Grid className='tasks' style={{height: height, position: "relative"}}>
 			<Row style={{marginLeft: '0px'}}>
-				<Col>
-						<p>Delete task: {this.props.task}?</p>
+				<Col sm={12}>
+						<h3>Delete this task?</h3>
+						<p>{this.props.task}</p>
 				</Col>
 			</Row>
-			<Row style={{marginLeft: '0px'}}>
+			<Row style={{marginLeft: '0px', position: "absolute", bottom: "0", width: "100%"}}>
 				<Col className='task-button-container' sm={12}>
 					<button className='task-buttons' 
 						onClick={ () => this.deleteTask()}>
