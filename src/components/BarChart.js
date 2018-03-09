@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { HorizontalBar } from 'react-chartjs-2';
-//import Radium from 'radium'
 
-//@Radium
 export default class BarChart extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
@@ -14,12 +12,13 @@ export default class BarChart extends Component {
 	render() {
 		return (
 			<div style={{height: this.props.height+"px"}}>
+				<h2>{this.props.title}</h2>
 				<HorizontalBar
 					data={this.props.data}
 					height={this.props.height}
 					options={{
 						title: {
-							display: true,
+							display: false,
 							text: this.props.title
 						},
 						maintainAspectRatio: false,
@@ -32,7 +31,7 @@ export default class BarChart extends Component {
 									beginAtZero: true
 								},
 								gridLines: {
-									color: "#1e2f51"
+									color: "#405175"
 								}
 							}],
 							yAxes: [{
@@ -42,7 +41,7 @@ export default class BarChart extends Component {
 									padding: -10
 								},
 								gridLines: {
-									color: "#1e2f51"
+									color: "#405175"
 								}
 							}]
 						}
