@@ -22,7 +22,7 @@ export default class LineChart extends Component {
 							display: true,
 							text: this.props.title
 						},
-						maintainAspectRatio: true,
+						maintainAspectRatio: false,
 						legend: {
 							position: "bottom"
 						},
