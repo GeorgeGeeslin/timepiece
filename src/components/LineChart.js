@@ -13,13 +13,13 @@ export default class LineChart extends Component {
 
 	render() {
 		return(
-			<div>
-				<Line 
-				height={300}
-				data={this.props.data}
+			<div style={{paddingTop: "50px", height: "350px"}}>
+				<h2>{this.props.title}</h2>
+				<Line 	
+					data={this.props.data}
 					options={{
 						title: {
-							display: true,
+							display: false,
 							text: this.props.title
 						},
 						maintainAspectRatio: false,
@@ -41,7 +41,6 @@ export default class LineChart extends Component {
 								}
 			        }],
 			        yAxes: [{
-			     //   	id: "task 1",
 			          ticks: {
 			            beginAtZero: true,
 			          },
@@ -52,6 +51,11 @@ export default class LineChart extends Component {
 			      },
 	      		legend: {
 							position: "bottom"
+						},
+						layout: {
+							padding: {
+								left: 10
+							}
 						}
 		    }}
 	    	/>

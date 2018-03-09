@@ -137,8 +137,6 @@ export default class ChartContainer extends Component {
 		}
 
 		function getLineChartDates(start, end) {
-			console.log(new Date(start))
-			console.log(new Date(end))
 			let labelArray = [];
 			let startDate;
 			let endDate;
@@ -215,8 +213,6 @@ export default class ChartContainer extends Component {
 				}
 
 				function mapDataToLabels(arr, labels) {
-					console.log(arr)
-					console.log(labels)
 					let data = [];
 					let j = 0;
 					for (let i = 0; i < arr.length; i++) {
