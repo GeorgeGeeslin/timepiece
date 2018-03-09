@@ -13,16 +13,16 @@ export default class LineChart extends Component {
 
 	render() {
 		return(
-			<div>
-				<Line 
-				height={60}
-				data={this.props.data}
+			<div style={{paddingTop: "50px", height: "350px"}}>
+				<h2>{this.props.title}</h2>
+				<Line 	
+					data={this.props.data}
 					options={{
 						title: {
-							display: true,
+							display: false,
 							text: this.props.title
 						},
-						maintainAspectRatio: true,
+						maintainAspectRatio: false,
 						legend: {
 							position: "bottom"
 						},
@@ -37,20 +37,25 @@ export default class LineChart extends Component {
 			            }
 			          },
 			          gridLines: {
-									color: "#1e2f51"
+									color: "#405175"
 								}
 			        }],
 			        yAxes: [{
 			          ticks: {
-			            beginAtZero: true
+			            beginAtZero: true,
 			          },
 			          gridLines: {
-									color: "#1e2f51"
+									color: "#405175"
 								}
 			        }]
 			      },
 	      		legend: {
 							position: "bottom"
+						},
+						layout: {
+							padding: {
+								left: 10
+							}
 						}
 		    }}
 	    	/>

@@ -7,7 +7,7 @@ import CreateTaskForm from '../components/CreateTaskForm';
 import CurrentTask from '../components/CurrentTask';
 import FinishedTask from '../components/FinishedTask';
 import EditTask from '../components/EditTask';
-import Summary from '../components/Summary'
+import Summary from '../components/Summary';
 
 export default class Timepiece extends Component {
 	static propTypes = {
@@ -25,7 +25,7 @@ export default class Timepiece extends Component {
 		user: PropTypes.object.isRequired,
 		showEditScreen: PropTypes.bool.isRequired,
 		lastManualUpdate: PropTypes.string,
-		selectedTaskIndex: PropTypes.string
+		selectedTaskIndex: PropTypes.string,
 	};
 
 	render() {
@@ -78,6 +78,11 @@ export default class Timepiece extends Component {
 				secondsElapsed={tasks.time}
 				selectedTaskIndex={selectedTaskIndex}
 				uid={uid}
+				openConfirmDelete={this.props.openConfirmDelete}
+				showConfirmDelete={this.props.showConfirmDelete}
+				closeConfirmDelete={this.props.closeConfirmDelete}
+				confirmDeleteTaskIndex={this.props.confirmDeleteTaskIndex}
+				deleteTask={this.props.deleteTask}
 			/>
 		));
 
@@ -154,7 +159,8 @@ export default class Timepiece extends Component {
 								</div>
 							</Col>
 						</Row>
-						{this.props.showEditScreen === true && <EditTask
+						{this.props.showEditScreen === true && 
+							<EditTask
 							closeEdit={this.props.closeEdit} 
 							updateTask={this.props.updateTask}
 							showEditScreen={this.props.showEditScreen}

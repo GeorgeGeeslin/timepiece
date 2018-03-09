@@ -358,14 +358,13 @@ input[type="text"].inputError {
   transform: unset !important;
   -webkit-transform: unset !important; }
 
-.edit-modal {
+.modal {
   -webkit-animation: fade 0.4s;
   animation: fade 0.4s;
   opacity: 1;
   width: 100%;
-  height: 100%;
   margin: auto; }
-  .edit-modal .tasks {
+  .modal .tasks {
     opacity: 1; }
 
 @-webkit-keyframes fade {
@@ -578,7 +577,7 @@ input[type="text"].inputError {
   margin-bottom: 30px;
   padding-top: 15px;
   padding-bottom: 15px;
-  border: 1px solid #1e2f51; }
+  border: 1px solid #96a2ec; }
 
 .radioGroup {
   padding-right: 15px;

@@ -10,13 +10,14 @@ export default class PieChart extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={{paddingTop: "50px"}}>
+				<h2>{this.props.title}</h2>
 				<Pie
 					data={this.props.data}
 					height={150}
 					options={{
 						title: {
-							display: true,
+							display: false,
 							text: "Pie Chart Title"
 						},
 						legend: {

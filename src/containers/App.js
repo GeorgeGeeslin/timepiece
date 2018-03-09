@@ -79,7 +79,7 @@ class App extends Component {
 							closeEdit = {closeEdit}
 							closeUserMenu = {closeUserMenu}
 							updateTask = {updateTask}
-							resumeTask = {resumeTask} 
+							resumeTask = {resumeTask}
 						/>
 					}
 					{ showChartScreen === true &&
