@@ -137,16 +137,17 @@ export default class ChartContainer extends Component {
 		}
 
 		function getLineChartDates(start, end) {
+			console.log(new Date(start))
+			console.log(new Date(end))
 			let labelArray = [];
 			let startDate;
 			let endDate;
 
 			let s = new Date(start);
 			let e = new Date(end);
-			let offSet = new Date(start).getTimezoneOffset()*60*1000;
 
-			startDate = new Date(s.getTime() + offSet);
-			endDate = new Date(e.getTime() + offSet);
+			startDate = new Date(s.getTime());
+			endDate = new Date(e.getTime());
 				
 			const dayCount = ((endDate - startDate) / 86400000);
 			
@@ -214,11 +215,14 @@ export default class ChartContainer extends Component {
 				}
 
 				function mapDataToLabels(arr, labels) {
+					console.log(arr)
+					console.log(labels)
 					let data = [];
 					let j = 0;
 					for (let i = 0; i < arr.length; i++) {
 						let unmatched = true;
 						let labelLength = (labels.length - 1);
+						//let labelLength = labels.length
 						while (unmatched) { 
 							if (arr[i].date === labels[j]) {
 								data.push(arr[i].time);
@@ -308,7 +312,6 @@ export default class ChartContainer extends Component {
 							}
 						}
 					}) // End of interval forEach.
-
 					data = data.sort((a, b) => { 
 						const date1 = new Date(a.date);
 						const date2 = new Date(b.date);
@@ -320,6 +323,7 @@ export default class ChartContainer extends Component {
 						data: mappedData, 
 						borderWidth: 1, 
 						fill: false,
+					//	yAxisID: label
 					});
 				}) // End of task forEach.
 					let colorArray = buildColorArray(datasets.length)
@@ -430,7 +434,6 @@ export default class ChartContainer extends Component {
 
 			let s = new Date(start);
 			let e = new Date(end);
-			let offSet = new Date(start).getTimezoneOffset()*60*1000;
 
 			startDate = new Date(s.getTime());
 			endDate = new Date(e.getTime()); 

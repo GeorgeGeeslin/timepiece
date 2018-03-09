@@ -15,7 +15,7 @@ export default class LineChart extends Component {
 		return(
 			<div>
 				<Line 
-				height={60}
+				height={300}
 				data={this.props.data}
 					options={{
 						title: {
@@ -41,8 +41,9 @@ export default class LineChart extends Component {
 								}
 			        }],
 			        yAxes: [{
+			     //   	id: "task 1",
 			          ticks: {
-			            beginAtZero: true
+			            beginAtZero: true,
 			          },
 			          gridLines: {
 									color: "#1e2f51"
