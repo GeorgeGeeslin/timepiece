@@ -37,7 +37,7 @@ export default class LineChart extends Component {
 			            }
 			          },
 			          gridLines: {
-									color: "#1e2f51"
+									color: "#405175"
 								}
 			        }],
 			        yAxes: [{
@@ -45,7 +45,7 @@ export default class LineChart extends Component {
 			            beginAtZero: true,
 			          },
 			          gridLines: {
-									color: "#1e2f51"
+									color: "#405175"
 								}
 			        }]
 			      },

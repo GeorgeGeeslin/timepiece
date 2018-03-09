@@ -31,7 +31,7 @@ export default class BarChart extends Component {
 									beginAtZero: true
 								},
 								gridLines: {
-									color: "#1e2f51"
+									color: "#405175"
 								}
 							}],
 							yAxes: [{
@@ -41,7 +41,7 @@ export default class BarChart extends Component {
 									padding: -10
 								},
 								gridLines: {
-									color: "#1e2f51"
+									color: "#405175"
 								}
 							}]
 						}
