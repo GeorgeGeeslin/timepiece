@@ -429,6 +429,28 @@ input[type="password"] {
 	color: $highlight-text;
 }
 
+.signin-transition {
+	opacity: 0;
+	-webkit-animation: signinAnimation 0.25s;
+	animation: signinAnimation $animation-time;  	
+}
+
+@-webkit-keyframes signinAnimation {
+    from {opacity: 1}
+    to {opacity: 0}
+}
+
+.signup-transition {
+	opacity: 0;
+	-webkit-animation: signUpAnimation 0.25s;
+	animation: signUpAnimation $animation-time;  	
+}
+
+@-webkit-keyframes signUpAnimation {
+    from {opacity: 1}
+    to {opacity: 0}
+}
+
 
 
 // ERRORS ------------------------------ /

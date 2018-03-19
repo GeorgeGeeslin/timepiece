@@ -18,7 +18,7 @@ export default class Login extends Component {
 		email: '',
 		password: '',
 		confirmPassword: '',
-		createUser: true
+		createUser: false
 	};
 
 	componentWillMount(){
@@ -66,20 +66,29 @@ export default class Login extends Component {
 		this.setState({confirmPassword: password});
 	};
 
+/*
 
 	showSignIn = (e) => {
+		const updateState = () => {
+			this.setState({
+				userName: '',
+				email: '',
+				password: '',
+				confirmPassword: '',
+				createUser: false
+			})
+		}
 		if (e) e.preventDefault();
-		this.setState({
-			userName: '',
-			email: '',
-			password: '',
-			confirmPassword: '',
-			createUser: false
-		})
+		const forum = document.getElementById('signUp');
+		forum.classList.add('signin-transition');
+		setTimeout(updateState, 250);
 	}
 
 	showSignUp = (e) => {
 		if (e) e.preventDefault();
+
+		//const forum = document.getElementById("")
+
 		this.setState({
 			userName: '',
 			email: '',
@@ -87,6 +96,61 @@ export default class Login extends Component {
 			createUser: true
 		})
 	}
+*/
+
+toggleSignUp = (e) => {
+	if (e) e.preventDefault();
+
+	/*if (this.state.createUser === true) {
+		const signInState = () => {
+			this.setState({
+				userName: '',
+				email: '',
+				password: '',
+				confirmPassword: '',
+				createUser: false
+			})		
+		}
+		let forum = document.getElementById('signUp');
+		forum.classList.add('signin-transition');
+		setTimeout(signInState, 250);
+		forum = document.getElementById('signIn');
+		forum.classList.add('signup-transition')
+
+	} else {
+
+	}*/
+
+	if (this.state.createUser === false) {
+		const signUpState = () => {
+			this.setState({
+				userName: '',
+				email: '',
+				password: '',
+				confirmPassword: '',
+				createUser: true
+			})	
+		}
+		let forum = document.getElementById('signIn');
+		forum.classList.add('signin-transition');
+		setTimeout(signUpState, 250);
+	} else {
+		const signInState = () => {
+			this.setState({
+				userName: '',
+				email: '',
+				password: '',
+				confirmPassword: '',
+				createUser: false
+			})
+		}
+		let forum = document.getElementById('signUp');
+		forum.classList.add('signup-transition');
+		setTimeout(signInState, 250);
+	}
+
+
+}
 
 /*
 	createUser = (e) => {
@@ -137,7 +201,7 @@ export default class Login extends Component {
 						</div>
 					}
 					{this.props.pendingLogin === false && this.state.createUser === true && 
-						<div className='signInSignUp' style={{maxWidth: '500px', width: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px', textAlign: 'center'}}>
+						<div id='signUp' className='signInSignUp' style={{maxWidth: '500px', width: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px', textAlign: 'center'}}>
 							<form  onSubmit={this.createUser}>
 								<input id='email'
 									type='text'
@@ -162,13 +226,13 @@ export default class Login extends Component {
 									value='Sign Up'
 								/>
 							</form>
-							<a href='#' onClick={() => this.showSignIn()}>
+							<a href='#' onClick={() => this.toggleSignUp()}>
 								Already have an account? Sign In
 							</a>
 						</div>
 					}
 					{this.props.pendingLogin === false && this.state.createUser === false &&
-						<div className='signInSignUp' style={{maxWidth: '500px', width: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px', textAlign: 'center'}}>
+						<div id ='signIn' className='signInSignUp' style={{maxWidth: '500px', width: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px', textAlign: 'center'}}>
 							<form style={{maxWidth: "500px"}} onSubmit={this.signIn}>
 								<input id='email'
 									type='text'
@@ -187,7 +251,7 @@ export default class Login extends Component {
 									value='Sign In'
 								/>
 							</form>
-							<a href='#' onClick={() => this.showSignUp()}>
+							<a href='#' onClick={() => this.toggleSignUp()}>
 								Don't have an account yet? Sign Up
 							</a>							
 						</div>
