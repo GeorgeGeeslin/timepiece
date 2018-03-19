@@ -17,6 +17,7 @@ export default class Login extends Component {
 		userName:'',
 		email: '',
 		password: '',
+		confirmPassword: '',
 		createUser: true
 	};
 
@@ -56,12 +57,23 @@ export default class Login extends Component {
 		this.setState({password: password});
 	};
 
+	onConfirmPasswordChange = (e) => {
+		const passwordField = document.getElementById("password");
+		if (passwordField.className === 'inputError') {
+			passwordField.classList.remove('inputError')
+		}
+		const password = e.target.value;
+		this.setState({confirmPassword: password});
+	};
+
+
 	showSignIn = (e) => {
 		if (e) e.preventDefault();
 		this.setState({
 			userName: '',
 			email: '',
 			password: '',
+			confirmPassword: '',
 			createUser: false
 		})
 	}
@@ -76,7 +88,7 @@ export default class Login extends Component {
 		})
 	}
 
-
+/*
 	createUser = (e) => {
 		if (e) e.preventDefault();
 		if (this.state.userName.length === 0) {
@@ -89,6 +101,10 @@ export default class Login extends Component {
 		}
 	}
 
+	signIn = (e) => {
+	
+	}
+*/
 
 
 	render() {
@@ -123,12 +139,6 @@ export default class Login extends Component {
 					{this.props.pendingLogin === false && this.state.createUser === true && 
 						<div className='signInSignUp' style={{maxWidth: '500px', width: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px', textAlign: 'center'}}>
 							<form  onSubmit={this.createUser}>
-								<input id='userName'
-									type='text'
-									value={this.state.userName}
-									onChange={this.onUserNameChange}
-									placeholder='User Name'
-								/>
 								<input id='email'
 									type='text'
 									value={this.state.email}
@@ -140,6 +150,12 @@ export default class Login extends Component {
 									value={this.state.password}
 									onChange={this.onPasswordChange}
 									placeholder='Password'
+								/>
+								<input id="confirm_password"
+									type='password'
+									value={this.state.confirmPassword}
+									onChange={this.onConfirmPasswordChange}
+									placeholder='Confirm Password'
 								/>
 								<input className='control-buttons' style={{marginTop: '30px'}}
 									type='submit'
