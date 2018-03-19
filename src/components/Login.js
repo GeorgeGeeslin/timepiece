@@ -100,27 +100,6 @@ export default class Login extends Component {
 
 toggleSignUp = (e) => {
 	if (e) e.preventDefault();
-
-	/*if (this.state.createUser === true) {
-		const signInState = () => {
-			this.setState({
-				userName: '',
-				email: '',
-				password: '',
-				confirmPassword: '',
-				createUser: false
-			})		
-		}
-		let forum = document.getElementById('signUp');
-		forum.classList.add('signin-transition');
-		setTimeout(signInState, 250);
-		forum = document.getElementById('signIn');
-		forum.classList.add('signup-transition')
-
-	} else {
-
-	}*/
-
 	if (this.state.createUser === false) {
 		const signUpState = () => {
 			this.setState({
