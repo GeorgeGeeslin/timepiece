@@ -116,7 +116,7 @@ export default class Login extends Component {
 			const filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
 			return String(email).search (filter) != -1;
 		}
-		if (validEmail(this.state.email) === false || this.state.email === '') {
+		if (validEmail(this.state.email) === false) {
 			const emailField = document.getElementById('email');
 			emailField.classList.add('inputError');
 			emailError = true;
@@ -153,11 +153,21 @@ export default class Login extends Component {
 	}
 
 
-/*
-	signIn = (e) => {
-	
+
+	validateSignIn = (e) => {
+		if (e) e.preventDefault();
+		function validEmail(email) {
+			const filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+			return String(email).search (filter) != -1;
+		}
+		if (validEmail(this.state.email) === false) {
+			this.setState({
+				emailError: true,
+				password: '' 
+			})
+		}
 	}
-*/
+
 
 
 	render() {
@@ -225,7 +235,8 @@ export default class Login extends Component {
 					}
 					{this.props.pendingLogin === false && this.state.createUser === false &&
 						<div id ='signIn' className='signInSignUp' style={{maxWidth: '500px', width: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px', textAlign: 'center'}}>
-							<form style={{maxWidth: "500px"}} onSubmit={this.signIn}>
+							<form style={{maxWidth: "500px"}} onSubmit={this.validateSignIn}>
+								{this.state.emailError && <span className='inputErrorSpan'>Invalid Email Address</span>}
 								<input id='email'
 									type='text'
 									value={this.state.email}
