@@ -18,7 +18,10 @@ export default class Login extends Component {
 		email: '',
 		password: '',
 		confirmPassword: '',
-		createUser: false
+		createUser: false,
+		emailError: false,
+		passwordError: false,
+		confirmPasswordError: false
 	};
 
 	componentWillMount(){
@@ -66,84 +69,91 @@ export default class Login extends Component {
 		this.setState({confirmPassword: password});
 	};
 
-/*
-
-	showSignIn = (e) => {
-		const updateState = () => {
-			this.setState({
-				userName: '',
-				email: '',
-				password: '',
-				confirmPassword: '',
-				createUser: false
-			})
-		}
+	toggleSignUp = (e) => {
 		if (e) e.preventDefault();
-		const forum = document.getElementById('signUp');
-		forum.classList.add('signin-transition');
-		setTimeout(updateState, 250);
-	}
-
-	showSignUp = (e) => {
-		if (e) e.preventDefault();
-
-		//const forum = document.getElementById("")
-
-		this.setState({
-			userName: '',
-			email: '',
-			password: '',
-			createUser: true
-		})
-	}
-*/
-
-toggleSignUp = (e) => {
-	if (e) e.preventDefault();
-	if (this.state.createUser === false) {
-		const signUpState = () => {
-			this.setState({
-				userName: '',
-				email: '',
-				password: '',
-				confirmPassword: '',
-				createUser: true
-			})	
-		}
-		let forum = document.getElementById('signIn');
-		forum.classList.add('signin-transition');
-		setTimeout(signUpState, 250);
-	} else {
-		const signInState = () => {
-			this.setState({
-				userName: '',
-				email: '',
-				password: '',
-				confirmPassword: '',
-				createUser: false
-			})
-		}
-		let forum = document.getElementById('signUp');
-		forum.classList.add('signup-transition');
-		setTimeout(signInState, 250);
-	}
-
-
-}
-
-/*
-	createUser = (e) => {
-		if (e) e.preventDefault();
-		if (this.state.userName.length === 0) {
-			const userNameField = document.getElementById("userName");
-			userNameField.classList.add('inputError');
+		if (this.state.createUser === false) {
+			const signUpState = () => {
 				this.setState({
 					userName: '',
-					password: ''
+					email: '',
+					password: '',
+					confirmPassword: '',
+					createUser: true,
+					emailError: false,
+					passwordError: false,
+					confirmPasswordError: false
+				})	
+			}
+			let forum = document.getElementById('signIn');
+			forum.classList.add('signin-transition');
+			setTimeout(signUpState, 250);
+		} else {
+			const signInState = () => {
+				this.setState({
+					userName: '',
+					email: '',
+					password: '',
+					confirmPassword: '',
+					createUser: false,
+					emailError: false,
+					passwordError: false,
+					confirmPasswordError: false
 				})
+			}
+			let forum = document.getElementById('signUp');
+			forum.classList.add('signup-transition');
+			setTimeout(signInState, 250);
+		}
+	};
+
+	validateCreateUser = (e) => {
+		if (e) e.preventDefault();
+		let errorExists = false;
+		let emailError = false;
+		let passwordError = false;
+		let confirmPasswordError = false;
+		function validEmail(email) {
+			const filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+			return String(email).search (filter) != -1;
+		}
+		if (validEmail(this.state.email) === false || this.state.email === '') {
+			const emailField = document.getElementById('email');
+			emailField.classList.add('inputError');
+			emailError = true;
+			errorExists = true;
+		}
+
+		if (this.state.password.length < 7) {
+			const passwordField = document.getElementById('password');
+			passwordField.classList.add('inputError');
+			passwordError = true;
+			errorExists = true;
+		}
+
+		if (this.state.password !== this.state.confirmPassword) {
+			const confirmPasswordField = document.getElementById('confirm_password');
+			confirmPasswordField.classList.add('inputError');
+			confirmPasswordError = true;
+			errorExists = true;
+		}
+		this.createUser(emailError, passwordError, confirmPasswordError, errorExists)
+	}
+
+	createUser = (emailError, passwordError, confirmPasswordError, errorExists) => {
+		if (errorExists) {
+		console.log("create user")
+			this.setState({
+				emailError: emailError,
+				passwordError: passwordError,
+				confirmPasswordError: confirmPasswordError
+			})
+		} else {
+			//Success
 		}
 	}
 
+
+/*
 	signIn = (e) => {
 	
 	}
@@ -181,19 +191,22 @@ toggleSignUp = (e) => {
 					}
 					{this.props.pendingLogin === false && this.state.createUser === true && 
 						<div id='signUp' className='signInSignUp' style={{maxWidth: '500px', width: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px', textAlign: 'center'}}>
-							<form  onSubmit={this.createUser}>
+							<form  onSubmit={this.validateCreateUser}>
+								{this.state.emailError && <span className='inputErrorSpan'>Invalid Email Address</span>}
 								<input id='email'
 									type='text'
 									value={this.state.email}
 									onChange={this.onEmailChange}
 									placeholder='Email'
 								/>
+								{this.state.passwordError && <span className='inputErrorSpan'>Password Is Too Short</span>}
 								<input id='password'
 									type='password'
 									value={this.state.password}
 									onChange={this.onPasswordChange}
-									placeholder='Password'
+									placeholder='Password (8 or more characters)'
 								/>
+								{this.state.confirmPasswordError && <span className='inputErrorSpan'>Password Does Not Match</span>}
 								<input id="confirm_password"
 									type='password'
 									value={this.state.confirmPassword}

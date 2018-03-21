@@ -470,6 +470,11 @@ input[type="text"].inputError {
 	margin: auto;
 }
 
+.inputErrorSpan {
+	color: #d6706f;
+	float: left;
+}
+
 // MODALS ------------------------------ /
 .modal-open {
 	background-color: #A9A9A9;

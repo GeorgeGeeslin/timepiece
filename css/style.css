@@ -365,6 +365,10 @@ input[type="text"].inputError {
   width: 100%;
   margin: auto; }
 
+.inputErrorSpan {
+  color: #d6706f;
+  float: left; }
+
 .modal-open {
   background-color: #A9A9A9; }
   .modal-open #root {
