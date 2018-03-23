@@ -70,6 +70,23 @@ function getUserData(user) {
 	}
 }
 
+export function createNewUser(email, password) {
+	return dispatch => {
+		//dispatch(pendingLogin())
+		auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+			console.log(error)
+		});
+	}
+}
+
+export function signIn(email, password) {
+	return dispatch => {
+		auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+			console.log(error)
+		});
+	}
+}
+
 export function attemptLogin(provider) {
 	return dispatch => {
 		dispatch(pendingLogin())

@@ -28,9 +28,11 @@ export default class UserHeader extends Component {
 				<div className='masthead'>
 					<span className={['timepieceLogo', 'mastheadLogo'].join(' ')}>Timepiece</span>
 					<button className='userAvatar' onClick={ () => this.toggleUserMenu()}>
-						<img src={this.props.user.photoURL} alt='User Icon' />
+						{ this.props.user.photoURL && <img src={this.props.user.photoURL} alt='User Icon' /> }
+						{ !this.props.user.photoURL && <div className='menuIcon'><div></div><div></div><div></div></div> }
 					</button>
-					<span className='displayName'>{this.props.user.displayName}</span>
+					{ this.props.user.displayName && <span className='displayName'>{this.props.user.displayName}</span> }
+					{ !this.props.user.displayName && <span className='displayName'>{this.props.user.email}</span>  }
 				</div>
 				{ this.props.showUserMenu === true && 
 					<UserMenu className='userMenu'

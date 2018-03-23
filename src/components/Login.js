@@ -11,6 +11,8 @@ export default class Login extends Component {
 		attemptLogin: PropTypes.func.isRequired,
 		checkLoginStatus: PropTypes.func.isRequired,
 		pendingLogin: PropTypes.bool.isRequired,
+		createNewUser: PropTypes.func.isRequired,
+		signIn: PropTypes.func.isRequired
 	};
 
 	state = {
@@ -40,7 +42,7 @@ export default class Login extends Component {
 		}
 		const userName = e.target.value;
 		this.setState({userName: userName});
-	};
+	}
 
 	onEmailChange = (e) => {
 		const emailField = document.getElementById("email");
@@ -49,7 +51,7 @@ export default class Login extends Component {
 		}
 		const email = e.target.value;
 		this.setState({email: email});
-	};
+	}
 
 	onPasswordChange = (e) => {
 		const passwordField = document.getElementById("password");
@@ -58,7 +60,7 @@ export default class Login extends Component {
 		}
 		const password = e.target.value;
 		this.setState({password: password});
-	};
+	}
 
 	onConfirmPasswordChange = (e) => {
 		const passwordField = document.getElementById("password");
@@ -67,7 +69,7 @@ export default class Login extends Component {
 		}
 		const password = e.target.value;
 		this.setState({confirmPassword: password});
-	};
+	}
 
 	toggleSignUp = (e) => {
 		if (e) e.preventDefault();
@@ -104,7 +106,7 @@ export default class Login extends Component {
 			forum.classList.add('signup-transition');
 			setTimeout(signInState, 250);
 		}
-	};
+	}
 
 	validateCreateUser = (e) => {
 		if (e) e.preventDefault();
@@ -141,18 +143,15 @@ export default class Login extends Component {
 
 	createUser = (emailError, passwordError, confirmPasswordError, errorExists) => {
 		if (errorExists) {
-		console.log("create user")
 			this.setState({
 				emailError: emailError,
 				passwordError: passwordError,
 				confirmPasswordError: confirmPasswordError
 			})
 		} else {
-			//Success
+			this.props.createNewUser(this.state.email, this.state.password);
 		}
 	}
-
-
 
 	validateSignIn = (e) => {
 		if (e) e.preventDefault();
@@ -165,13 +164,16 @@ export default class Login extends Component {
 				emailError: true,
 				password: '' 
 			})
+		} else {
+			console.log("sign in")
+			this.props.signIn(this.state.email, this.state.password)
 		}
 	}
 
 
 
-	render() {
 
+	render() {
 		const fbLogoStyle = {
 			display: 'inline-block',
 		  float: 'left',
