@@ -20,3 +20,5 @@ export const OPEN_CHARTS = 'task/OPEN_CHARTS';
 export const CLOSE_CHARTS = 'task/CLOSE_CHARTS';
 export const OPEN_USER_MENU = 'task/OPEN_USER_MENU';
 export const CLOSE_USER_MENU = 'task/CLOSE_USER_MENU';
+export const CREATE_NEW_USER = 'task/CREATE_NEW_USER';
+export const SIGN_IN = 'task/SIGN_IN';
