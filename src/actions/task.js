@@ -75,6 +75,7 @@ export function createNewUser(email, password) {
 		//dispatch(pendingLogin())
 		auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
 			console.log(error)
+			dispatch(loginError(error.code, error.message));
 		});
 	}
 }
@@ -83,6 +84,7 @@ export function signIn(email, password) {
 	return dispatch => {
 		auth.signInWithEmailAndPassword(email, password).catch(function(error) {
 			console.log(error)
+			dispatch(loginError(error.code, error.message));			
 		});
 	}
 }
