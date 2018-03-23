@@ -219,6 +219,25 @@ input[type="text"] {
 	@include center;
 }
 
+input[type="password"] {
+	width: 100%;
+	line-height: 2em;
+	border: 0px;
+	@include inputs {
+		border-bottom: 1px solid $color-borders;
+		&::placeholder {
+			color: $color-accent;
+		}
+		&:focus {
+			&::placeholder {
+				color: $highlight-text;
+			}
+			border-bottom: 1px solid $color-accent;
+		}  
+	}
+	@include center;
+}
+
 .taskLabel {
 	@include label;
 }
@@ -273,6 +292,15 @@ input[type="text"] {
 		border-radius: 50%;
 	}
 }
+
+.menuIcon div {
+	width: 35px;
+	height: 5px;
+	background-color: black;
+	margin: 6px 0;
+}
+
+
 
 // User Menu ----------------------- /
 
@@ -400,11 +428,39 @@ input[type="text"] {
 }
 
 .facebookSignIn:hover {
-  background-color: #5b7bd5;
+ background-color: #5b7bd5;
  background-image: -webkit-linear-gradient(#5b7bd5, #4864b1);
  background-image: -o-linear-gradient(#5b7bd5, #4864b1);
  background-image: linear-gradient(#5b7bd5, #4864b1);
 }
+
+.signInSignUp a{
+	color: $highlight-text;
+}
+
+.signin-transition {
+	opacity: 0;
+	-webkit-animation: signinAnimation 0.25s;
+	animation: signinAnimation $animation-time;  	
+}
+
+@-webkit-keyframes signinAnimation {
+    from {opacity: 1}
+    to {opacity: 0}
+}
+
+.signup-transition {
+	opacity: 0;
+	-webkit-animation: signUpAnimation 0.25s;
+	animation: signUpAnimation $animation-time;  	
+}
+
+@-webkit-keyframes signUpAnimation {
+    from {opacity: 1}
+    to {opacity: 0}
+}
+
+
 
 // ERRORS ------------------------------ /
 
@@ -421,6 +477,11 @@ input[type="text"].inputError {
 	border: 1px solid $highlight-border;;
 	width: 100%;
 	margin: auto;
+}
+
+.inputErrorSpan {
+	color: #d6706f;
+	float: left;
 }
 
 // MODALS ------------------------------ /

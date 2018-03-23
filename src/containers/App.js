@@ -38,6 +38,8 @@ class App extends Component {
 		const closeUserMenu = bindActionCreators(TaskActionCreators.closeUserMenu, dispatch);
 		const updateTask = bindActionCreators(TaskActionCreators.updateTask, dispatch);
 		const resumeTask = bindActionCreators(TaskActionCreators.resumeTask, dispatch);
+		const createNewUser = bindActionCreators(TaskActionCreators.createNewUser, dispatch);
+		const signIn = bindActionCreators(TaskActionCreators.signIn, dispatch);
 
 		return (
 			<div>
@@ -49,6 +51,8 @@ class App extends Component {
 					loginError = {this.props.loginError}
 					loginErrorCode = {this.props.loginErrorCode}
 					loginErrorMsg = {this.props.loginErrorMsg}
+					createNewUser = {createNewUser}
+					signIn = {signIn}
 				/>
 			}
 			{ user !== null &&
