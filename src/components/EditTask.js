@@ -120,14 +120,14 @@ export default class EditTask extends Component {
 			}
 		);
 		this.setState({timeintervals: timeintervals});
-	}
+	};
 
 	onRemoveTime = (index) => {
 		var timeintervals = [];
 		this.state.timeintervals.map((interval, index) => ( timeintervals.push(interval) ))
 		timeintervals.splice(index,1);
 		this.setState({timeintervals: timeintervals});
-	}
+	};
 
 	findOverlappingTimes = (intervals) => {
 		var overlappingTimes = [];
@@ -139,7 +139,7 @@ export default class EditTask extends Component {
 			}
 		}
 		return overlappingTimes;		
-	}
+	};
 
 	updateTask = (e) => {
 		if (e) e.preventDefault();
@@ -189,6 +189,11 @@ export default class EditTask extends Component {
 			this.props.closeEdit();
 		}
 	};
+
+	/*test = () => {
+		console.log(navigator.userAgent)
+	}*/
+
 
 	render() {	
 		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
@@ -258,6 +263,7 @@ export default class EditTask extends Component {
 							</Modal.Body>
 							<Modal.Footer>
 								<input
+									onClick={this.updateTask}
 									className='task-buttons' 
 									type='submit'
 									value='Save and Exit'
