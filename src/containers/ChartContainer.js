@@ -218,7 +218,6 @@ export default class ChartContainer extends Component {
 					for (let i = 0; i < arr.length; i++) {
 						let unmatched = true;
 						let labelLength = (labels.length - 1);
-						//let labelLength = labels.length
 						while (unmatched) { 
 							if (arr[i].date === labels[j]) {
 								data.push(arr[i].time);
@@ -246,8 +245,14 @@ export default class ChartContainer extends Component {
 						const s = new Date(interval.startTime);
 						const e = new Date(interval.stopTime);
 
-						const start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
-						const end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+						let start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
+						let end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+
+						//Add timezone offset. This should probably only be applied to browsers like Firefox that 
+						//return the time in UTC instead of automatically adjusting to local time, like Chrome.
+						const offset = new Date().getTimezoneOffset() * 60 * 1000;
+						start = new Date(start.getTime() + offset);
+						end = new Date(end.getTime() + offset);
 
 						const dayCount = Math.round((end.getTime() - start.getTime()) / (86400000))
 																						
@@ -272,7 +277,7 @@ export default class ChartContainer extends Component {
 									time = parseFloat(Number(Math.round(time/36000) /100).toFixed(2));
 									if (includedDates.includes(date) === false ) {
 										includedDates.push(date);
-										data.push({date: date, time: time});								
+										data.push({date: date, time: time});							
 									} else {
 										let index = data.findIndex(x => x.date === date);
 										const prevTime = data[index].time;
@@ -702,8 +707,14 @@ export default class ChartContainer extends Component {
 						const s = new Date(interval.startTime);
 						const e = new Date(interval.stopTime);
 
-						const start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
-						const end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+						let start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
+						let end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+
+						//Add timezone offset. This should probably only be applied to browsers like Firefox that 
+						//return the time in UTC instead of automatically adjusting to local time, like Chrome.
+						const offset = new Date().getTimezoneOffset() * 60 * 1000;
+						start = new Date(start.getTime() + offset);
+						end = new Date(end.getTime() + offset);
 
 						const dayCount = Math.round((end.getTime() - start.getTime()) / (86400000))
 																						
