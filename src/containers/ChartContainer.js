@@ -245,8 +245,8 @@ export default class ChartContainer extends Component {
 						const s = new Date(interval.startTime);
 						const e = new Date(interval.stopTime);
 
-						let start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
-						let end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+						let start = new Date(s.getFullYear() + "/" + (s.getMonth() + 1) + "/" + s.getDate());
+						let end = new Date(e.getFullYear() + "/" + (e.getMonth() + 1) + "/" + e.getDate());
 
 						//Add timezone offset. This should probably only be applied to browsers like Firefox that 
 						//return the time in UTC instead of automatically adjusting to local time, like Chrome.
@@ -255,7 +255,7 @@ export default class ChartContainer extends Component {
 						end = new Date(end.getTime() + offset);
 
 						const dayCount = Math.round((end.getTime() - start.getTime()) / (86400000))
-																						
+														
 						if (dayCount === 0) {
 							let date = dateToString(start);
 							let time = interval.stopTime - interval.startTime;
@@ -707,8 +707,8 @@ export default class ChartContainer extends Component {
 						const s = new Date(interval.startTime);
 						const e = new Date(interval.stopTime);
 
-						let start = new Date(s.getFullYear() + "-" + (s.getMonth() + 1) + "-" + s.getDate());
-						let end = new Date(e.getFullYear() + "-" + (e.getMonth() + 1) + "-" + e.getDate());
+						let start = new Date(s.getFullYear() + "/" + (s.getMonth() + 1) + "/" + s.getDate());
+						let end = new Date(e.getFullYear() + "/" + (e.getMonth() + 1) + "/" + e.getDate());
 
 						//Add timezone offset. This should probably only be applied to browsers like Firefox that 
 						//return the time in UTC instead of automatically adjusting to local time, like Chrome.
