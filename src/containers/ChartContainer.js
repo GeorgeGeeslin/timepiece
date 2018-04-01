@@ -137,43 +137,17 @@ export default class ChartContainer extends Component {
 		}
 
 		function getLineChartDates(start, end) {
-			console.log(new Date(start))
-			console.log(new Date(end))
 			let labelArray = [];
-//			let startDate;
-//			let endDate;
 
 			let s = new Date(start);
 			let e = new Date(end);
 
-//			startDate = new Date(s.getTime());
-//			endDate = new Date(e.getTime());
 			let startDate = new Date(s.getFullYear() + "/" + (s.getMonth() + 1) + "/" + s.getDate());
 			let endDate = new Date(e.getFullYear() + "/" + (e.getMonth() + 1) + "/" + e.getDate());
 
-
-
-
-									const offset = new Date().getTimezoneOffset() * 60 * 1000;
-						startDate = new Date(startDate.getTime() + offset);
-						endDate = new Date(endDate.getTime() + offset);
-
-	
-
-
-/**********/
-/*
-						let start = new Date(s.getFullYear() + "/" + (s.getMonth() + 1) + "/" + s.getDate());
-						let end = new Date(e.getFullYear() + "/" + (e.getMonth() + 1) + "/" + e.getDate());
-
-						//Add timezone offset. This should probably only be applied to browsers like Firefox that 
-						//return the time in UTC instead of automatically adjusting to local time, like Chrome.
-						const offset = new Date().getTimezoneOffset() * 60 * 1000;
-						start = new Date(start.getTime() + offset);
-						end = new Date(end.getTime() + offset);
-
-*/
-
+			const offset = new Date().getTimezoneOffset() * 60 * 1000;
+			startDate = new Date(startDate.getTime() + offset);
+			endDate = new Date(endDate.getTime() + offset);
 				
 			const dayCount = ((endDate - startDate) / 86400000);
 			                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
@@ -183,8 +157,6 @@ export default class ChartContainer extends Component {
 				return result;
 			}
 			for (let i = 0; i <= dayCount; i++) {
-				console.log("i = " + i)
-				console.log("dayCount = " + dayCount)
 				let date = addDays(startDate, i);
 				let year = date.getFullYear();
 				let days = ("0" + date.getDate()).slice(-2);
@@ -192,7 +164,6 @@ export default class ChartContainer extends Component {
 				let dateString = year+"-"+month+"-"+days;
 				labelArray.push(dateString);
 			}
-			console.log(labelArray)
 			return labelArray;
 		}
 
