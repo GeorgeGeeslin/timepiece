@@ -190,11 +190,6 @@ export default class EditTask extends Component {
 		}
 	};
 
-	/*test = () => {
-		console.log(navigator.userAgent)
-	}*/
-
-
 	render() {	
 		var timeIntervals = this.state.timeintervals.map((timeInterval, index) => (
 			<div key={index} className='tasks'>
