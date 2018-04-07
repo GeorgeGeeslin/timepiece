@@ -49,6 +49,15 @@ export default function Task(state=initialState, action) {
 			}
 		}
 
+		case TaskActionTypes.CLEAR_LOGIN_ERROR: {
+			return {
+				...state,
+				loginError: false,
+				loginErrorCode: '',
+				loginErrorMsg: ''
+			}
+		}
+
 		case TaskActionTypes.SUCCESSFUL_SIGNOUT: {
 			return {
 				...state,
