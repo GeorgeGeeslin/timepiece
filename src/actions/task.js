@@ -111,6 +111,12 @@ export const loginError = (code, message) => {
 	}
 }
 
+export const clearLoginError = () => {
+	return {
+		type: TaskActionTypes.CLEAR_LOGIN_ERROR
+	}
+}
+
 export const pendingLogin = () => {
 	return {
 		type: TaskActionTypes.PENDING_LOGIN

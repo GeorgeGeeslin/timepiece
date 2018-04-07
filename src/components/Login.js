@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { googleProvider, facebookProvider } from '../firebase';
 import GoogleButton from 'react-google-button'
-//import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { auth} from '../firebase';
 
 const fbLogo = require("../images/fb_logo50.png");
 
@@ -12,7 +12,8 @@ export default class Login extends Component {
 		checkLoginStatus: PropTypes.func.isRequired,
 		pendingLogin: PropTypes.bool.isRequired,
 		createNewUser: PropTypes.func.isRequired,
-		signIn: PropTypes.func.isRequired
+		signIn: PropTypes.func.isRequired,
+		clearLoginError: PropTypes.func.isRequired
 	};
 
 	state = {
@@ -23,7 +24,8 @@ export default class Login extends Component {
 		createUser: false,
 		emailError: false,
 		passwordError: false,
-		confirmPasswordError: false
+		confirmPasswordError: false,
+		resetPasswordMessage: ''
 	};
 
 	componentWillMount(){
@@ -31,6 +33,7 @@ export default class Login extends Component {
 	}
 
 	login(provider) {
+		this.props.clearLoginError();
 		this.setState({pendingLogin: true})
 		this.props.attemptLogin(provider)
 	}
@@ -142,6 +145,7 @@ export default class Login extends Component {
 	}
 
 	createUser = (emailError, passwordError, confirmPasswordError, errorExists) => {
+		this.props.clearLoginError();
 		if (errorExists) {
 			this.setState({
 				emailError: emailError,
@@ -165,12 +169,18 @@ export default class Login extends Component {
 				password: '' 
 			})
 		} else {
-			console.log("sign in")
+			this.props.clearLoginError();
 			this.props.signIn(this.state.email, this.state.password)
 		}
 	}
 
-
+	resetPasswordEmail = (email) => {
+		auth.sendPasswordResetEmail(email).then(() => {
+			this.setState({resetPasswordMessage: "Password Reset Email Sent!"})
+		}).catch(function(error) {
+			console.log(error)
+		})
+	}
 
 
 	render() {
@@ -263,6 +273,14 @@ export default class Login extends Component {
 					}
 					{this.props.pendingLogin === true &&
 						<div className='loader'>
+						</div>
+					}
+					{this.props.loginError === true && this.props.loginErrorCode === "auth/wrong-password" &&
+						<div>
+							<a href='#' onClick={() => this.resetPasswordEmail(this.state.email)}>
+								Reset Password?
+							</a>
+							<span>     {this.state.resetPasswordMessage}</span>
 						</div>
 					}
 					{this.props.loginError === true && 
