@@ -40,6 +40,7 @@ class App extends Component {
 		const resumeTask = bindActionCreators(TaskActionCreators.resumeTask, dispatch);
 		const createNewUser = bindActionCreators(TaskActionCreators.createNewUser, dispatch);
 		const signIn = bindActionCreators(TaskActionCreators.signIn, dispatch);
+		const clearLoginError = bindActionCreators(TaskActionCreators.clearLoginError, dispatch);
 
 		return (
 			<div>
@@ -53,6 +54,7 @@ class App extends Component {
 					loginErrorMsg = {this.props.loginErrorMsg}
 					createNewUser = {createNewUser}
 					signIn = {signIn}
+					clearLoginError = {clearLoginError}
 				/>
 			}
 			{ user !== null &&
